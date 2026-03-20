@@ -17,12 +17,15 @@ export default function DashboardScreen({ navigation }: any) {
       >
         {/* 🔴 LOGOUT */}
         <TouchableOpacity style={styles.dashboardLogoutBtn}>
-          <Text style={styles.dashboardLogoutText}>Logout</Text>
+          <Text style={styles.dashboardLogoutText}
+          onPress={() => navigation.navigate("Login")}>
+            Logout
+          </Text>
         </TouchableOpacity>
 
         {/* HEADER */}
         <View style={styles.dashboardHeader}>
-          <View style={styles.dashboardBadge}>
+          <View style={styles.dashboardBadge}> 
             <Text style={styles.dashboardBadgeText}>CONTROL CENTER</Text>
           </View>
 
