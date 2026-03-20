@@ -13,11 +13,9 @@ export default function LoginScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      {/* Background Glow */}
       <View style={styles.backgroundGlow1} />
       <View style={styles.backgroundGlow2} />
 
-      {/* Card */}
       <View style={styles.card}>
         <View style={styles.badge}>
           <Text style={styles.badgeText}>SECURE ACCESS</Text>
