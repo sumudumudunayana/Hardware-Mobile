@@ -15,7 +15,7 @@ export default function DashboardScreen({ navigation }: any) {
         contentContainerStyle={{ padding: 16, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* 🔴 LOGOUT */}
+        {/*  LOGOUT */}
         <TouchableOpacity style={styles.dashboardLogoutBtn}>
           <Text style={styles.dashboardLogoutText}
           onPress={() => navigation.navigate("Login")}>
