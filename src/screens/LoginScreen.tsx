@@ -22,7 +22,6 @@ export default function LoginScreen({ navigation }: any) {
 
       // store token
       console.log("TOKEN:", res.data.token);
-
       // navigate to main app
       navigation.navigate("Main");
     } catch (error: any) {
