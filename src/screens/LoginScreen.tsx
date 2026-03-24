@@ -4,12 +4,34 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
+import axios from "axios";
 import styles from "../styles/loginStyles";
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const res = await axios.post(
+        "http://10.0.2.2:5500/api/auth/login", // ⚠️ IMPORTANT
+        { email, password }
+      );
+
+      // ✅ store token (later we improve this)
+      console.log("TOKEN:", res.data.token);
+
+      // 👉 navigate to main app
+      navigation.navigate("Main");
+    } catch (error: any) {
+      Alert.alert(
+        "Login Failed",
+        error.response?.data?.message || "Something went wrong"
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -30,6 +52,7 @@ export default function LoginScreen({ navigation }: any) {
         <TextInput
           placeholder="Enter your email"
           style={styles.input}
+          value={email}
           onChangeText={setEmail}
         />
 
@@ -37,20 +60,20 @@ export default function LoginScreen({ navigation }: any) {
           placeholder="Enter your password"
           secureTextEntry
           style={styles.input}
+          value={password}
           onChangeText={setPassword}
         />
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("Main")}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <Text style={styles.register}>
           Don’t have an account?{" "}
-          <Text style={styles.registerLink}
-            onPress={() => navigation.navigate("Register")}>
+          <Text
+            style={styles.registerLink}
+            onPress={() => navigation.navigate("Register")}
+          >
             Register
           </Text>
         </Text>
