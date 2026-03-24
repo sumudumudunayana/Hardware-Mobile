@@ -1,31 +1,28 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import styles from '../styles/dashboardScreenStyles';
 
-export default function DashboardScreen({ navigation }: any) {
+export default function DashboardScreen({navigation}: any) {
   return (
-    <View style={{ flex: 1, backgroundColor: "#ffffffcd" }}>
-      
+    <View style={{flex: 1, backgroundColor: '#ffffffcd'}}>
       {/* 🌟 GLOW BACKGROUND */}
       <View style={styles.dashboardGlowPrimary} />
       <View style={styles.dashboardGlowSecondary} />
 
       {/* 📜 CONTENT */}
       <ScrollView
-        contentContainerStyle={{ padding: 16, paddingBottom: 40 }}
-        showsVerticalScrollIndicator={false}
-      >
+        contentContainerStyle={{padding: 16, paddingBottom: 40}}
+        showsVerticalScrollIndicator={false}>
         {/*  LOGOUT */}
-        <TouchableOpacity style={styles.dashboardLogoutBtn}>
-          <Text style={styles.dashboardLogoutText}
-          onPress={() => navigation.navigate("Login")}>
-            Logout
-          </Text>
+        <TouchableOpacity
+          style={styles.dashboardLogoutBtn}
+          onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.dashboardLogoutText}>Logout</Text>
         </TouchableOpacity>
 
         {/* HEADER */}
         <View style={styles.dashboardHeader}>
-          <View style={styles.dashboardBadge}> 
+          <View style={styles.dashboardBadge}>
             <Text style={styles.dashboardBadgeText}>CONTROL CENTER</Text>
           </View>
 
@@ -52,7 +49,9 @@ export default function DashboardScreen({ navigation }: any) {
         {/* MODULES */}
         <View style={styles.dashboardGrid}>
           {/* PRODUCTS */}
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity
+            style={styles.dashboardCard}
+            onPress={() => navigation.navigate('Products')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>📦</Text>
               <Text style={styles.dashboardStatus}>Inventory</Text>
@@ -122,9 +121,7 @@ export default function DashboardScreen({ navigation }: any) {
               <Text style={styles.dashboardIcon}>🏷️</Text>
               <Text style={styles.dashboardStatus}>Promotions</Text>
             </View>
-            <Text style={styles.dashboardCardTitle}>
-              Promotion Management
-            </Text>
+            <Text style={styles.dashboardCardTitle}>Promotion Management</Text>
             <Text style={styles.dashboardCardDesc}>
               Manage discounts and campaigns
             </Text>
