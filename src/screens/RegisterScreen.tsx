@@ -4,13 +4,38 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
+import axios from "axios";
 import styles from "../styles/registerScreenStyles";
 
 export default function RegisterScreen({ navigation }: any) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleRegister = async () => {
+    try {
+      await axios.post(
+        "http://10.0.2.2:5500/api/auth/register", //  important change
+        {
+          name,
+          email,
+          password,
+        }
+      );
+
+      Alert.alert("Success", "Registration successful");
+
+      // go back to login
+      navigation.navigate("Login");
+    } catch (error: any) {
+      Alert.alert(
+        "Registration Failed",
+        error.response?.data?.message || "Registration failed"
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -33,12 +58,14 @@ export default function RegisterScreen({ navigation }: any) {
         <TextInput
           placeholder="Enter your name"
           style={styles.input}
+          value={name}
           onChangeText={setName}
         />
 
         <TextInput
           placeholder="Enter your email"
           style={styles.input}
+          value={email}
           onChangeText={setEmail}
         />
 
@@ -46,10 +73,11 @@ export default function RegisterScreen({ navigation }: any) {
           placeholder="Create a password"
           secureTextEntry
           style={styles.input}
+          value={password}
           onChangeText={setPassword}
         />
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
 
