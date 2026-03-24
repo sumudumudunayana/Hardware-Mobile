@@ -16,14 +16,14 @@ export default function LoginScreen({ navigation }: any) {
   const handleLogin = async () => {
     try {
       const res = await axios.post(
-        "http://10.0.2.2:5500/api/auth/login", // ⚠️ IMPORTANT
+        "http://10.0.2.2:5500/api/auth/login",
         { email, password }
       );
 
-      // ✅ store token (later we improve this)
+      // store token
       console.log("TOKEN:", res.data.token);
 
-      // 👉 navigate to main app
+      // navigate to main app
       navigation.navigate("Main");
     } catch (error: any) {
       Alert.alert(
