@@ -11,17 +11,25 @@ export default function AppHeader({
   onBack?: () => void;
 }) {
   return (
-    <View style={styles.container}>
-      {/* BACK BUTTON */}
-      <TouchableOpacity onPress={onBack} style={styles.backButton}>
-        <Icon name="chevron-back" style={styles.icon} />
-      </TouchableOpacity>
+    <View style={styles.headerContainer}>
+      {/* LEFT */}
+      <View style={styles.side}>
+        {onBack && (
+          <TouchableOpacity onPress={onBack} style={styles.backButton}>
+            <Icon name="chevron-back" style={styles.icon} />
+          </TouchableOpacity>
+        )}
+      </View>
 
-      {/* TITLE */}
-      <Text style={styles.title}>{title}</Text>
+      {/* CENTER */}
+      <View style={styles.center}>
+        <Text numberOfLines={1} style={styles.title}>
+          {title}
+        </Text>
+      </View>
 
-      {/* SPACER */}
-      <View style={styles.spacer} />
+      {/* RIGHT (placeholder for future icons) */}
+      <View style={styles.side} />
     </View>
   );
 }
