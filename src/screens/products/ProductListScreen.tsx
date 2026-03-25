@@ -65,7 +65,7 @@ export default function ProductListScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      {/* 🔙 HEADER */}
+      {/* HEADER */}
       <AppHeader title="Products" onBack={() => navigation.goBack()} />
 
       {/* 🔄 LOADING */}
