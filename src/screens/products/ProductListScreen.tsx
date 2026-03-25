@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import axios from "axios";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AppHeader from "../../components/AppHeader";
 import styles from "../../styles/products/ProductListScreenStyles";
 
@@ -64,7 +65,9 @@ export default function ProductListScreen({ navigation }: any) {
   };
 
   return (
+  <SafeAreaView style={styles.safeArea}>
     <View style={styles.container}>
+      
       {/* HEADER */}
       <AppHeader title="Products" onBack={() => navigation.goBack()} />
 
@@ -72,7 +75,10 @@ export default function ProductListScreen({ navigation }: any) {
       {loading ? (
         <ActivityIndicator size="large" color="#f59e0b" />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
           {products.map((item) => (
             <View key={item.id} style={styles.card}>
               <Text style={styles.productName}>{item.name}</Text>
@@ -89,7 +95,6 @@ export default function ProductListScreen({ navigation }: any) {
               </Text>
 
               <View style={styles.buttonRow}>
-                {/* VIEW */}
                 <TouchableOpacity
                   style={[styles.btn, styles.viewBtn]}
                   onPress={() =>
@@ -99,7 +104,6 @@ export default function ProductListScreen({ navigation }: any) {
                   <Text style={styles.btnText}>View</Text>
                 </TouchableOpacity>
 
-                {/* EDIT */}
                 <TouchableOpacity
                   style={[styles.btn, styles.editBtn]}
                   onPress={() =>
@@ -109,7 +113,6 @@ export default function ProductListScreen({ navigation }: any) {
                   <Text style={styles.btnText}>Edit</Text>
                 </TouchableOpacity>
 
-                {/* DELETE */}
                 <TouchableOpacity
                   style={[styles.btn, styles.deleteBtn]}
                   onPress={() => handleDelete(item)}
@@ -125,10 +128,11 @@ export default function ProductListScreen({ navigation }: any) {
       {/* FAB */}
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => navigation.navigate("ProductEdit")}
+        onPress={() => navigation.navigate("ProductAdd")}
       >
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
     </View>
-  );
+  </SafeAreaView>
+);
 }
