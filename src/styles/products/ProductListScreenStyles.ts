@@ -1,125 +1,113 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+  // ✅ SAFE AREA
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#f5f7fb",
+  },
+
+  // ✅ MAIN CONTAINER (NO PADDING HERE)
   container: {
     flex: 1,
-    backgroundColor: '#f5f7fb',
-    padding: 16,
   },
 
-  title: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: '#0f172a',
-    marginBottom: 16,
+  // ✅ SCROLL CONTENT (padding moved here)
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 40,
   },
 
+  // ✅ CARD
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     padding: 16,
     borderRadius: 16,
+    marginTop: 10,
     marginBottom: 15,
 
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.06,
     shadowRadius: 10,
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     elevation: 4,
 
     borderWidth: 1,
-    borderColor: '#eef2f7',
+    borderColor: "#eef2f7",
   },
 
+  // ✅ PRODUCT NAME
   productName: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#0f172a',
+    fontWeight: "700",
+    color: "#0f172a",
   },
 
+  // ✅ META TEXT
   productMeta: {
     fontSize: 12,
-    color: '#64748b',
+    color: "#64748b",
     marginTop: 4,
   },
 
+  // ✅ BUTTON ROW
   buttonRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 12,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
 
+  // ✅ BASE BUTTON
   btn: {
     flex: 1,
     paddingVertical: 8,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginHorizontal: 4,
   },
 
+  // ✅ BUTTON VARIANTS
   viewBtn: {
-    backgroundColor: '#e0f2fe',
+    backgroundColor: "#e0f2fe",
   },
 
   editBtn: {
-    backgroundColor: '#fef3c7',
+    backgroundColor: "#fef3c7",
   },
 
   deleteBtn: {
-    backgroundColor: '#fee2e2',
+    backgroundColor: "#fee2e2",
   },
 
+  // ✅ BUTTON TEXT
   btnText: {
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
+    color: "#0f172a",
   },
 
+  // ✅ FLOATING BUTTON (FAB)
   fab: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 30,
     right: 20,
-    backgroundColor: '#f59e0b',
+    backgroundColor: "#f59e0b",
     width: 60,
     height: 60,
     borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
 
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 10,
-    shadowOffset: {width: 0, height: 5},
+    shadowOffset: { width: 0, height: 5 },
     elevation: 6,
   },
 
   fabText: {
     fontSize: 28,
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#0f172a',
-  },
-
-  headerSpacer: {
-    width: 26, // same as icon size → keeps title centered
-  },
-
-  backButton: {
-    padding: 4,
-  },
-
-  backIcon: {
-    fontSize: 26,
-    color: '#0f172a',
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
