@@ -68,7 +68,7 @@ export default function ProductListScreen({ navigation }: any) {
       {/* HEADER */}
       <AppHeader title="Products" onBack={() => navigation.goBack()} />
 
-      {/* 🔄 LOADING */}
+      {/* LOADING */}
       {loading ? (
         <ActivityIndicator size="large" color="#f59e0b" />
       ) : (
