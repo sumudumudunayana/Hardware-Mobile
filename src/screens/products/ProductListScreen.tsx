@@ -15,7 +15,7 @@ export default function ProductListScreen({ navigation }: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔥 FETCH PRODUCTS
+  // FETCH PRODUCTS
   const fetchProducts = async () => {
     try {
       const res = await axios.get("http://10.0.2.2:5500/api/items");
