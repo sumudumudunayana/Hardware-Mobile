@@ -40,7 +40,7 @@ export default function ProductListScreen({ navigation }: any) {
     }
   };
 
-  // 🔄 LOAD ON SCREEN OPEN
+  // LOAD ON SCREEN OPEN
   useEffect(() => {
     fetchProducts();
   }, []);
