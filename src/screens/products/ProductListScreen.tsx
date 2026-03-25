@@ -45,7 +45,7 @@ export default function ProductListScreen({ navigation }: any) {
     fetchProducts();
   }, []);
 
-  // ❌ DELETE HANDLER
+  // DELETE HANDLER
   const handleDelete = (item: any) => {
     Alert.alert(
       "Delete Product",
