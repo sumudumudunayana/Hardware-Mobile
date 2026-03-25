@@ -122,7 +122,7 @@ export default function ProductListScreen({ navigation }: any) {
         </ScrollView>
       )}
 
-      {/* ➕ FAB */}
+      {/* FAB */}
       <TouchableOpacity
         style={styles.fab}
         onPress={() => navigation.navigate("ProductEdit")}
