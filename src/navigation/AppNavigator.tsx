@@ -12,6 +12,7 @@ import DashboardScreen from '../screens/DashboardScreen';
 import ProductListScreen from '../screens/products/ProductListScreen';
 import ProductDetailsScreen from '../screens/products/ProductDetailsScreen';
 import ProductEditScreen from '../screens/products/ProductEditScreen';
+import ProductAddScreen from '../screens/products/ProductAddScreen';
 
 // TYPES
 export type RootStackParamList = {
@@ -33,6 +34,7 @@ function ProductStackScreen() {
       <ProductStack.Screen name="ProductList" component={ProductListScreen} />
       <ProductStack.Screen name="ProductDetails" component={ProductDetailsScreen} />
       <ProductStack.Screen name="ProductEdit" component={ProductEditScreen} />
+      <ProductStack.Screen name="ProductAdd" component={ProductAddScreen} />
     </ProductStack.Navigator>
   );
 }
