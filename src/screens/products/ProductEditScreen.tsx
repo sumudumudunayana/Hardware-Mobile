@@ -15,7 +15,6 @@ export default function ProductEditScreen({route, navigation}: any) {
   const {item} = route.params;
 
   const [formData, setFormData] = useState({...item});
-
   const handleChange = (key: string, value: string) => {
     setFormData({...formData, [key]: value});
   };
@@ -40,7 +39,6 @@ export default function ProductEditScreen({route, navigation}: any) {
         itemCostPrice: cost,
         itemSellingPrice: selling,
       });
-
       Alert.alert('Success', 'Item updated successfully');
       navigation.goBack();
     } catch (err: any) {
