@@ -62,7 +62,6 @@ export default function ProductAddScreen({navigation}: any) {
     if (!formData.itemName.trim()) {
       return Alert.alert('Error', 'Item name is required');
     }
-
     try {
       await axios.post('http://10.0.2.2:5500/api/items', {
         ...formData,
@@ -70,7 +69,6 @@ export default function ProductAddScreen({navigation}: any) {
         itemSellingPrice: selling,
         itemLabeledPrice: labeled,
       });
-
       Alert.alert('Success', 'Item added successfully');
       navigation.goBack();
     } catch (error: any) {
