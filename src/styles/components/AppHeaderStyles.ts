@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   headerContainer: {
-    height: 56, // 🔥 standard header height
+    height: 56, // standard header height
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -17,7 +17,7 @@ export default StyleSheet.create({
     shadowRadius: 6,
     shadowOffset: { width: 0, height: 2 },
 
-    // ✨ ANDROID
+    // ANDROID
     elevation: 3,
   },
 
