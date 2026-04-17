@@ -53,15 +53,12 @@ export default function ProductAddScreen({navigation}: any) {
     const cost = Number(formData.itemCostPrice);
     const selling = Number(formData.itemSellingPrice);
     const labeled = Number(formData.itemLabeledPrice);
-
     if (cost < 0 || selling < 0 || labeled < 0) {
       return Alert.alert('Error', 'Prices cannot be negative');
     }
-
     if (selling < cost) {
       return Alert.alert('Warning', 'Selling price must be higher than cost');
     }
-
     if (!formData.itemName.trim()) {
       return Alert.alert('Error', 'Item name is required');
     }
