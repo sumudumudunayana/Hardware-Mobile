@@ -13,7 +13,6 @@ import styles from '../../styles/products/ProductEditScreenStyles';
 
 export default function ProductEditScreen({route, navigation}: any) {
   const {item} = route.params;
-
   const [formData, setFormData] = useState({...item});
   const handleChange = (key: string, value: string) => {
     setFormData({...formData, [key]: value});
@@ -23,7 +22,6 @@ export default function ProductEditScreen({route, navigation}: any) {
   const handleUpdate = async () => {
     const cost = Number(formData.itemCostPrice || formData.price);
     const selling = Number(formData.itemSellingPrice || formData.price);
-
     if (!formData.name?.trim()) {
       return Alert.alert('Error', 'Item name is required');
     }
