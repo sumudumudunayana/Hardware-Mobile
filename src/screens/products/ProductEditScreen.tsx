@@ -54,7 +54,6 @@ export default function ProductEditScreen({route, navigation}: any) {
         onPress: async () => {
           try {
             await axios.delete(`http://10.0.2.2:5500/api/items/${formData.id}`);
-
             Alert.alert('Deleted', 'Item removed successfully');
             navigation.goBack();
           } catch {
