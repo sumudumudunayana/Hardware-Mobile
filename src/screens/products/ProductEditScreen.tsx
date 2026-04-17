@@ -20,7 +20,7 @@ export default function ProductEditScreen({ route, navigation }: any) {
     setFormData({ ...formData, [key]: value });
   };
 
-  //  UPDATE
+  // UPDATE
   const handleUpdate = async () => {
     const cost = Number(formData.itemCostPrice || formData.price);
     const selling = Number(formData.itemSellingPrice || formData.price);
@@ -54,7 +54,7 @@ export default function ProductEditScreen({ route, navigation }: any) {
     }
   };
 
-  // ✅ DELETE
+  // DELETE
   const handleDelete = () => {
     Alert.alert(
       "Delete Item",
