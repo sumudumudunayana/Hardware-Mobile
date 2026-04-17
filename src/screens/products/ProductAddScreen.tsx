@@ -42,7 +42,6 @@ export default function ProductAddScreen({navigation}: any) {
         Alert.alert('Error', 'Failed to load dropdown data');
       }
     };
-
     loadData();
   }, []);
 
