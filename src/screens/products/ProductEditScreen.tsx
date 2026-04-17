@@ -28,15 +28,12 @@ export default function ProductEditScreen({route, navigation}: any) {
     if (!formData.name?.trim()) {
       return Alert.alert('Error', 'Item name is required');
     }
-
     if (cost < 0 || selling < 0) {
       return Alert.alert('Error', 'Prices cannot be negative');
     }
-
     if (selling < cost) {
       return Alert.alert('Warning', 'Selling must be higher than cost');
     }
-
     try {
       await axios.put(`http://10.0.2.2:5500/api/items/${formData.id}`, {
         itemName: formData.name,
