@@ -23,7 +23,6 @@ export default function ProductAddScreen({navigation}: any) {
     itemCompany: '',
     itemDistributor: '',
   });
-
   const [categories, setCategories] = useState<any[]>([]);
   const [companies, setCompanies] = useState<any[]>([]);
   const [distributors, setDistributors] = useState<any[]>([]);
@@ -36,7 +35,6 @@ export default function ProductAddScreen({navigation}: any) {
           axios.get('http://10.0.2.2:5500/api/companies'),
           axios.get('http://10.0.2.2:5500/api/distributors'),
         ]);
-
         setCategories(cat.data);
         setCompanies(com.data);
         setDistributors(dist.data);
