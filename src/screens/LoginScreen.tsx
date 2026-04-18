@@ -1,34 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from "react-native";
+
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 import styles from "../styles/loginStyles";
 
 export default function LoginScreen({ navigation }: any) {
+  const { login } = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = async () => {
+    // Basic validation
+    if (!email || !password) {
+      Alert.alert(
+        "Validation Error",
+        "Please enter email and password"
+      );
+      return;
+    }
+
     try {
+      setLoading(true);
+
       const res = await axios.post(
         "http://10.0.2.2:5500/api/auth/login",
-        { email, password }
+        {
+          email,
+          password,
+        }
       );
 
-      // store token
-      console.log("TOKEN:", res.data.token);
-      // navigate to main app
-      navigation.navigate("Main");
+      const token = res.data.token;
+
+      if (!token) {
+        Alert.alert(
+          "Login Failed",
+          "Token not received from server"
+        );
+        return;
+      }
+
+      // Save token using AuthContext
+      await login(token);
+
+      // No need for navigation.navigate("Main")
+      // AppNavigator handles redirect automatically
+
     } catch (error: any) {
       Alert.alert(
         "Login Failed",
-        error.response?.data?.message || "Something went wrong"
+        error.response?.data?.message ||
+          "Something went wrong"
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,10 +75,14 @@ export default function LoginScreen({ navigation }: any) {
 
       <View style={styles.card}>
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>SECURE ACCESS</Text>
+          <Text style={styles.badgeText}>
+            SECURE ACCESS
+          </Text>
         </View>
 
-        <Text style={styles.title}>Welcome Back</Text>
+        <Text style={styles.title}>
+          Welcome Back
+        </Text>
 
         <Text style={styles.subtitle}>
           Sign in to access your hardware system.
@@ -53,6 +93,8 @@ export default function LoginScreen({ navigation }: any) {
           style={styles.input}
           value={email}
           onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
         />
 
         <TextInput
@@ -63,15 +105,27 @@ export default function LoginScreen({ navigation }: any) {
           onChangeText={setPassword}
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleLogin}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#ffffff" />
+          ) : (
+            <Text style={styles.buttonText}>
+              Login
+            </Text>
+          )}
         </TouchableOpacity>
 
         <Text style={styles.register}>
           Don’t have an account?{" "}
           <Text
             style={styles.registerLink}
-            onPress={() => navigation.navigate("Register")}
+            onPress={() =>
+              navigation.navigate("Register")
+            }
           >
             Register
           </Text>
