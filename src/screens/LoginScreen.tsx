@@ -26,15 +26,12 @@ export default function LoginScreen({navigation}: any) {
       Alert.alert('Validation Error', 'Please enter email and password');
       return;
     }
-
     try {
       setLoading(true);
-
       const res = await axios.post('http://10.0.2.2:5500/api/auth/login', {
         email,
         password,
       });
-
       const token = res.data.token;
 
       if (!token) {
