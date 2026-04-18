@@ -33,15 +33,12 @@ export default function LoginScreen({navigation}: any) {
         password,
       });
       const token = res.data.token;
-
       if (!token) {
         Alert.alert('Login Failed', 'Token not received from server');
         return;
       }
-
       // Save token using AuthContext
       await login(token);
-
       // No need for navigation.navigate("Main")
       // AppNavigator handles redirect automatically
     } catch (error: any) {
