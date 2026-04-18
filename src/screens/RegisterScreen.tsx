@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -6,46 +6,38 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
-} from "react-native";
+} from 'react-native';
 
-import api from "../api/api";
-import styles from "../styles/registerScreenStyles";
+import api from '../api/api';
+import styles from '../styles/registerScreenStyles';
 
-export default function RegisterScreen({ navigation }: any) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function RegisterScreen({navigation}: any) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const handleRegister = async () => {
     // Validation
     if (!name || !email || !password) {
-      Alert.alert(
-        "Validation Error",
-        "Please fill all fields"
-      );
+      Alert.alert('Validation Error', 'Please fill all fields');
       return;
     }
-
     try {
       setLoading(true);
 
-      await api.post("/auth/register", {
+      await api.post('/auth/register', {
         name,
         email,
         password,
       });
 
-      Alert.alert(
-        "Success",
-        "Registration successful"
-      );
+      Alert.alert('Success', 'Registration successful');
 
-      navigation.navigate("Login");
+      navigation.navigate('Login');
     } catch (error: any) {
       Alert.alert(
-        "Registration Failed",
-        error.response?.data?.message ||
-          "Registration failed"
+        'Registration Failed',
+        error.response?.data?.message || 'Registration failed',
       );
     } finally {
       setLoading(false);
@@ -59,14 +51,10 @@ export default function RegisterScreen({ navigation }: any) {
 
       <View style={styles.card}>
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>
-            NEW ACCOUNT
-          </Text>
+          <Text style={styles.badgeText}>NEW ACCOUNT</Text>
         </View>
 
-        <Text style={styles.title}>
-          Create Account
-        </Text>
+        <Text style={styles.title}>Create Account</Text>
 
         <Text style={styles.subtitle}>
           Create your account to access the system
@@ -99,25 +87,19 @@ export default function RegisterScreen({ navigation }: any) {
         <TouchableOpacity
           style={styles.button}
           onPress={handleRegister}
-          disabled={loading}
-        >
+          disabled={loading}>
           {loading ? (
             <ActivityIndicator color="#ffffff" />
           ) : (
-            <Text style={styles.buttonText}>
-              Register
-            </Text>
+            <Text style={styles.buttonText}>Register</Text>
           )}
         </TouchableOpacity>
 
         <Text style={styles.loginText}>
-          Already have an account?{" "}
+          Already have an account?{' '}
           <Text
             style={styles.loginLink}
-            onPress={() =>
-              navigation.navigate("Login")
-            }
-          >
+            onPress={() => navigation.navigate('Login')}>
             Login
           </Text>
         </Text>
