@@ -15,9 +15,7 @@ export default function RegisterScreen({ navigation }: any) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [loading, setLoading] = useState(false);
-
   const handleRegister = async () => {
     // Validation
     if (!name || !email || !password) {
