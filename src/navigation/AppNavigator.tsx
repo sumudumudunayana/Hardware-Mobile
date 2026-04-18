@@ -26,7 +26,7 @@ const Tab = createBottomTabNavigator();
 const ProductStack = createNativeStackNavigator();
 
 /**
- * 🧩 PRODUCT STACK (inside tab)
+ *  PRODUCT STACK (inside tab)
  */
 function ProductStackScreen() {
   return (
