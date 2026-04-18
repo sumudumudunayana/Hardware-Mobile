@@ -14,12 +14,9 @@ import styles from '../styles/loginStyles';
 
 export default function LoginScreen({navigation}: any) {
   const {login} = useContext(AuthContext);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [loading, setLoading] = useState(false);
-
   const handleLogin = async () => {
     // Basic validation
     if (!email || !password) {
