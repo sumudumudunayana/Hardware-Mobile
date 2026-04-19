@@ -28,7 +28,7 @@ export default function DashboardScreen({navigation}: any) {
       <View style={styles.dashboardGlowPrimary} />
       <View style={styles.dashboardGlowSecondary} />
 
-      {/* 📜 CONTENT */}
+      {/* CONTENT */}
       <ScrollView
         contentContainerStyle={{padding: 16, paddingBottom: 40}}
         showsVerticalScrollIndicator={false}>
