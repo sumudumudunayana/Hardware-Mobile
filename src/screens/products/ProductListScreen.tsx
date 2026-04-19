@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/products/ProductListScreenStyles';
@@ -17,7 +16,6 @@ export default function ProductListScreen({navigation}: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  
    //FETCH PRODUCTS
    //JWT token is automatically attached by api.ts
   const fetchProducts = async () => {
