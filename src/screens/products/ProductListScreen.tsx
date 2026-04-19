@@ -35,11 +35,9 @@ export default function ProductListScreen({navigation}: any) {
       // Token expired / unauthorized
       if (error.response?.status === 401) {
         Alert.alert('Session Expired', 'Please login again');
-
         navigation.replace('Login');
         return;
       }
-
       Alert.alert(
         'Error',
         error.response?.data?.message || 'Failed to fetch products',
