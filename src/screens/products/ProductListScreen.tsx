@@ -17,10 +17,9 @@ export default function ProductListScreen({navigation}: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  /**
-   * FETCH PRODUCTS
-   * JWT token is automatically attached by api.ts
-   */
+  
+   //FETCH PRODUCTS
+   //JWT token is automatically attached by api.ts
   const fetchProducts = async () => {
     try {
       setLoading(true);
