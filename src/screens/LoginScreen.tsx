@@ -39,11 +39,17 @@ export default function LoginScreen({navigation}: any) {
       // No need for navigation.navigate("Main")
       // AppNavigator handles redirect automatically
     } catch (error: any) {
-      Alert.alert(
-        'Login Failed',
-        error.response?.data?.message || 'Something went wrong',
-      );
-    } finally {
+  console.log("LOGIN ERROR:", error);
+  console.log("RESPONSE:", error.response?.data);
+  console.log("MESSAGE:", error.message);
+
+  Alert.alert(
+    "Login Failed",
+    error.response?.data?.message ||
+      error.message ||
+      "Something went wrong"
+  );
+} finally {
       setLoading(false);
     }
   };
