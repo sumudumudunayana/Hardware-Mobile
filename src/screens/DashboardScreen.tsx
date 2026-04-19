@@ -1,8 +1,31 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import React, { useContext } from 'react';
+import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import { AuthContext } from '../context/AuthContext';
 import styles from '../styles/dashboardScreenStyles';
 
 export default function DashboardScreen({navigation}: any) {
+  const { logout } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: async () => {
+            await logout();
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: '#ffffffcd'}}>
       {/* 🌟 GLOW BACKGROUND */}
@@ -13,10 +36,11 @@ export default function DashboardScreen({navigation}: any) {
       <ScrollView
         contentContainerStyle={{padding: 16, paddingBottom: 40}}
         showsVerticalScrollIndicator={false}>
-        {/*  LOGOUT */}
+        
+        {/* LOGOUT */}
         <TouchableOpacity
           style={styles.dashboardLogoutBtn}
-          onPress={() => navigation.navigate('Login')}>
+          onPress={handleLogout}>
           <Text style={styles.dashboardLogoutText}>Logout</Text>
         </TouchableOpacity>
 
