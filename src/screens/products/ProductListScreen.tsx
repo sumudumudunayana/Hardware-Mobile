@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,14 +6,14 @@ import {
   ScrollView,
   Alert,
   ActivityIndicator,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-import api from "../../api/api";
-import AppHeader from "../../components/AppHeader";
-import styles from "../../styles/products/ProductListScreenStyles";
+import api from '../../api/api';
+import AppHeader from '../../components/AppHeader';
+import styles from '../../styles/products/ProductListScreenStyles';
 
-export default function ProductListScreen({ navigation }: any) {
+export default function ProductListScreen({navigation}: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +25,7 @@ export default function ProductListScreen({ navigation }: any) {
     try {
       setLoading(true);
 
-      const res = await api.get("/items");
+      const res = await api.get('/items');
 
       const formatted = res.data.map((item: any) => ({
         id: item._id,
@@ -40,19 +40,15 @@ export default function ProductListScreen({ navigation }: any) {
     } catch (error: any) {
       // Token expired / unauthorized
       if (error.response?.status === 401) {
-        Alert.alert(
-          "Session Expired",
-          "Please login again"
-        );
+        Alert.alert('Session Expired', 'Please login again');
 
-        navigation.replace("Login");
+        navigation.replace('Login');
         return;
       }
 
       Alert.alert(
-        "Error",
-        error.response?.data?.message ||
-          "Failed to fetch products"
+        'Error',
+        error.response?.data?.message || 'Failed to fetch products',
       );
     } finally {
       setLoading(false);
@@ -71,37 +67,33 @@ export default function ProductListScreen({ navigation }: any) {
    */
   const handleDelete = (item: any) => {
     Alert.alert(
-      "Delete Product",
+      'Delete Product',
       `Are you sure you want to delete "${item.name}"?`,
       [
         {
-          text: "Cancel",
-          style: "cancel",
+          text: 'Cancel',
+          style: 'cancel',
         },
         {
-          text: "Delete",
-          style: "destructive",
+          text: 'Delete',
+          style: 'destructive',
           onPress: async () => {
             try {
               await api.delete(`/items/${item.id}`);
 
-              Alert.alert(
-                "Success",
-                "Product deleted successfully"
-              );
+              Alert.alert('Success', 'Product deleted successfully');
 
               // Refresh product list
               fetchProducts();
             } catch (error: any) {
               Alert.alert(
-                "Delete Failed",
-                error.response?.data?.message ||
-                  "Failed to delete product"
+                'Delete Failed',
+                error.response?.data?.message || 'Failed to delete product',
               );
             }
           },
         },
-      ]
+      ],
     );
   };
 
@@ -109,42 +101,26 @@ export default function ProductListScreen({ navigation }: any) {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         {/* HEADER */}
-        <AppHeader
-          title="Products"
-          onBack={() => navigation.goBack()}
-        />
+        <AppHeader title="Products" onBack={() => navigation.goBack()} />
 
         {/* LOADING */}
         {loading ? (
-          <ActivityIndicator
-            size="large"
-            color="#f59e0b"
-          />
+          <ActivityIndicator size="large" color="#f59e0b" />
         ) : (
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.scrollContent}
-          >
-            {products.map((item) => (
-              <View
-                key={item.id}
-                style={styles.card}
-              >
-                <Text style={styles.productName}>
-                  {item.name}
-                </Text>
+            contentContainerStyle={styles.scrollContent}>
+            {products.map(item => (
+              <View key={item.id} style={styles.card}>
+                <Text style={styles.productName}>{item.name}</Text>
 
-                <Text style={styles.productMeta}>
-                  Rs. {item.price}
-                </Text>
+                <Text style={styles.productMeta}>Rs. {item.price}</Text>
 
                 <Text style={styles.productMeta}>
                   Category: {item.category}
                 </Text>
 
-                <Text style={styles.productMeta}>
-                  Company: {item.company}
-                </Text>
+                <Text style={styles.productMeta}>Company: {item.company}</Text>
 
                 <Text style={styles.productMeta}>
                   Supplier: {item.supplier}
@@ -152,51 +128,23 @@ export default function ProductListScreen({ navigation }: any) {
 
                 <View style={styles.buttonRow}>
                   <TouchableOpacity
-                    style={[
-                      styles.btn,
-                      styles.viewBtn,
-                    ]}
+                    style={[styles.btn, styles.viewBtn]}
                     onPress={() =>
-                      navigation.navigate(
-                        "ProductDetails",
-                        { item }
-                      )
-                    }
-                  >
-                    <Text style={styles.btnText}>
-                      View
-                    </Text>
+                      navigation.navigate('ProductDetails', {item})
+                    }>
+                    <Text style={styles.btnText}>View</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    style={[
-                      styles.btn,
-                      styles.editBtn,
-                    ]}
-                    onPress={() =>
-                      navigation.navigate(
-                        "ProductEdit",
-                        { item }
-                      )
-                    }
-                  >
-                    <Text style={styles.btnText}>
-                      Edit
-                    </Text>
+                    style={[styles.btn, styles.editBtn]}
+                    onPress={() => navigation.navigate('ProductEdit', {item})}>
+                    <Text style={styles.btnText}>Edit</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    style={[
-                      styles.btn,
-                      styles.deleteBtn,
-                    ]}
-                    onPress={() =>
-                      handleDelete(item)
-                    }
-                  >
-                    <Text style={styles.btnText}>
-                      Delete
-                    </Text>
+                    style={[styles.btn, styles.deleteBtn]}
+                    onPress={() => handleDelete(item)}>
+                    <Text style={styles.btnText}>Delete</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -207,10 +155,7 @@ export default function ProductListScreen({ navigation }: any) {
         {/* FAB */}
         <TouchableOpacity
           style={styles.fab}
-          onPress={() =>
-            navigation.navigate("ProductAdd")
-          }
-        >
+          onPress={() => navigation.navigate('ProductAdd')}>
           <Text style={styles.fabText}>+</Text>
         </TouchableOpacity>
       </View>
