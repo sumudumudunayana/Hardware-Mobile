@@ -21,9 +21,7 @@ export default function ProductListScreen({navigation}: any) {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-
       const res = await api.get('/items');
-
       const formatted = res.data.map((item: any) => ({
         id: item._id,
         name: item.itemName,
@@ -32,7 +30,6 @@ export default function ProductListScreen({navigation}: any) {
         company: item.itemCompany,
         supplier: item.itemDistributor,
       }));
-
       setProducts(formatted);
     } catch (error: any) {
       // Token expired / unauthorized
