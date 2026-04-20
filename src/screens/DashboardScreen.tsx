@@ -83,7 +83,9 @@ export default function DashboardScreen({navigation}: any) {
           </TouchableOpacity>
 
           {/* CUSTOMERS */}
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity
+            style={styles.dashboardCard}
+            onPress={() => navigation.navigate('Customers')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>👥</Text>
               <Text style={styles.dashboardStatus}>Customers</Text>
@@ -144,6 +146,40 @@ export default function DashboardScreen({navigation}: any) {
             <Text style={styles.dashboardCardDesc}>
               Manage discounts and campaigns
             </Text>
+            <Text style={styles.dashboardLink}>Open →</Text>
+          </TouchableOpacity>
+
+          {/* CATEGORY MANAGEMENT */}
+          <TouchableOpacity style={styles.dashboardCard}>
+            <View style={styles.dashboardCardTop}>
+              <Text style={styles.dashboardIcon}>🗂️</Text>
+              <Text style={styles.dashboardStatus}>Categories</Text>
+            </View>
+
+            <Text style={styles.dashboardCardTitle}>Category Management</Text>
+
+            <Text style={styles.dashboardCardDesc}>
+              Manage product categories and classifications
+            </Text>
+
+            <Text style={styles.dashboardLink}>Open →</Text>
+          </TouchableOpacity>
+
+          {/* COMPANY MANAGEMENT */}
+          <TouchableOpacity 
+          style={styles.dashboardCard}
+          onPress={() => navigation.navigate('Companies')}>
+            <View style={styles.dashboardCardTop}>
+              <Text style={styles.dashboardIcon}>🏢</Text>
+              <Text style={styles.dashboardStatus}>Companies</Text>
+            </View>
+
+            <Text style={styles.dashboardCardTitle}>Company Management</Text>
+
+            <Text style={styles.dashboardCardDesc}>
+              Manage company records and business details
+            </Text>
+
             <Text style={styles.dashboardLink}>Open →</Text>
           </TouchableOpacity>
         </View>
