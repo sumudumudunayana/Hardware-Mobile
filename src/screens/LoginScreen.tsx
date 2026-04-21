@@ -7,8 +7,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-
-import axios from 'axios';
+import api from '../api/api';
 import {AuthContext} from '../context/AuthContext';
 import styles from '../styles/loginStyles';
 
@@ -25,7 +24,7 @@ export default function LoginScreen({navigation}: any) {
     }
     try {
       setLoading(true);
-      const res = await axios.post('http://10.0.2.2:5500/api/auth/login', {
+      const res = await api.post('/auth/login', {
         email,
         password,
       });
@@ -39,17 +38,17 @@ export default function LoginScreen({navigation}: any) {
       // No need for navigation.navigate("Main")
       // AppNavigator handles redirect automatically
     } catch (error: any) {
-  console.log("LOGIN ERROR:", error);
-  console.log("RESPONSE:", error.response?.data);
-  console.log("MESSAGE:", error.message);
+      console.log('LOGIN ERROR:', error);
+      console.log('RESPONSE:', error.response?.data);
+      console.log('MESSAGE:', error.message);
 
-  Alert.alert(
-    "Login Failed",
-    error.response?.data?.message ||
-      error.message ||
-      "Something went wrong"
-  );
-} finally {
+      Alert.alert(
+        'Login Failed',
+        error.response?.data?.message ||
+          error.message ||
+          'Something went wrong',
+      );
+    } finally {
       setLoading(false);
     }
   };
@@ -72,6 +71,7 @@ export default function LoginScreen({navigation}: any) {
 
         <TextInput
           placeholder="Enter your email"
+          placeholderTextColor="#64748b"
           style={styles.input}
           value={email}
           onChangeText={setEmail}
@@ -81,6 +81,7 @@ export default function LoginScreen({navigation}: any) {
 
         <TextInput
           placeholder="Enter your password"
+          placeholderTextColor="#64748b"
           secureTextEntry
           style={styles.input}
           value={password}
