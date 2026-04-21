@@ -22,6 +22,8 @@ export default function DashboardScreen({navigation}: any) {
     ]);
   };
 
+  
+
   return (
     <View style={{flex: 1, backgroundColor: '#ffffffcd'}}>
       {/* GLOW BACKGROUND */}
@@ -55,7 +57,7 @@ export default function DashboardScreen({navigation}: any) {
           <View style={styles.dashboardStatsRow}>
             <View style={styles.dashboardStatCard}>
               <Text style={styles.dashboardStatTitle}>Modules</Text>
-              <Text style={styles.dashboardStatValue}>06</Text>
+              <Text style={styles.dashboardStatValue}>08</Text>
             </View>
 
             <View style={styles.dashboardStatCard}>
@@ -98,7 +100,9 @@ export default function DashboardScreen({navigation}: any) {
           </TouchableOpacity>
 
           {/* SALES */}
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity 
+          style={styles.dashboardCard}
+          onPress={() => navigation.navigate('Sales')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🧾</Text>
               <Text style={styles.dashboardStatus}>Sales</Text>
@@ -111,7 +115,9 @@ export default function DashboardScreen({navigation}: any) {
           </TouchableOpacity>
 
           {/* SUPPLIERS */}
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity 
+          style={styles.dashboardCard}
+          onPress={() => navigation.navigate('Distributors')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🚚</Text>
               <Text style={styles.dashboardStatus}>Suppliers</Text>
@@ -124,7 +130,9 @@ export default function DashboardScreen({navigation}: any) {
           </TouchableOpacity>
 
           {/* STOCK */}
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity
+           style={styles.dashboardCard}
+           onPress={() => navigation.navigate('Stocks')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>📊</Text>
               <Text style={styles.dashboardStatus}>Stock</Text>
@@ -137,7 +145,9 @@ export default function DashboardScreen({navigation}: any) {
           </TouchableOpacity>
 
           {/* PROMOTIONS */}
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity 
+          style={styles.dashboardCard}
+          onPress={() => navigation.navigate('Promotions')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🏷️</Text>
               <Text style={styles.dashboardStatus}>Promotions</Text>
@@ -150,7 +160,9 @@ export default function DashboardScreen({navigation}: any) {
           </TouchableOpacity>
 
           {/* CATEGORY MANAGEMENT */}
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity 
+          style={styles.dashboardCard}
+          onPress={() => navigation.navigate('Categories')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🗂️</Text>
               <Text style={styles.dashboardStatus}>Categories</Text>
