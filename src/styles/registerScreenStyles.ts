@@ -77,6 +77,7 @@ export default StyleSheet.create({
     marginBottom: 15,
     borderWidth: 1,
     borderColor: "#e2e8f0",
+    color: "#111827"
   },
 
   button: {
