@@ -73,20 +73,6 @@ export default function CustomerDetailsScreen({
             </Text>
           </View>
 
-          {/* EDIT BUTTON */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              navigation.navigate(
-                "CustomerEdit",
-                { customer }
-              )
-            }
-          >
-            <Text style={styles.buttonText}>
-              Edit Customer
-            </Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
