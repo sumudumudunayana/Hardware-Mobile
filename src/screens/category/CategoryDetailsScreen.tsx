@@ -63,20 +63,6 @@ export default function CategoryDetailsScreen({
             </Text>
           </View>
 
-          {/* EDIT BUTTON */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              navigation.navigate(
-                "CategoryEdit",
-                { category }
-              )
-            }
-          >
-            <Text style={styles.buttonText}>
-              Edit Category
-            </Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
