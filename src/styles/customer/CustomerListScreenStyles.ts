@@ -1,136 +1,187 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  // SAFE AREA
   safeArea: {
     flex: 1,
-    backgroundColor: "#f5f7fb",
+    backgroundColor: '#f6f8fc',
   },
 
-  // MAIN CONTAINER
   container: {
     flex: 1,
   },
 
-  // SEARCH INPUT
-  searchInput: {
-    backgroundColor: "#ffffff",
-    marginHorizontal: 16,
-    marginTop: 10,
-    marginBottom: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    borderRadius: 14,
-
-    fontSize: 14,
-    color: "#0f172a",
-
-    borderWidth: 1,
-    borderColor: "#eef2f7",
-
-    shadowColor: "#000",
-    shadowOpacity: 0.04,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 3 },
-    elevation: 2,
-  },
-
-  // SCROLL CONTENT
   scrollContent: {
     paddingHorizontal: 16,
     paddingBottom: 40,
   },
 
-  // CARD
-  card: {
-    backgroundColor: "#ffffff",
-    padding: 16,
-    borderRadius: 16,
+  /* HEADER SECTION */
+  headingSection: {
     marginTop: 10,
-    marginBottom: 15,
+    marginBottom: 18,
+  },
 
-    shadowColor: "#000",
+  heading: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#0f172a',
+  },
+
+  subHeading: {
+    fontSize: 14,
+    color: '#64748b',
+    marginTop: 6,
+  },
+
+  /* SUMMARY CARDS */
+  summaryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 18,
+  },
+
+  summaryCard: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+    padding: 18,
+    borderRadius: 18,
+    marginHorizontal: 4,
+
+    shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
+    elevation: 4,
+  },
+
+  summaryLabel: {
+    fontSize: 13,
+    color: '#64748b',
+    marginBottom: 8,
+  },
+
+  summaryValue: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#f59e0b',
+  },
+
+  /* QUICK ACTION */
+  quickActionCard: {
+    backgroundColor: '#f59e0b',
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 20,
+  },
+
+  quickActionTitle: {
+    fontSize: 13,
+    color: '#fff',
+    opacity: 0.9,
+  },
+
+  quickActionText: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#fff',
+    marginTop: 6,
+  },
+
+  quickActionSub: {
+    fontSize: 13,
+    color: '#fff',
+    marginTop: 6,
+    opacity: 0.9,
+  },
+
+  /* SEARCH */
+  searchInput: {
+    backgroundColor: '#ffffff',
+    marginBottom: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    borderRadius: 14,
+
+    fontSize: 14,
+    color: '#0f172a',
+
+    borderWidth: 1,
+    borderColor: '#eef2f7',
+
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    shadowOffset: {width: 0, height: 3},
+    elevation: 2,
+  },
+
+  /* SECTION TITLE */
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#0f172a',
+    marginBottom: 10,
+  },
+
+  /* CUSTOMER CARD */
+  card: {
+    backgroundColor: '#ffffff',
+    padding: 16,
+    borderRadius: 16,
+    marginBottom: 15,
+
+    shadowColor: '#000',
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    shadowOffset: {width: 0, height: 4},
     elevation: 4,
 
     borderWidth: 1,
-    borderColor: "#eef2f7",
+    borderColor: '#eef2f7',
   },
 
-  // CUSTOMER NAME
   customerName: {
     fontSize: 16,
-    fontWeight: "700",
-    color: "#0f172a",
+    fontWeight: '700',
+    color: '#0f172a',
   },
 
-  // CUSTOMER META
   customerMeta: {
-    fontSize: 12,
-    color: "#64748b",
-    marginTop: 4,
+    fontSize: 13,
+    color: '#64748b',
+    marginTop: 5,
   },
 
-  // BUTTON ROW
+  /* BUTTONS */
   buttonRow: {
-    flexDirection: "row",
-    marginTop: 12,
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    marginTop: 14,
+    justifyContent: 'space-between',
   },
 
-  // BASE BUTTON
   btn: {
     flex: 1,
-    paddingVertical: 8,
-    borderRadius: 10,
-    alignItems: "center",
+    paddingVertical: 10,
+    borderRadius: 12,
+    alignItems: 'center',
     marginHorizontal: 4,
   },
 
-  // BUTTON VARIANTS
   viewBtn: {
-    backgroundColor: "#e0f2fe",
+    backgroundColor: '#e0f2fe',
   },
 
   editBtn: {
-    backgroundColor: "#fef3c7",
+    backgroundColor: '#fef3c7',
   },
 
   deleteBtn: {
-    backgroundColor: "#fee2e2",
+    backgroundColor: '#fee2e2',
   },
 
-  // BUTTON TEXT
   btnText: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: "#0f172a",
-  },
-
-  // FLOATING BUTTON (FAB)
-  fab: {
-    position: "absolute",
-    bottom: 30,
-    right: 20,
-    backgroundColor: "#f59e0b",
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
-    elevation: 6,
-  },
-
-  fabText: {
-    fontSize: 28,
-    color: "#ffffff",
-    fontWeight: "bold",
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#0f172a',
   },
 });
