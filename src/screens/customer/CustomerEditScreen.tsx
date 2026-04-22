@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,17 +7,17 @@ import {
   ScrollView,
   Alert,
   ActivityIndicator,
-} from "react-native";
+} from 'react-native';
 
-import api from "../../api/api";
-import AppHeader from "../../components/AppHeader";
-import styles from "../../styles/customer/CustomerEditScreenStyles";
+import api from '../../api/api';
+import AppHeader from '../../components/AppHeader';
+import styles from '../../styles/customer/CustomerEditScreenStyles';
 
 export default function CustomerEditScreen({
   route,
   navigation,
 }: any) {
-  const { customer } = route.params;
+  const {customer} = route.params;
 
   const [formData, setFormData] = useState({
     ...customer,
@@ -30,7 +30,7 @@ export default function CustomerEditScreen({
    */
   const handleChange = (
     key: string,
-    value: string
+    value: string,
   ) => {
     setFormData({
       ...formData,
@@ -44,8 +44,8 @@ export default function CustomerEditScreen({
   const handleUpdate = async () => {
     if (!formData.customerName?.trim()) {
       Alert.alert(
-        "Validation Error",
-        "Customer name is required"
+        'Validation Error',
+        'Customer name is required',
       );
       return;
     }
@@ -54,40 +54,40 @@ export default function CustomerEditScreen({
       !formData.customerContactNumber?.trim()
     ) {
       Alert.alert(
-        "Validation Error",
-        "Contact number is required"
+        'Validation Error',
+        'Contact number is required',
       );
       return;
     }
 
     if (!formData.customerEmail?.trim()) {
       Alert.alert(
-        "Validation Error",
-        "Email is required"
+        'Validation Error',
+        'Email is required',
       );
       return;
     }
 
     if (
       !/^\d{10}$/.test(
-        formData.customerContactNumber
+        formData.customerContactNumber,
       )
     ) {
       Alert.alert(
-        "Validation Error",
-        "Contact number must be exactly 10 digits"
+        'Validation Error',
+        'Contact number must be exactly 10 digits',
       );
       return;
     }
 
     if (
       !/^\S+@\S+\.\S+$/.test(
-        formData.customerEmail
+        formData.customerEmail,
       )
     ) {
       Alert.alert(
-        "Validation Error",
-        "Invalid email address"
+        'Validation Error',
+        'Invalid email address',
       );
       return;
     }
@@ -104,30 +104,30 @@ export default function CustomerEditScreen({
             formData.customerContactNumber,
           customerEmail:
             formData.customerEmail,
-        }
+        },
       );
 
       Alert.alert(
-        "Success",
-        "Customer updated successfully"
+        'Success',
+        'Customer updated successfully',
       );
 
       navigation.goBack();
     } catch (error: any) {
       if (error.response?.status === 401) {
         Alert.alert(
-          "Session Expired",
-          "Please login again"
+          'Session Expired',
+          'Please login again',
         );
 
-        navigation.replace("Login");
+        navigation.replace('Login');
         return;
       }
 
       Alert.alert(
-        "Update Failed",
+        'Update Failed',
         error.response?.data?.message ||
-          "Failed to update customer"
+          'Failed to update customer',
       );
     } finally {
       setLoading(false);
@@ -139,42 +139,43 @@ export default function CustomerEditScreen({
    */
   const handleDelete = () => {
     Alert.alert(
-      "Delete Customer",
-      "This action cannot be undone",
+      'Delete Customer',
+      'This action cannot be undone',
       [
         {
-          text: "Cancel",
-          style: "cancel",
+          text: 'Cancel',
+          style: 'cancel',
         },
         {
-          text: "Delete",
-          style: "destructive",
+          text: 'Delete',
+          style: 'destructive',
           onPress: async () => {
             try {
               setLoading(true);
 
               await api.delete(
-                `/customers/${formData._id}`
+                `/customers/${formData._id}`,
               );
 
               Alert.alert(
-                "Deleted",
-                "Customer removed successfully"
+                'Deleted',
+                'Customer removed successfully',
               );
 
               navigation.goBack();
             } catch (error: any) {
               Alert.alert(
-                "Delete Failed",
-                error.response?.data?.message ||
-                  "Failed to delete customer"
+                'Delete Failed',
+                error.response?.data
+                  ?.message ||
+                  'Failed to delete customer',
               );
             } finally {
               setLoading(false);
             }
           },
         },
-      ]
+      ],
     );
   };
 
@@ -188,27 +189,32 @@ export default function CustomerEditScreen({
       <ScrollView
         contentContainerStyle={
           styles.scrollContent
-        }
-      >
+        }>
         <View style={styles.card}>
           <Text style={styles.title}>
             Edit Customer
           </Text>
 
           {/* NAME */}
+          <Text style={styles.label}>
+            Customer Name
+          </Text>
           <TextInput
             style={styles.input}
             value={formData.customerName}
             placeholder="Customer Name"
-            onChangeText={(text) =>
+            onChangeText={text =>
               handleChange(
-                "customerName",
-                text
+                'customerName',
+                text,
               )
             }
           />
 
           {/* CONTACT */}
+          <Text style={styles.label}>
+            Contact Number
+          </Text>
           <TextInput
             style={styles.input}
             value={
@@ -216,25 +222,28 @@ export default function CustomerEditScreen({
             }
             keyboardType="numeric"
             placeholder="Contact Number"
-            onChangeText={(text) =>
+            onChangeText={text =>
               handleChange(
-                "customerContactNumber",
-                text
+                'customerContactNumber',
+                text,
               )
             }
           />
 
           {/* EMAIL */}
+          <Text style={styles.label}>
+            Email Address
+          </Text>
           <TextInput
             style={styles.input}
             value={formData.customerEmail}
             autoCapitalize="none"
             keyboardType="email-address"
             placeholder="Email Address"
-            onChangeText={(text) =>
+            onChangeText={text =>
               handleChange(
-                "customerEmail",
-                text
+                'customerEmail',
+                text,
               )
             }
           />
@@ -244,16 +253,14 @@ export default function CustomerEditScreen({
             <TouchableOpacity
               style={styles.updateBtn}
               onPress={handleUpdate}
-              disabled={loading}
-            >
+              disabled={loading}>
               {loading ? (
-                <ActivityIndicator
-                  color="#ffffff"
-                />
+                <ActivityIndicator color="#ffffff" />
               ) : (
                 <Text
-                  style={styles.updateText}
-                >
+                  style={
+                    styles.updateText
+                  }>
                   Save Changes
                 </Text>
               )}
@@ -262,9 +269,9 @@ export default function CustomerEditScreen({
             <TouchableOpacity
               style={styles.deleteBtn}
               onPress={handleDelete}
-              disabled={loading}
-            >
-              <Text style={styles.deleteText}>
+              disabled={loading}>
+              <Text
+                style={styles.deleteText}>
                 Delete
               </Text>
             </TouchableOpacity>
