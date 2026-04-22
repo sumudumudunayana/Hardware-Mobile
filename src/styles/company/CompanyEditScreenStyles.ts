@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f7fb",
+    backgroundColor: '#f5f7fb',
   },
 
   scrollContent: {
@@ -12,12 +12,12 @@ export default StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     padding: 20,
     borderRadius: 16,
     marginTop: 10,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
     shadowOffset: {
@@ -27,66 +27,74 @@ export default StyleSheet.create({
     elevation: 4,
 
     borderWidth: 1,
-    borderColor: "#eef2f7",
+    borderColor: '#eef2f7',
   },
 
   title: {
     fontSize: 18,
-    fontWeight: "700",
-    color: "#0f172a",
+    fontWeight: '700',
+    color: '#0f172a',
     marginBottom: 18,
   },
 
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#334155',
+    marginBottom: 6,
+    marginTop: 12,
+  },
+
   input: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: "#e2e8f0",
+    borderColor: '#e2e8f0',
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 14,
     fontSize: 14,
-    color: "#0f172a",
+    color: '#64748b',
     marginBottom: 14,
   },
 
   textArea: {
     minHeight: 100,
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
   },
 
   buttonRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 10,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
 
   updateBtn: {
     flex: 1,
-    backgroundColor: "#f59e0b",
+    backgroundColor: '#f59e0b',
     paddingVertical: 15,
     borderRadius: 14,
-    alignItems: "center",
+    alignItems: 'center',
     marginRight: 8,
   },
 
   deleteBtn: {
     flex: 1,
-    backgroundColor: "#fee2e2",
+    backgroundColor: '#fee2e2',
     paddingVertical: 15,
     borderRadius: 14,
-    alignItems: "center",
+    alignItems: 'center',
     marginLeft: 8,
   },
 
   updateText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 
   deleteText: {
-    color: "#b91c1c",
+    color: '#b91c1c',
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 });
