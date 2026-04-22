@@ -152,7 +152,7 @@ export default StyleSheet.create({
 
   dashboardLogoutBtn: {
     position: "absolute",
-    top: 50,
+    top: 30,
     right: 20,
     backgroundColor: "#ef4444",
     paddingVertical: 8,
