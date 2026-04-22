@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,17 +7,17 @@ import {
   ScrollView,
   Alert,
   ActivityIndicator,
-} from "react-native";
+} from 'react-native';
 
-import api from "../../api/api";
-import AppHeader from "../../components/AppHeader";
-import styles from "../../styles/category/CategoryEditScreenStyles";
+import api from '../../api/api';
+import AppHeader from '../../components/AppHeader';
+import styles from '../../styles/category/CategoryEditScreenStyles';
 
 export default function CategoryEditScreen({
   route,
   navigation,
 }: any) {
-  const { category } = route.params;
+  const {category} = route.params;
 
   const [formData, setFormData] = useState({
     ...category,
@@ -30,7 +30,7 @@ export default function CategoryEditScreen({
    */
   const handleChange = (
     key: string,
-    value: string
+    value: string,
   ) => {
     setFormData({
       ...formData,
@@ -47,18 +47,19 @@ export default function CategoryEditScreen({
       !formData.categoryDescription?.trim()
     ) {
       Alert.alert(
-        "Validation Error",
-        "All fields are required"
+        'Validation Error',
+        'All fields are required',
       );
       return;
     }
 
     if (
-      formData.categoryName.trim().length < 3
+      formData.categoryName.trim()
+        .length < 3
     ) {
       Alert.alert(
-        "Validation Error",
-        "Category name must be at least 3 characters"
+        'Validation Error',
+        'Category name must be at least 3 characters',
       );
       return;
     }
@@ -73,30 +74,30 @@ export default function CategoryEditScreen({
             formData.categoryName,
           categoryDescription:
             formData.categoryDescription,
-        }
+        },
       );
 
       Alert.alert(
-        "Success",
-        "Category updated successfully"
+        'Success',
+        'Category updated successfully',
       );
 
       navigation.goBack();
     } catch (error: any) {
       if (error.response?.status === 401) {
         Alert.alert(
-          "Session Expired",
-          "Please login again"
+          'Session Expired',
+          'Please login again',
         );
 
-        navigation.replace("Login");
+        navigation.replace('Login');
         return;
       }
 
       Alert.alert(
-        "Update Failed",
+        'Update Failed',
         error.response?.data?.message ||
-          "Failed to update category"
+          'Failed to update category',
       );
     } finally {
       setLoading(false);
@@ -108,42 +109,43 @@ export default function CategoryEditScreen({
    */
   const handleDelete = () => {
     Alert.alert(
-      "Delete Category",
-      "This action cannot be undone",
+      'Delete Category',
+      'This action cannot be undone',
       [
         {
-          text: "Cancel",
-          style: "cancel",
+          text: 'Cancel',
+          style: 'cancel',
         },
         {
-          text: "Delete",
-          style: "destructive",
+          text: 'Delete',
+          style: 'destructive',
           onPress: async () => {
             try {
               setLoading(true);
 
               await api.delete(
-                `/categories/${formData._id}`
+                `/categories/${formData._id}`,
               );
 
               Alert.alert(
-                "Deleted",
-                "Category removed successfully"
+                'Deleted',
+                'Category removed successfully',
               );
 
               navigation.goBack();
             } catch (error: any) {
               Alert.alert(
-                "Delete Failed",
-                error.response?.data?.message ||
-                  "Failed to delete category"
+                'Delete Failed',
+                error.response?.data
+                  ?.message ||
+                  'Failed to delete category',
               );
             } finally {
               setLoading(false);
             }
           },
         },
-      ]
+      ],
     );
   };
 
@@ -157,27 +159,32 @@ export default function CategoryEditScreen({
       <ScrollView
         contentContainerStyle={
           styles.scrollContent
-        }
-      >
+        }>
         <View style={styles.card}>
           <Text style={styles.title}>
             Edit Category
           </Text>
 
           {/* NAME */}
+          <Text style={styles.label}>
+            Category Name
+          </Text>
           <TextInput
             style={styles.input}
             value={formData.categoryName}
             placeholder="Category Name"
-            onChangeText={(text) =>
+            onChangeText={text =>
               handleChange(
-                "categoryName",
-                text
+                'categoryName',
+                text,
               )
             }
           />
 
           {/* DESCRIPTION */}
+          <Text style={styles.label}>
+            Category Description
+          </Text>
           <TextInput
             style={[
               styles.input,
@@ -188,10 +195,10 @@ export default function CategoryEditScreen({
               formData.categoryDescription
             }
             placeholder="Category Description"
-            onChangeText={(text) =>
+            onChangeText={text =>
               handleChange(
-                "categoryDescription",
-                text
+                'categoryDescription',
+                text,
               )
             }
           />
@@ -201,16 +208,14 @@ export default function CategoryEditScreen({
             <TouchableOpacity
               style={styles.updateBtn}
               onPress={handleUpdate}
-              disabled={loading}
-            >
+              disabled={loading}>
               {loading ? (
-                <ActivityIndicator
-                  color="#ffffff"
-                />
+                <ActivityIndicator color="#ffffff" />
               ) : (
                 <Text
-                  style={styles.updateText}
-                >
+                  style={
+                    styles.updateText
+                  }>
                   Save Changes
                 </Text>
               )}
@@ -219,9 +224,9 @@ export default function CategoryEditScreen({
             <TouchableOpacity
               style={styles.deleteBtn}
               onPress={handleDelete}
-              disabled={loading}
-            >
-              <Text style={styles.deleteText}>
+              disabled={loading}>
+              <Text
+                style={styles.deleteText}>
                 Delete
               </Text>
             </TouchableOpacity>
