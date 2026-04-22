@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
   View,
   Text,
@@ -17,7 +17,7 @@ export default function CompanyEditScreen({
   route,
   navigation,
 }: any) {
-  const { company } = route.params;
+  const {company} = route.params;
 
   const [formData, setFormData] = useState({
     ...company,
@@ -30,7 +30,7 @@ export default function CompanyEditScreen({
    */
   const handleChange = (
     key: string,
-    value: string
+    value: string,
   ) => {
     setFormData({
       ...formData,
@@ -51,31 +51,31 @@ export default function CompanyEditScreen({
     ) {
       Alert.alert(
         "Validation Error",
-        "All fields are required"
+        "All fields are required",
       );
       return;
     }
 
     if (
       !/^\d{10}$/.test(
-        formData.companyContactNumber
+        formData.companyContactNumber,
       )
     ) {
       Alert.alert(
         "Validation Error",
-        "Contact number must be exactly 10 digits"
+        "Contact number must be exactly 10 digits",
       );
       return;
     }
 
     if (
       !/^\S+@\S+\.\S+$/.test(
-        formData.companyEmail
+        formData.companyEmail,
       )
     ) {
       Alert.alert(
         "Validation Error",
-        "Invalid email address"
+        "Invalid email address",
       );
       return;
     }
@@ -86,7 +86,8 @@ export default function CompanyEditScreen({
       await api.put(
         `/companies/${formData._id}`,
         {
-          companyName: formData.companyName,
+          companyName:
+            formData.companyName,
           companyDescription:
             formData.companyDescription,
           companyAddress:
@@ -95,12 +96,12 @@ export default function CompanyEditScreen({
             formData.companyContactNumber,
           companyEmail:
             formData.companyEmail,
-        }
+        },
       );
 
       Alert.alert(
         "Success",
-        "Company updated successfully"
+        "Company updated successfully",
       );
 
       navigation.goBack();
@@ -108,7 +109,7 @@ export default function CompanyEditScreen({
       if (error.response?.status === 401) {
         Alert.alert(
           "Session Expired",
-          "Please login again"
+          "Please login again",
         );
 
         navigation.replace("Login");
@@ -118,7 +119,7 @@ export default function CompanyEditScreen({
       Alert.alert(
         "Update Failed",
         error.response?.data?.message ||
-          "Failed to update company"
+          "Failed to update company",
       );
     } finally {
       setLoading(false);
@@ -145,12 +146,12 @@ export default function CompanyEditScreen({
               setLoading(true);
 
               await api.delete(
-                `/companies/${formData._id}`
+                `/companies/${formData._id}`,
               );
 
               Alert.alert(
                 "Deleted",
-                "Company removed successfully"
+                "Company removed successfully",
               );
 
               navigation.goBack();
@@ -158,14 +159,14 @@ export default function CompanyEditScreen({
               Alert.alert(
                 "Delete Failed",
                 error.response?.data?.message ||
-                  "Failed to delete company"
+                  "Failed to delete company",
               );
             } finally {
               setLoading(false);
             }
           },
         },
-      ]
+      ],
     );
   };
 
@@ -179,14 +180,16 @@ export default function CompanyEditScreen({
       <ScrollView
         contentContainerStyle={
           styles.scrollContent
-        }
-      >
+        }>
         <View style={styles.card}>
           <Text style={styles.title}>
             Edit Company
           </Text>
 
           {/* NAME */}
+          <Text style={styles.label}>
+            Company Name
+          </Text>
           <TextInput
             style={styles.input}
             value={formData.companyName}
@@ -194,29 +197,37 @@ export default function CompanyEditScreen({
             onChangeText={(text) =>
               handleChange(
                 "companyName",
-                text
+                text,
               )
             }
           />
 
           {/* DESCRIPTION */}
+          <Text style={styles.label}>
+            Company Description
+          </Text>
           <TextInput
             style={[
               styles.input,
               styles.textArea,
             ]}
             multiline
-            value={formData.companyDescription}
+            value={
+              formData.companyDescription
+            }
             placeholder="Company Description"
             onChangeText={(text) =>
               handleChange(
                 "companyDescription",
-                text
+                text,
               )
             }
           />
 
           {/* ADDRESS */}
+          <Text style={styles.label}>
+            Company Address
+          </Text>
           <TextInput
             style={styles.input}
             value={formData.companyAddress}
@@ -224,12 +235,15 @@ export default function CompanyEditScreen({
             onChangeText={(text) =>
               handleChange(
                 "companyAddress",
-                text
+                text,
               )
             }
           />
 
           {/* CONTACT */}
+          <Text style={styles.label}>
+            Contact Number
+          </Text>
           <TextInput
             style={styles.input}
             value={
@@ -240,12 +254,15 @@ export default function CompanyEditScreen({
             onChangeText={(text) =>
               handleChange(
                 "companyContactNumber",
-                text
+                text,
               )
             }
           />
 
           {/* EMAIL */}
+          <Text style={styles.label}>
+            Email Address
+          </Text>
           <TextInput
             style={styles.input}
             value={formData.companyEmail}
@@ -255,7 +272,7 @@ export default function CompanyEditScreen({
             onChangeText={(text) =>
               handleChange(
                 "companyEmail",
-                text
+                text,
               )
             }
           />
@@ -265,16 +282,14 @@ export default function CompanyEditScreen({
             <TouchableOpacity
               style={styles.updateBtn}
               onPress={handleUpdate}
-              disabled={loading}
-            >
+              disabled={loading}>
               {loading ? (
-                <ActivityIndicator
-                  color="#ffffff"
-                />
+                <ActivityIndicator color="#ffffff" />
               ) : (
                 <Text
-                  style={styles.updateText}
-                >
+                  style={
+                    styles.updateText
+                  }>
                   Save Changes
                 </Text>
               )}
@@ -283,9 +298,9 @@ export default function CompanyEditScreen({
             <TouchableOpacity
               style={styles.deleteBtn}
               onPress={handleDelete}
-              disabled={loading}
-            >
-              <Text style={styles.deleteText}>
+              disabled={loading}>
+              <Text
+                style={styles.deleteText}>
                 Delete
               </Text>
             </TouchableOpacity>
