@@ -92,21 +92,6 @@ export default function CompanyDetailsScreen({
               {company.companyEmail}
             </Text>
           </View>
-
-          {/* EDIT BUTTON */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              navigation.navigate(
-                "CompanyEdit",
-                { company }
-              )
-            }
-          >
-            <Text style={styles.buttonText}>
-              Edit Company
-            </Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
