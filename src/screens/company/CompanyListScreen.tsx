@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   TextInput,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 import api from "../../api/api";
 import AppHeader from "../../components/AppHeader";
@@ -121,20 +121,25 @@ export default function CompanyListScreen({
     fetchCompanies();
   }, []);
 
+  /**
+   * DASHBOARD VALUES
+   */
+  const totalCompanies = companies.length;
+
+  const companiesWithEmail = companies.filter(
+    (item) => item.companyEmail
+  ).length;
+
+  const companiesWithPhone = companies.filter(
+    (item) => item.companyContactNumber
+  ).length;
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <AppHeader
           title="Companies"
           onBack={() => navigation.goBack()}
-        />
-
-        {/* SEARCH */}
-        <TextInput
-          placeholder="Search by name, email, phone..."
-          style={styles.searchInput}
-          value={search}
-          onChangeText={handleSearch}
         />
 
         {loading ? (
@@ -147,6 +152,71 @@ export default function CompanyListScreen({
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
           >
+            {/* HEADING */}
+            <View style={styles.headingSection}>
+              <Text style={styles.heading}>
+                Company Overview
+              </Text>
+              <Text style={styles.subHeading}>
+                Manage companies and company records
+              </Text>
+            </View>
+
+            {/* SUMMARY CARDS */}
+            <View style={styles.summaryRow}>
+              <View style={styles.summaryCard}>
+                <Text style={styles.summaryLabel}>
+                  Total Companies
+                </Text>
+                <Text style={styles.summaryValue}>
+                  {totalCompanies}
+                </Text>
+              </View>
+
+              <View style={styles.summaryCard}>
+                <Text style={styles.summaryLabel}>
+                  Business Status
+                </Text>
+                <Text style={styles.summaryValue}>
+                  Active
+                </Text>
+              </View>
+            </View>
+
+
+            {/* QUICK ACTION */}
+            <TouchableOpacity
+              style={styles.quickActionCard}
+              onPress={() =>
+                navigation.navigate("CompanyAdd")
+              }
+            >
+              <Text style={styles.quickActionTitle}>
+                Quick Action
+              </Text>
+              <Text style={styles.quickActionText}>
+                Add New Company
+              </Text>
+              <Text style={styles.quickActionSub}>
+                Tap here to register new companies
+              </Text>
+            </TouchableOpacity>
+
+
+            <Text style={styles.sectionTitle}>
+              Company List
+            </Text>
+
+            {/* SEARCH */}
+            <TextInput
+              placeholder="Search by name, email, phone..."
+              placeholderTextColor="#64748b"
+              style={styles.searchInput}
+              value={search}
+              onChangeText={handleSearch}
+            />
+
+            {/* COMPANY LIST */}
             {filteredCompanies.map((company) => (
               <View
                 key={company._id}
@@ -154,10 +224,6 @@ export default function CompanyListScreen({
               >
                 <Text style={styles.companyName}>
                   {company.companyName}
-                </Text>
-
-                <Text style={styles.companyMeta}>
-                  ID: {company.companyId}
                 </Text>
 
                 <Text style={styles.companyMeta}>
@@ -177,7 +243,7 @@ export default function CompanyListScreen({
                     onPress={() =>
                       navigation.navigate(
                         "CompanyDetails",
-                        { company }
+                        {company}
                       )
                     }
                   >
@@ -194,7 +260,7 @@ export default function CompanyListScreen({
                     onPress={() =>
                       navigation.navigate(
                         "CompanyEdit",
-                        { company }
+                        {company}
                       )
                     }
                   >
@@ -221,16 +287,6 @@ export default function CompanyListScreen({
             ))}
           </ScrollView>
         )}
-
-        {/* FAB */}
-        <TouchableOpacity
-          style={styles.fab}
-          onPress={() =>
-            navigation.navigate("CompanyAdd")
-          }
-        >
-          <Text style={styles.fabText}>+</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
