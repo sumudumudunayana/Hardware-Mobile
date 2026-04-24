@@ -1,7 +1,7 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
-import styles from "../styles/components/AppHeaderStyles";
+import React from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import styles from '../styles/components/AppHeaderStyles';
 
 export default function AppHeader({
   title,
