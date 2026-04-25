@@ -54,9 +54,7 @@ export default function CategoryListScreen({navigation}: any) {
     setSearch(text);
 
     const filtered = categories.filter(category =>
-      category.categoryName
-        ?.toLowerCase()
-        .includes(text.toLowerCase()),
+      category.categoryName?.toLowerCase().includes(text.toLowerCase()),
     );
 
     setFilteredCategories(filtered);
@@ -79,21 +77,15 @@ export default function CategoryListScreen({navigation}: any) {
           style: 'destructive',
           onPress: async () => {
             try {
-              await api.delete(
-                `/categories/${category._id}`,
-              );
+              await api.delete(`/categories/${category._id}`);
 
-              Alert.alert(
-                'Success',
-                'Category deleted successfully',
-              );
+              Alert.alert('Success', 'Category deleted successfully');
 
               fetchCategories();
             } catch (error: any) {
               Alert.alert(
                 'Delete Failed',
-                error.response?.data?.message ||
-                  'Failed to delete category',
+                error.response?.data?.message || 'Failed to delete category',
               );
             }
           },
@@ -120,26 +112,17 @@ export default function CategoryListScreen({navigation}: any) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <AppHeader
-          title="Categories"
-          onBack={() => navigation.goBack()}
-        />
+        <AppHeader title="Categories" onBack={() => navigation.goBack()} />
 
         {loading ? (
-          <ActivityIndicator
-            size="large"
-            color="#f59e0b"
-          />
+          <ActivityIndicator size="large" color="#f59e0b" />
         ) : (
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            
             {/* HEADING */}
             <View style={styles.headingSection}>
-              <Text style={styles.heading}>
-                Category Overview
-              </Text>
+              <Text style={styles.heading}>Category Overview</Text>
               <Text style={styles.subHeading}>
                 Manage product categories and records
               </Text>
@@ -148,49 +131,30 @@ export default function CategoryListScreen({navigation}: any) {
             {/* SUMMARY CARDS */}
             <View style={styles.summaryRow}>
               <View style={styles.summaryCard}>
-                <Text style={styles.summaryLabel}>
-                  Total Categories
-                </Text>
-                <Text style={styles.summaryValue}>
-                  {totalCategories}
-                </Text>
+                <Text style={styles.summaryLabel}>Total Categories</Text>
+                <Text style={styles.summaryValue}>{totalCategories}</Text>
               </View>
 
               <View style={styles.summaryCard}>
-                <Text style={styles.summaryLabel}>
-                  Active Categories
-                </Text>
-                <Text style={styles.summaryValue}>
-                  {activeCategories}
-                </Text>
+                <Text style={styles.summaryLabel}>Active Categories</Text>
+                <Text style={styles.summaryValue}>{activeCategories}</Text>
               </View>
             </View>
-
 
             {/* QUICK ACTION */}
             <TouchableOpacity
               style={styles.quickActionCard}
-              onPress={() =>
-                navigation.navigate('CategoryAdd')
-              }>
-              <Text style={styles.quickActionTitle}>
-                Quick Action
-              </Text>
-              <Text style={styles.quickActionText}>
-                Add New Category
-              </Text>
+              onPress={() => navigation.navigate('CategoryAdd')}>
+              <Text style={styles.quickActionTitle}>Quick Action</Text>
+              <Text style={styles.quickActionText}>Add New Category</Text>
               <Text style={styles.quickActionSub}>
                 Tap here to create new product categories
               </Text>
             </TouchableOpacity>
 
-           
+            <Text style={styles.sectionTitle}>Category List</Text>
 
-            <Text style={styles.sectionTitle}>
-              Category List
-            </Text>
-
-             {/* SEARCH */}
+            {/* SEARCH */}
             <TextInput
               placeholder="Search by category name..."
               placeholderTextColor="#64748b"
@@ -201,14 +165,8 @@ export default function CategoryListScreen({navigation}: any) {
 
             {/* CATEGORY LIST */}
             {filteredCategories.map(category => (
-              <View
-                key={category._id}
-                style={styles.card}>
-                <Text style={styles.categoryName}>
-                  {category.categoryName}
-                </Text>
-
-                
+              <View key={category._id} style={styles.card}>
+                <Text style={styles.categoryName}>{category.categoryName}</Text>
 
                 <Text style={styles.categoryMeta}>
                   Description: {category.categoryDescription}
@@ -216,48 +174,25 @@ export default function CategoryListScreen({navigation}: any) {
 
                 <View style={styles.buttonRow}>
                   <TouchableOpacity
-                    style={[
-                      styles.btn,
-                      styles.viewBtn,
-                    ]}
+                    style={[styles.btn, styles.viewBtn]}
                     onPress={() =>
-                      navigation.navigate(
-                        'CategoryDetails',
-                        {category},
-                      )
+                      navigation.navigate('CategoryDetails', {category})
                     }>
-                    <Text style={styles.btnText}>
-                      View
-                    </Text>
+                    <Text style={styles.btnText}>View</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    style={[
-                      styles.btn,
-                      styles.editBtn,
-                    ]}
+                    style={[styles.btn, styles.editBtn]}
                     onPress={() =>
-                      navigation.navigate(
-                        'CategoryEdit',
-                        {category},
-                      )
+                      navigation.navigate('CategoryEdit', {category})
                     }>
-                    <Text style={styles.btnText}>
-                      Edit
-                    </Text>
+                    <Text style={styles.btnText}>Edit</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    style={[
-                      styles.btn,
-                      styles.deleteBtn,
-                    ]}
-                    onPress={() =>
-                      handleDelete(category)
-                    }>
-                    <Text style={styles.btnText}>
-                      Delete
-                    </Text>
+                    style={[styles.btn, styles.deleteBtn]}
+                    onPress={() => handleDelete(category)}>
+                    <Text style={styles.btnText}>Delete</Text>
                   </TouchableOpacity>
                 </View>
               </View>
