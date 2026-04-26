@@ -23,9 +23,8 @@ export default function CompanyListScreen({
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
-  /**
-   * FETCH COMPANIES
-   */
+   // FETCH COMPANIES
+  
   const fetchCompanies = async () => {
     try {
       setLoading(true);
