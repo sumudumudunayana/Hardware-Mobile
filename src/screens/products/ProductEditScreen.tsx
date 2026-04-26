@@ -40,9 +40,8 @@ export default function ProductEditScreen({
     });
   };
 
-  /**
-   * UPDATE PRODUCT
-   */
+   // UPDATE PRODUCT
+  
   const handleUpdate = async () => {
     const cost = Number(formData.itemCostPrice);
     const selling = Number(formData.itemSellingPrice);
