@@ -25,9 +25,7 @@ export default function CustomerAddScreen({
 
   const [loading, setLoading] = useState(false);
 
-  /**
-   * HANDLE INPUT CHANGE
-   */
+  //  HANDLE INPUT CHANGE
   const handleChange = (
     key: string,
     value: string
