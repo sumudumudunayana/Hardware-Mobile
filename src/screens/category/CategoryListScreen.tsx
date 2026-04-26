@@ -20,9 +20,7 @@ export default function CategoryListScreen({navigation}: any) {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
 
-  /**
-   * FETCH CATEGORIES
-   */
+   // FETCH CATEGORIES
   const fetchCategories = async () => {
     try {
       setLoading(true);
