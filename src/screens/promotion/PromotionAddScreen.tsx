@@ -30,9 +30,7 @@ export default function PromotionAddScreen({
     status: "active",
   });
 
-  /**
-   * LOAD ITEMS
-   */
+   // LOAD ITEMS
   useEffect(() => {
     const fetchItems = async () => {
       try {
