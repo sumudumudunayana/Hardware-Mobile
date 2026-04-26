@@ -22,9 +22,9 @@ export default function CategoryAddScreen({navigation}: any) {
 
   const [loading, setLoading] = useState(false);
 
-  /**
-   * HANDLE INPUT CHANGE
-   */
+  
+   // HANDLE INPUT CHANGE
+   
   const handleChange = (key: string, value: string) => {
     setFormData({
       ...formData,
