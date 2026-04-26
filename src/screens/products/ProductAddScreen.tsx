@@ -32,9 +32,7 @@ export default function ProductAddScreen({navigation}: any) {
 
   const [loading, setLoading] = useState(false);
 
-  /**
-   * LOAD DROPDOWN DATA
-   */
+   // LOAD DROPDOWN DATA
   useEffect(() => {
     const loadData = async () => {
       try {
