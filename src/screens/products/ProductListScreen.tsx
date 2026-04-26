@@ -16,9 +16,7 @@ export default function ProductListScreen({navigation}: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  /**
-   * FETCH PRODUCTS
-   */
+   // FETCH PRODUCTS
   const fetchProducts = async () => {
     try {
       setLoading(true);
