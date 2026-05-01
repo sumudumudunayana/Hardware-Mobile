@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,31 +7,26 @@ import {
   ScrollView,
   Alert,
   ActivityIndicator,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-import api from "../../api/api";
-import AppHeader from "../../components/AppHeader";
-import styles from "../../styles/company/CompanyAddScreenStyles";
+import api from '../../api/api';
+import AppHeader from '../../components/AppHeader';
+import styles from '../../styles/company/CompanyAddScreenStyles';
 
-export default function CompanyAddScreen({
-  navigation,
-}: any) {
+export default function CompanyAddScreen({navigation}: any) {
   const [formData, setFormData] = useState({
-    companyName: "",
-    companyDescription: "",
-    companyAddress: "",
-    companyContactNumber: "",
-    companyEmail: "",
+    companyName: '',
+    companyDescription: '',
+    companyAddress: '',
+    companyContactNumber: '',
+    companyEmail: '',
   });
 
   const [loading, setLoading] = useState(false);
 
-   // HANDLE INPUT CHANGE
-  const handleChange = (
-    key: string,
-    value: string
-  ) => {
+  // HANDLE INPUT CHANGE
+  const handleChange = (key: string, value: string) => {
     setFormData({
       ...formData,
       [key]: value,
@@ -50,72 +45,48 @@ export default function CompanyAddScreen({
       !formData.companyContactNumber.trim() ||
       !formData.companyEmail.trim()
     ) {
+      Alert.alert('Validation Error', 'All fields are required');
+      return;
+    }
+
+    if (!/^\d{10}$/.test(formData.companyContactNumber)) {
       Alert.alert(
-        "Validation Error",
-        "All fields are required"
+        'Validation Error',
+        'Contact number must be exactly 10 digits',
       );
       return;
     }
 
-    if (
-      !/^\d{10}$/.test(
-        formData.companyContactNumber
-      )
-    ) {
-      Alert.alert(
-        "Validation Error",
-        "Contact number must be exactly 10 digits"
-      );
-      return;
-    }
-
-    if (
-      !/^\S+@\S+\.\S+$/.test(
-        formData.companyEmail
-      )
-    ) {
-      Alert.alert(
-        "Validation Error",
-        "Invalid email address"
-      );
+    if (!/^\S+@\S+\.\S+$/.test(formData.companyEmail)) {
+      Alert.alert('Validation Error', 'Invalid email address');
       return;
     }
 
     try {
       setLoading(true);
 
-      await api.post("/companies", {
+      await api.post('/companies', {
         companyName: formData.companyName,
-        companyDescription:
-          formData.companyDescription,
-        companyAddress:
-          formData.companyAddress,
-        companyContactNumber:
-          formData.companyContactNumber,
+        companyDescription: formData.companyDescription,
+        companyAddress: formData.companyAddress,
+        companyContactNumber: formData.companyContactNumber,
         companyEmail: formData.companyEmail,
       });
 
-      Alert.alert(
-        "Success",
-        "Company added successfully"
-      );
+      Alert.alert('Success', 'Company added successfully');
 
       navigation.goBack();
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert(
-          "Session Expired",
-          "Please login again"
-        );
+        Alert.alert('Session Expired', 'Please login again');
 
-        navigation.replace("Login");
+        navigation.replace('Login');
         return;
       }
 
       Alert.alert(
-        "Add Failed",
-        error.response?.data?.message ||
-          "Failed to add company"
+        'Add Failed',
+        error.response?.data?.message || 'Failed to add company',
       );
     } finally {
       setLoading(false);
@@ -125,50 +96,29 @@ export default function CompanyAddScreen({
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <AppHeader
-          title="Add Company"
-          onBack={() => navigation.goBack()}
-        />
+        <AppHeader title="Add Company" onBack={() => navigation.goBack()} />
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContent}
-        >
+          contentContainerStyle={styles.scrollContent}>
           <View style={styles.card}>
-            <Text style={styles.title}>
-              Add New Company
-            </Text>
+            <Text style={styles.title}>Add New Company</Text>
 
             {/* NAME */}
             <TextInput
               placeholder="Company Name"
               style={styles.input}
               value={formData.companyName}
-              onChangeText={(text) =>
-                handleChange(
-                  "companyName",
-                  text
-                )
-              }
+              onChangeText={text => handleChange('companyName', text)}
             />
 
             {/* DESCRIPTION */}
             <TextInput
               placeholder="Company Description"
-              style={[
-                styles.input,
-                styles.textArea,
-              ]}
+              style={[styles.input, styles.textArea]}
               multiline
-              value={
-                formData.companyDescription
-              }
-              onChangeText={(text) =>
-                handleChange(
-                  "companyDescription",
-                  text
-                )
-              }
+              value={formData.companyDescription}
+              onChangeText={text => handleChange('companyDescription', text)}
             />
 
             {/* ADDRESS */}
@@ -176,12 +126,7 @@ export default function CompanyAddScreen({
               placeholder="Company Address"
               style={styles.input}
               value={formData.companyAddress}
-              onChangeText={(text) =>
-                handleChange(
-                  "companyAddress",
-                  text
-                )
-              }
+              onChangeText={text => handleChange('companyAddress', text)}
             />
 
             {/* CONTACT */}
@@ -189,15 +134,8 @@ export default function CompanyAddScreen({
               placeholder="Contact Number"
               style={styles.input}
               keyboardType="numeric"
-              value={
-                formData.companyContactNumber
-              }
-              onChangeText={(text) =>
-                handleChange(
-                  "companyContactNumber",
-                  text
-                )
-              }
+              value={formData.companyContactNumber}
+              onChangeText={text => handleChange('companyContactNumber', text)}
             />
 
             {/* EMAIL */}
@@ -207,28 +145,18 @@ export default function CompanyAddScreen({
               autoCapitalize="none"
               keyboardType="email-address"
               value={formData.companyEmail}
-              onChangeText={(text) =>
-                handleChange(
-                  "companyEmail",
-                  text
-                )
-              }
+              onChangeText={text => handleChange('companyEmail', text)}
             />
 
             {/* SUBMIT */}
             <TouchableOpacity
               style={styles.button}
               onPress={handleSubmit}
-              disabled={loading}
-            >
+              disabled={loading}>
               {loading ? (
-                <ActivityIndicator
-                  color="#ffffff"
-                />
+                <ActivityIndicator color="#ffffff" />
               ) : (
-                <Text style={styles.buttonText}>
-                  Add Company
-                </Text>
+                <Text style={styles.buttonText}>Add Company</Text>
               )}
             </TouchableOpacity>
           </View>
