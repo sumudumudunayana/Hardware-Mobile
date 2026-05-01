@@ -63,8 +63,7 @@ export default function CartScreen() {
     const now = new Date();
 
     const subtotal = cart.reduce(
-      (sum, item) =>
-        sum + Number(item.price) * Number(item.quantity),
+      (sum, item) => sum + Number(item.price) * Number(item.quantity),
       0,
     );
 
@@ -88,8 +87,7 @@ export default function CartScreen() {
 
     // percentage first
     percentagePromos.forEach((promo: any) => {
-      const amount =
-        (runningTotal * Number(promo.discountValue)) / 100;
+      const amount = (runningTotal * Number(promo.discountValue)) / 100;
 
       if (amount > 0) {
         runningTotal -= amount;
@@ -160,11 +158,7 @@ export default function CartScreen() {
   const updateQtyInput = (item: any, value: string) => {
     if (value === '') {
       setCart(prev =>
-        prev.map(i =>
-          i.itemId === item.itemId
-            ? {...i, quantity: ''}
-            : i,
-        ),
+        prev.map(i => (i.itemId === item.itemId ? {...i, quantity: ''} : i)),
       );
       return;
     }
@@ -176,11 +170,7 @@ export default function CartScreen() {
     }
 
     setCart(prev =>
-      prev.map(i =>
-        i.itemId === item.itemId
-          ? {...i, quantity: value}
-          : i,
-      ),
+      prev.map(i => (i.itemId === item.itemId ? {...i, quantity: value} : i)),
     );
   };
 
@@ -189,10 +179,7 @@ export default function CartScreen() {
     const qty = Number(item.quantity);
 
     if (isNaN(qty) || qty <= 0) {
-      Alert.alert(
-        'Error',
-        'Quantity must be greater than 0',
-      );
+      Alert.alert('Error', 'Quantity must be greater than 0');
       loadCart();
       return;
     }
@@ -212,9 +199,7 @@ export default function CartScreen() {
   // CALCULATIONS
   const subtotal = useMemo(() => {
     return cart.reduce(
-      (total, item) =>
-        total +
-        Number(item.price) * Number(item.quantity),
+      (total, item) => total + Number(item.price) * Number(item.quantity),
       0,
     );
   }, [cart]);
@@ -226,10 +211,7 @@ export default function CartScreen() {
     );
   }, [appliedPromotions]);
 
-  const finalTotal = Math.max(
-    subtotal - totalDiscount,
-    0,
-  );
+  const finalTotal = Math.max(subtotal - totalDiscount, 0);
 
   // COMPLETE SALE
   const generateInvoice = async () => {
@@ -261,10 +243,7 @@ export default function CartScreen() {
       const id = res.data._id || res.data.saleId;
 
       if (!id) {
-        Alert.alert(
-          'Error',
-          'Sale created but ID missing',
-        );
+        Alert.alert('Error', 'Sale created but ID missing');
         return;
       }
 
@@ -276,11 +255,7 @@ export default function CartScreen() {
     } catch (error: any) {
       console.log(error);
 
-      Alert.alert(
-        'Error',
-        error.response?.data?.message ||
-          'Sale failed',
-      );
+      Alert.alert('Error', error.response?.data?.message || 'Sale failed');
     }
 
     setLoading(false);
@@ -289,32 +264,21 @@ export default function CartScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <AppHeader
-          title="Shopping Cart"
-          onBack={() => navigation.goBack()}
-        />
+        <AppHeader title="Shopping Cart" onBack={() => navigation.goBack()} />
 
         <ScrollView showsVerticalScrollIndicator={false}>
           {cart.length === 0 ? (
-            <Text style={styles.empty}>
-              Your cart is empty
-            </Text>
+            <Text style={styles.empty}>Your cart is empty</Text>
           ) : (
             <>
               {cart.map((item: any) => (
-                <View
-                  key={item.itemId}
-                  style={styles.card}>
-                  <Text style={styles.name}>
-                    {item.name}
-                  </Text>
+                <View key={item.itemId} style={styles.card}>
+                  <Text style={styles.name}>{item.name}</Text>
 
                   <View style={styles.qtyRow}>
                     <TouchableOpacity
                       style={styles.qtyBtn}
-                      onPress={() =>
-                        decreaseQty(item)
-                      }>
+                      onPress={() => decreaseQty(item)}>
                       <Text>-</Text>
                     </TouchableOpacity>
 
@@ -322,19 +286,13 @@ export default function CartScreen() {
                       style={styles.qtyInput}
                       keyboardType="numeric"
                       value={String(item.quantity)}
-                      onChangeText={text =>
-                        updateQtyInput(item, text)
-                      }
-                      onBlur={() =>
-                        saveQtyInput(item)
-                      }
+                      onChangeText={text => updateQtyInput(item, text)}
+                      onBlur={() => saveQtyInput(item)}
                     />
 
                     <TouchableOpacity
                       style={styles.qtyBtn}
-                      onPress={() =>
-                        increaseQty(item)
-                      }>
+                      onPress={() => increaseQty(item)}>
                       <Text>+</Text>
                     </TouchableOpacity>
                   </View>
@@ -342,8 +300,7 @@ export default function CartScreen() {
                   <Text style={styles.price}>
                     Rs.{' '}
                     {(
-                      Number(item.price) *
-                      Number(item.quantity)
+                      Number(item.price) * Number(item.quantity)
                     ).toLocaleString()}
                   </Text>
                 </View>
@@ -351,27 +308,18 @@ export default function CartScreen() {
 
               <View style={styles.summary}>
                 <Text style={styles.summaryText}>
-                  Subtotal: Rs.{' '}
-                  {subtotal.toLocaleString()}
+                  Subtotal: Rs. {subtotal.toLocaleString()}
                 </Text>
 
-                {appliedPromotions.map(
-                  (promo: any, index: number) => (
-                    <Text
-                      key={index}
-                      style={styles.discount}>
-                      {promo.promotionName} :
-                      - Rs.{' '}
-                      {Number(
-                        promo.amount,
-                      ).toLocaleString()}
-                    </Text>
-                  ),
-                )}
+                {appliedPromotions.map((promo: any, index: number) => (
+                  <Text key={index} style={styles.discount}>
+                    {promo.promotionName} : - Rs.{' '}
+                    {Number(promo.amount).toLocaleString()}
+                  </Text>
+                ))}
 
                 <Text style={styles.total}>
-                  Total: Rs.{' '}
-                  {finalTotal.toLocaleString()}
+                  Total: Rs. {finalTotal.toLocaleString()}
                 </Text>
               </View>
 
@@ -379,20 +327,14 @@ export default function CartScreen() {
                 style={styles.primaryBtn}
                 onPress={generateInvoice}>
                 <Text style={styles.primaryText}>
-                  {loading
-                    ? 'Processing...'
-                    : 'Complete Sale'}
+                  {loading ? 'Processing...' : 'Complete Sale'}
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.secondaryBtn}
-                onPress={() =>
-                  navigation.goBack()
-                }>
-                <Text style={styles.secondaryText}>
-                  Continue Shopping
-                </Text>
+                onPress={() => navigation.goBack()}>
+                <Text style={styles.secondaryText}>Continue Shopping</Text>
               </TouchableOpacity>
             </>
           )}
