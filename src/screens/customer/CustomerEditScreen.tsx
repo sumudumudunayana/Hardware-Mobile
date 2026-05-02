@@ -13,10 +13,7 @@ import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/customer/CustomerEditScreenStyles';
 
-export default function CustomerEditScreen({
-  route,
-  navigation,
-}: any) {
+export default function CustomerEditScreen({route, navigation}: any) {
   const {customer} = route.params;
 
   const [formData, setFormData] = useState({
@@ -26,10 +23,7 @@ export default function CustomerEditScreen({
   const [loading, setLoading] = useState(false);
 
   //  HANDLE INPUT CHANGE
-  const handleChange = (
-    key: string,
-    value: string,
-  ) => {
+  const handleChange = (key: string, value: string) => {
     setFormData({
       ...formData,
       [key]: value,
@@ -41,36 +35,21 @@ export default function CustomerEditScreen({
    */
   const handleUpdate = async () => {
     if (!formData.customerName?.trim()) {
-      Alert.alert(
-        'Validation Error',
-        'Customer name is required',
-      );
+      Alert.alert('Validation Error', 'Customer name is required');
       return;
     }
 
-    if (
-      !formData.customerContactNumber?.trim()
-    ) {
-      Alert.alert(
-        'Validation Error',
-        'Contact number is required',
-      );
+    if (!formData.customerContactNumber?.trim()) {
+      Alert.alert('Validation Error', 'Contact number is required');
       return;
     }
 
     if (!formData.customerEmail?.trim()) {
-      Alert.alert(
-        'Validation Error',
-        'Email is required',
-      );
+      Alert.alert('Validation Error', 'Email is required');
       return;
     }
 
-    if (
-      !/^\d{10}$/.test(
-        formData.customerContactNumber,
-      )
-    ) {
+    if (!/^\d{10}$/.test(formData.customerContactNumber)) {
       Alert.alert(
         'Validation Error',
         'Contact number must be exactly 10 digits',
@@ -78,45 +57,26 @@ export default function CustomerEditScreen({
       return;
     }
 
-    if (
-      !/^\S+@\S+\.\S+$/.test(
-        formData.customerEmail,
-      )
-    ) {
-      Alert.alert(
-        'Validation Error',
-        'Invalid email address',
-      );
+    if (!/^\S+@\S+\.\S+$/.test(formData.customerEmail)) {
+      Alert.alert('Validation Error', 'Invalid email address');
       return;
     }
 
     try {
       setLoading(true);
 
-      await api.put(
-        `/customers/${formData._id}`,
-        {
-          customerName:
-            formData.customerName,
-          customerContactNumber:
-            formData.customerContactNumber,
-          customerEmail:
-            formData.customerEmail,
-        },
-      );
+      await api.put(`/customers/${formData._id}`, {
+        customerName: formData.customerName,
+        customerContactNumber: formData.customerContactNumber,
+        customerEmail: formData.customerEmail,
+      });
 
-      Alert.alert(
-        'Success',
-        'Customer updated successfully',
-      );
+      Alert.alert('Success', 'Customer updated successfully');
 
       navigation.goBack();
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert(
-          'Session Expired',
-          'Please login again',
-        );
+        Alert.alert('Session Expired', 'Please login again');
 
         navigation.replace('Login');
         return;
@@ -124,8 +84,7 @@ export default function CustomerEditScreen({
 
       Alert.alert(
         'Update Failed',
-        error.response?.data?.message ||
-          'Failed to update customer',
+        error.response?.data?.message || 'Failed to update customer',
       );
     } finally {
       setLoading(false);
@@ -136,114 +95,72 @@ export default function CustomerEditScreen({
    * DELETE CUSTOMER
    */
   const handleDelete = () => {
-    Alert.alert(
-      'Delete Customer',
-      'This action cannot be undone',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
+    Alert.alert('Delete Customer', 'This action cannot be undone', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            setLoading(true);
+
+            await api.delete(`/customers/${formData._id}`);
+
+            Alert.alert('Deleted', 'Customer removed successfully');
+
+            navigation.goBack();
+          } catch (error: any) {
+            Alert.alert(
+              'Delete Failed',
+              error.response?.data?.message || 'Failed to delete customer',
+            );
+          } finally {
+            setLoading(false);
+          }
         },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              setLoading(true);
-
-              await api.delete(
-                `/customers/${formData._id}`,
-              );
-
-              Alert.alert(
-                'Deleted',
-                'Customer removed successfully',
-              );
-
-              navigation.goBack();
-            } catch (error: any) {
-              Alert.alert(
-                'Delete Failed',
-                error.response?.data
-                  ?.message ||
-                  'Failed to delete customer',
-              );
-            } finally {
-              setLoading(false);
-            }
-          },
-        },
-      ],
-    );
+      },
+    ]);
   };
 
   return (
     <View style={styles.container}>
-      <AppHeader
-        title="Edit Customer"
-        onBack={() => navigation.goBack()}
-      />
+      <AppHeader title="Edit Customer" onBack={() => navigation.goBack()} />
 
-      <ScrollView
-        contentContainerStyle={
-          styles.scrollContent
-        }>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.card}>
-          <Text style={styles.title}>
-            Edit Customer
-          </Text>
+          <Text style={styles.title}>Edit Customer</Text>
 
           {/* NAME */}
-          <Text style={styles.label}>
-            Customer Name
-          </Text>
+          <Text style={styles.label}>Customer Name</Text>
           <TextInput
             style={styles.input}
             value={formData.customerName}
             placeholder="Customer Name"
-            onChangeText={text =>
-              handleChange(
-                'customerName',
-                text,
-              )
-            }
+            onChangeText={text => handleChange('customerName', text)}
           />
 
           {/* CONTACT */}
-          <Text style={styles.label}>
-            Contact Number
-          </Text>
+          <Text style={styles.label}>Contact Number</Text>
           <TextInput
             style={styles.input}
-            value={
-              formData.customerContactNumber
-            }
+            value={formData.customerContactNumber}
             keyboardType="numeric"
             placeholder="Contact Number"
-            onChangeText={text =>
-              handleChange(
-                'customerContactNumber',
-                text,
-              )
-            }
+            onChangeText={text => handleChange('customerContactNumber', text)}
           />
 
           {/* EMAIL */}
-          <Text style={styles.label}>
-            Email Address
-          </Text>
+          <Text style={styles.label}>Email Address</Text>
           <TextInput
             style={styles.input}
             value={formData.customerEmail}
             autoCapitalize="none"
             keyboardType="email-address"
             placeholder="Email Address"
-            onChangeText={text =>
-              handleChange(
-                'customerEmail',
-                text,
-              )
-            }
+            onChangeText={text => handleChange('customerEmail', text)}
           />
 
           {/* ACTIONS */}
@@ -255,12 +172,7 @@ export default function CustomerEditScreen({
               {loading ? (
                 <ActivityIndicator color="#ffffff" />
               ) : (
-                <Text
-                  style={
-                    styles.updateText
-                  }>
-                  Save Changes
-                </Text>
+                <Text style={styles.updateText}>Save Changes</Text>
               )}
             </TouchableOpacity>
 
@@ -268,10 +180,7 @@ export default function CustomerEditScreen({
               style={styles.deleteBtn}
               onPress={handleDelete}
               disabled={loading}>
-              <Text
-                style={styles.deleteText}>
-                Delete
-              </Text>
+              <Text style={styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
         </View>
