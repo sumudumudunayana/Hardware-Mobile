@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/category/CategoryEditScreenStyles';
@@ -22,8 +23,6 @@ export default function CategoryEditScreen({route, navigation}: any) {
 
   const [loading, setLoading] = useState(false);
 
-  // HANDLE INPUT CHANGE
-
   const handleChange = (key: string, value: string) => {
     setFormData({
       ...formData,
@@ -31,23 +30,26 @@ export default function CategoryEditScreen({route, navigation}: any) {
     });
   };
 
-  /**
-   * UPDATE CATEGORY
-   */
+  // UPDATE CATEGORY
   const handleUpdate = async () => {
     if (
       !formData.categoryName?.trim() ||
       !formData.categoryDescription?.trim()
     ) {
-      Alert.alert('Validation Error', 'All fields are required');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'All fields are required',
+      });
       return;
     }
 
     if (formData.categoryName.trim().length < 3) {
-      Alert.alert(
-        'Validation Error',
-        'Category name must be at least 3 characters',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Category name must be at least 3 characters',
+      });
       return;
     }
 
@@ -59,58 +61,77 @@ export default function CategoryEditScreen({route, navigation}: any) {
         categoryDescription: formData.categoryDescription,
       });
 
-      Alert.alert('Success', 'Category updated successfully');
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Category updated successfully',
+      });
 
-      navigation.goBack();
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
 
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Update Failed',
-        error.response?.data?.message || 'Failed to update category',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Update Failed',
+        text2:
+          error.response?.data?.message ||
+          'Failed to update category',
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  /**
-   * DELETE CATEGORY
-   */
+  // DELETE CATEGORY
   const handleDelete = () => {
-    Alert.alert('Delete Category', 'This action cannot be undone', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            setLoading(true);
+    Alert.alert(
+      'Delete Category',
+      'This action cannot be undone',
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              setLoading(true);
 
-            await api.delete(`/categories/${formData._id}`);
+              await api.delete(`/categories/${formData._id}`);
 
-            Alert.alert('Deleted', 'Category removed successfully');
+              Toast.show({
+                type: 'success',
+                text1: 'Deleted',
+                text2: 'Category removed successfully',
+              });
 
-            navigation.goBack();
-          } catch (error: any) {
-            Alert.alert(
-              'Delete Failed',
-              error.response?.data?.message || 'Failed to delete category',
-            );
-          } finally {
-            setLoading(false);
-          }
+              navigation.goBack();
+            } catch (error: any) {
+              Toast.show({
+                type: 'error',
+                text1: 'Delete Failed',
+                text2:
+                  error.response?.data?.message ||
+                  'Failed to delete category',
+              });
+            } finally {
+              setLoading(false);
+            }
+          },
         },
-      },
-    ]);
+      ],
+    );
   };
 
   return (
@@ -127,7 +148,10 @@ export default function CategoryEditScreen({route, navigation}: any) {
             style={styles.input}
             value={formData.categoryName}
             placeholder="Category Name"
-            onChangeText={text => handleChange('categoryName', text)}
+            placeholderTextColor="#64748b"
+            onChangeText={text =>
+              handleChange('categoryName', text)
+            }
           />
 
           {/* DESCRIPTION */}
@@ -137,13 +161,16 @@ export default function CategoryEditScreen({route, navigation}: any) {
             multiline
             value={formData.categoryDescription}
             placeholder="Category Description"
-            onChangeText={text => handleChange('categoryDescription', text)}
+            placeholderTextColor="#64748b"
+            onChangeText={text =>
+              handleChange('categoryDescription', text)
+            }
           />
 
-          {/* ACTIONS */}
+          {/* BUTTONS */}
           <View style={styles.buttonRow}>
             <TouchableOpacity
-              style={styles.updateBtn}
+              style={[styles.updateBtn, loading && {opacity: 0.6}]}
               onPress={handleUpdate}
               disabled={loading}>
               {loading ? (
