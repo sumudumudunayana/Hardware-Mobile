@@ -4,50 +4,74 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
+
+import Toast from 'react-native-toast-message'; // ✅ ADD THIS
+
 import api from '../api/api';
 import {AuthContext} from '../context/AuthContext';
 import styles from '../styles/loginStyles';
 
 export default function LoginScreen({navigation}: any) {
   const {login} = useContext(AuthContext);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const [loading, setLoading] = useState(false);
+
   const handleLogin = async () => {
-    // Basic validation
+    // ✅ VALIDATION
     if (!email || !password) {
-      Alert.alert('Validation Error', 'Please enter email and password');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Please enter email and password',
+      });
       return;
     }
+
     try {
       setLoading(true);
+
       const res = await api.post('/auth/login', {
         email,
         password,
       });
+
       const token = res.data.token;
+
       if (!token) {
-        Alert.alert('Login Failed', 'Token not received from server');
+        Toast.show({
+          type: 'error',
+          text1: 'Login Failed',
+          text2: 'Token not received from server',
+        });
         return;
       }
-      // Save token using AuthContext
+
       await login(token);
-      // No need for navigation.navigate("Main")
-      // AppNavigator handles redirect automatically
+
+      // ✅ SUCCESS TOAST
+      Toast.show({
+        type: 'success',
+        text1: 'Login Successful',
+        text2: 'Welcome back!',
+      });
+
+      // navigation handled by AuthContext
     } catch (error: any) {
       console.log('LOGIN ERROR:', error);
-      console.log('RESPONSE:', error.response?.data);
-      console.log('MESSAGE:', error.message);
 
-      Alert.alert(
-        'Login Failed',
-        error.response?.data?.message ||
+      Toast.show({
+        type: 'error',
+        text1: 'Login Failed',
+        text2:
+          error.response?.data?.message ||
           error.message ||
           'Something went wrong',
-      );
+      });
     } finally {
       setLoading(false);
     }
@@ -69,6 +93,7 @@ export default function LoginScreen({navigation}: any) {
           Sign in to access your hardware system.
         </Text>
 
+        {/* EMAIL */}
         <TextInput
           placeholder="Enter your email"
           placeholderTextColor="#64748b"
@@ -79,6 +104,7 @@ export default function LoginScreen({navigation}: any) {
           keyboardType="email-address"
         />
 
+        {/* PASSWORD */}
         <TextInput
           placeholder="Enter your password"
           placeholderTextColor="#64748b"
@@ -88,6 +114,7 @@ export default function LoginScreen({navigation}: any) {
           onChangeText={setPassword}
         />
 
+        {/* LOGIN BUTTON */}
         <TouchableOpacity
           style={styles.button}
           onPress={handleLogin}
@@ -99,6 +126,7 @@ export default function LoginScreen({navigation}: any) {
           )}
         </TouchableOpacity>
 
+        {/* REGISTER */}
         <Text style={styles.register}>
           Don’t have an account?{' '}
           <Text
