@@ -4,9 +4,10 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
+
+import Toast from 'react-native-toast-message'; // ✅ ADD THIS
 
 import api from '../api/api';
 import styles from '../styles/registerScreenStyles';
@@ -15,13 +16,40 @@ export default function RegisterScreen({navigation}: any) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const [loading, setLoading] = useState(false);
+
   const handleRegister = async () => {
-    // Validation
+    // ✅ VALIDATION
     if (!name || !email || !password) {
-      Alert.alert('Validation Error', 'Please fill all fields');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Please fill all fields',
+      });
       return;
     }
+
+    // Optional: Email format validation
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid Email',
+        text2: 'Please enter a valid email address',
+      });
+      return;
+    }
+
+    // Optional: Password length
+    if (password.length < 6) {
+      Toast.show({
+        type: 'error',
+        text1: 'Weak Password',
+        text2: 'Password must be at least 6 characters',
+      });
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -31,14 +59,23 @@ export default function RegisterScreen({navigation}: any) {
         password,
       });
 
-      Alert.alert('Success', 'Registration successful');
+      // ✅ SUCCESS
+      Toast.show({
+        type: 'success',
+        text1: 'Registration Successful',
+        text2: 'You can now login',
+      });
 
-      navigation.navigate('Login');
+      setTimeout(() => {
+        navigation.navigate('Login');
+      }, 1000);
     } catch (error: any) {
-      Alert.alert(
-        'Registration Failed',
-        error.response?.data?.message || 'Registration failed',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Registration Failed',
+        text2:
+          error.response?.data?.message || 'Registration failed',
+      });
     } finally {
       setLoading(false);
     }
@@ -60,6 +97,7 @@ export default function RegisterScreen({navigation}: any) {
           Create your account to access the system
         </Text>
 
+        {/* NAME */}
         <TextInput
           placeholder="Enter your name"
           placeholderTextColor="#64748b"
@@ -68,6 +106,7 @@ export default function RegisterScreen({navigation}: any) {
           onChangeText={setName}
         />
 
+        {/* EMAIL */}
         <TextInput
           placeholder="Enter your email"
           placeholderTextColor="#64748b"
@@ -78,6 +117,7 @@ export default function RegisterScreen({navigation}: any) {
           keyboardType="email-address"
         />
 
+        {/* PASSWORD */}
         <TextInput
           placeholder="Create a password"
           placeholderTextColor="#64748b"
@@ -87,6 +127,7 @@ export default function RegisterScreen({navigation}: any) {
           onChangeText={setPassword}
         />
 
+        {/* BUTTON */}
         <TouchableOpacity
           style={styles.button}
           onPress={handleRegister}
@@ -98,6 +139,7 @@ export default function RegisterScreen({navigation}: any) {
           )}
         </TouchableOpacity>
 
+        {/* LOGIN LINK */}
         <Text style={styles.loginText}>
           Already have an account?{' '}
           <Text
