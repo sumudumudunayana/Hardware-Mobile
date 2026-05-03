@@ -1,5 +1,14 @@
 import React, {useContext} from 'react';
-import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from 'react-native';
+
+import Toast from 'react-native-toast-message'; // ✅ ADD THIS
+
 import {AuthContext} from '../context/AuthContext';
 import styles from '../styles/dashboardScreenStyles';
 
@@ -16,13 +25,27 @@ export default function DashboardScreen({navigation}: any) {
         text: 'Logout',
         style: 'destructive',
         onPress: async () => {
-          await logout();
+          try {
+            await logout();
+
+            // ✅ SUCCESS TOAST
+            Toast.show({
+              type: 'success',
+              text1: 'Logged Out',
+              text2: 'You have been logged out successfully',
+            });
+          } catch (error) {
+            // ❌ ERROR TOAST
+            Toast.show({
+              type: 'error',
+              text1: 'Logout Failed',
+              text2: 'Something went wrong',
+            });
+          }
         },
       },
     ]);
   };
-
-  
 
   return (
     <View style={{flex: 1, backgroundColor: '#ffffffcd'}}>
@@ -34,6 +57,7 @@ export default function DashboardScreen({navigation}: any) {
       <ScrollView
         contentContainerStyle={{padding: 16, paddingBottom: 40}}
         showsVerticalScrollIndicator={false}>
+        
         {/* LOGOUT */}
         <TouchableOpacity
           style={styles.dashboardLogoutBtn}
@@ -69,6 +93,7 @@ export default function DashboardScreen({navigation}: any) {
 
         {/* MODULES */}
         <View style={styles.dashboardGrid}>
+
           {/* PRODUCTS */}
           <TouchableOpacity
             style={styles.dashboardCard}
@@ -100,9 +125,9 @@ export default function DashboardScreen({navigation}: any) {
           </TouchableOpacity>
 
           {/* SALES */}
-          <TouchableOpacity 
-          style={styles.dashboardCard}
-          onPress={() => navigation.navigate('Sales')}>
+          <TouchableOpacity
+            style={styles.dashboardCard}
+            onPress={() => navigation.navigate('Sales')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🧾</Text>
               <Text style={styles.dashboardStatus}>Sales</Text>
@@ -115,9 +140,9 @@ export default function DashboardScreen({navigation}: any) {
           </TouchableOpacity>
 
           {/* SUPPLIERS */}
-          <TouchableOpacity 
-          style={styles.dashboardCard}
-          onPress={() => navigation.navigate('Distributors')}>
+          <TouchableOpacity
+            style={styles.dashboardCard}
+            onPress={() => navigation.navigate('Distributors')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🚚</Text>
               <Text style={styles.dashboardStatus}>Suppliers</Text>
@@ -131,8 +156,8 @@ export default function DashboardScreen({navigation}: any) {
 
           {/* STOCK */}
           <TouchableOpacity
-           style={styles.dashboardCard}
-           onPress={() => navigation.navigate('Stocks')}>
+            style={styles.dashboardCard}
+            onPress={() => navigation.navigate('Stocks')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>📊</Text>
               <Text style={styles.dashboardStatus}>Stock</Text>
@@ -145,9 +170,9 @@ export default function DashboardScreen({navigation}: any) {
           </TouchableOpacity>
 
           {/* PROMOTIONS */}
-          <TouchableOpacity 
-          style={styles.dashboardCard}
-          onPress={() => navigation.navigate('Promotions')}>
+          <TouchableOpacity
+            style={styles.dashboardCard}
+            onPress={() => navigation.navigate('Promotions')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🏷️</Text>
               <Text style={styles.dashboardStatus}>Promotions</Text>
@@ -159,41 +184,36 @@ export default function DashboardScreen({navigation}: any) {
             <Text style={styles.dashboardLink}>Open →</Text>
           </TouchableOpacity>
 
-          {/* CATEGORY MANAGEMENT */}
-          <TouchableOpacity 
-          style={styles.dashboardCard}
-          onPress={() => navigation.navigate('Categories')}>
+          {/* CATEGORY */}
+          <TouchableOpacity
+            style={styles.dashboardCard}
+            onPress={() => navigation.navigate('Categories')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🗂️</Text>
               <Text style={styles.dashboardStatus}>Categories</Text>
             </View>
-
             <Text style={styles.dashboardCardTitle}>Category Management</Text>
-
             <Text style={styles.dashboardCardDesc}>
               Manage product categories and classifications
             </Text>
-
             <Text style={styles.dashboardLink}>Open →</Text>
           </TouchableOpacity>
 
-          {/* COMPANY MANAGEMENT */}
-          <TouchableOpacity 
-          style={styles.dashboardCard}
-          onPress={() => navigation.navigate('Companies')}>
+          {/* COMPANY */}
+          <TouchableOpacity
+            style={styles.dashboardCard}
+            onPress={() => navigation.navigate('Companies')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🏢</Text>
               <Text style={styles.dashboardStatus}>Companies</Text>
             </View>
-
             <Text style={styles.dashboardCardTitle}>Company Management</Text>
-
             <Text style={styles.dashboardCardDesc}>
               Manage company records and business details
             </Text>
-
             <Text style={styles.dashboardLink}>Open →</Text>
           </TouchableOpacity>
+
         </View>
       </ScrollView>
     </View>
