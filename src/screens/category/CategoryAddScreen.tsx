@@ -5,11 +5,11 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/category/CategoryAddScreenStyles';
@@ -23,7 +23,6 @@ export default function CategoryAddScreen({navigation}: any) {
   const [loading, setLoading] = useState(false);
 
   // HANDLE INPUT CHANGE
-
   const handleChange = (key: string, value: string) => {
     setFormData({
       ...formData,
@@ -31,20 +30,23 @@ export default function CategoryAddScreen({navigation}: any) {
     });
   };
 
-  /**
-   * CREATE CATEGORY
-   */
+  // CREATE CATEGORY
   const handleSubmit = async () => {
     if (!formData.categoryName.trim() || !formData.categoryDescription.trim()) {
-      Alert.alert('Validation Error', 'All fields are required');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'All fields are required',
+      });
       return;
     }
 
     if (formData.categoryName.trim().length < 3) {
-      Alert.alert(
-        'Validation Error',
-        'Category name must be at least 3 characters',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Category name must be at least 3 characters',
+      });
       return;
     }
 
@@ -56,21 +58,35 @@ export default function CategoryAddScreen({navigation}: any) {
         categoryDescription: formData.categoryDescription,
       });
 
-      Alert.alert('Success', 'Category added successfully');
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Category added successfully',
+      });
 
-      navigation.goBack();
+      // small delay for better UX
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
+
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
 
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Add Failed',
-        error.response?.data?.message || 'Failed to add category',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Add Failed',
+        text2:
+          error.response?.data?.message || 'Failed to add category',
+      });
     } finally {
       setLoading(false);
     }
@@ -93,6 +109,7 @@ export default function CategoryAddScreen({navigation}: any) {
               style={styles.input}
               value={formData.categoryName}
               onChangeText={text => handleChange('categoryName', text)}
+              placeholderTextColor="#64748b"
             />
 
             {/* DESCRIPTION */}
@@ -102,11 +119,12 @@ export default function CategoryAddScreen({navigation}: any) {
               multiline
               value={formData.categoryDescription}
               onChangeText={text => handleChange('categoryDescription', text)}
+              placeholderTextColor="#64748b"
             />
 
             {/* SUBMIT */}
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button, loading && {opacity: 0.6}]}
               onPress={handleSubmit}
               disabled={loading}>
               {loading ? (
