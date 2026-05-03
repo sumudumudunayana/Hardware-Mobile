@@ -9,53 +9,74 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/company/CompanyEditScreenStyles';
 
+// ✅ TYPE DEFINITION
+type CompanyForm = {
+  _id?: string;
+  companyName: string;
+  companyDescription: string;
+  companyAddress: string;
+  companyContactNumber: string;
+  companyEmail: string;
+};
+
 export default function CompanyEditScreen({route, navigation}: any) {
   const {company} = route.params;
 
-  const [formData, setFormData] = useState({
-    ...company,
+  // ✅ TYPED STATE
+  const [formData, setFormData] = useState<CompanyForm>({
+    _id: company._id,
+    companyName: company.companyName || '',
+    companyDescription: company.companyDescription || '',
+    companyAddress: company.companyAddress || '',
+    companyContactNumber: company.companyContactNumber || '',
+    companyEmail: company.companyEmail || '',
   });
 
   const [loading, setLoading] = useState(false);
 
-  // HANDLE INPUT CHANGE
-  const handleChange = (key: string, value: string) => {
-    setFormData({
-      ...formData,
+  // ✅ TYPED HANDLE CHANGE
+  const handleChange = (key: keyof CompanyForm, value: string) => {
+    setFormData(prev => ({
+      ...prev,
       [key]: value,
-    });
+    }));
   };
 
-  /**
-   * UPDATE COMPANY
-   */
+  // UPDATE COMPANY
   const handleUpdate = async () => {
     if (
-      !formData.companyName?.trim() ||
-      !formData.companyDescription?.trim() ||
-      !formData.companyAddress?.trim() ||
-      !formData.companyContactNumber?.trim() ||
-      !formData.companyEmail?.trim()
+      !formData.companyName.trim() ||
+      !formData.companyDescription.trim() ||
+      !formData.companyAddress.trim() ||
+      !formData.companyContactNumber.trim() ||
+      !formData.companyEmail.trim()
     ) {
-      Alert.alert('Validation Error', 'All fields are required');
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'All fields are required',
+      });
     }
 
     if (!/^\d{10}$/.test(formData.companyContactNumber)) {
-      Alert.alert(
-        'Validation Error',
-        'Contact number must be exactly 10 digits',
-      );
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Invalid Contact',
+        text2: 'Contact number must be exactly 10 digits',
+      });
     }
 
     if (!/^\S+@\S+\.\S+$/.test(formData.companyEmail)) {
-      Alert.alert('Validation Error', 'Invalid email address');
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Invalid Email',
+        text2: 'Please enter a valid email address',
+      });
     }
 
     try {
@@ -69,58 +90,77 @@ export default function CompanyEditScreen({route, navigation}: any) {
         companyEmail: formData.companyEmail,
       });
 
-      Alert.alert('Success', 'Company updated successfully');
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Company updated successfully',
+      });
 
-      navigation.goBack();
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
+
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
 
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Update Failed',
-        error.response?.data?.message || 'Failed to update company',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Update Failed',
+        text2:
+          error.response?.data?.message || 'Failed to update company',
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  /**
-   * DELETE COMPANY
-   */
+  // DELETE COMPANY
   const handleDelete = () => {
-    Alert.alert('Delete Company', 'This action cannot be undone', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            setLoading(true);
+    Alert.alert(
+      'Delete Company',
+      'This action cannot be undone',
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              setLoading(true);
 
-            await api.delete(`/companies/${formData._id}`);
+              await api.delete(`/companies/${formData._id}`);
 
-            Alert.alert('Deleted', 'Company removed successfully');
+              Toast.show({
+                type: 'success',
+                text1: 'Deleted',
+                text2: 'Company removed successfully',
+              });
 
-            navigation.goBack();
-          } catch (error: any) {
-            Alert.alert(
-              'Delete Failed',
-              error.response?.data?.message || 'Failed to delete company',
-            );
-          } finally {
-            setLoading(false);
-          }
+              navigation.goBack();
+            } catch (error: any) {
+              Toast.show({
+                type: 'error',
+                text1: 'Delete Failed',
+                text2:
+                  error.response?.data?.message ||
+                  'Failed to delete company',
+              });
+            } finally {
+              setLoading(false);
+            }
+          },
         },
-      },
-    ]);
+      ],
+    );
   };
 
   return (
@@ -137,6 +177,7 @@ export default function CompanyEditScreen({route, navigation}: any) {
             style={styles.input}
             value={formData.companyName}
             placeholder="Company Name"
+            placeholderTextColor="#64748b"
             onChangeText={text => handleChange('companyName', text)}
           />
 
@@ -147,7 +188,10 @@ export default function CompanyEditScreen({route, navigation}: any) {
             multiline
             value={formData.companyDescription}
             placeholder="Company Description"
-            onChangeText={text => handleChange('companyDescription', text)}
+            placeholderTextColor="#64748b"
+            onChangeText={text =>
+              handleChange('companyDescription', text)
+            }
           />
 
           {/* ADDRESS */}
@@ -156,7 +200,10 @@ export default function CompanyEditScreen({route, navigation}: any) {
             style={styles.input}
             value={formData.companyAddress}
             placeholder="Company Address"
-            onChangeText={text => handleChange('companyAddress', text)}
+            placeholderTextColor="#64748b"
+            onChangeText={text =>
+              handleChange('companyAddress', text)
+            }
           />
 
           {/* CONTACT */}
@@ -166,7 +213,13 @@ export default function CompanyEditScreen({route, navigation}: any) {
             value={formData.companyContactNumber}
             keyboardType="numeric"
             placeholder="Contact Number"
-            onChangeText={text => handleChange('companyContactNumber', text)}
+            placeholderTextColor="#64748b"
+            onChangeText={text =>
+              handleChange(
+                'companyContactNumber',
+                text.replace(/[^0-9]/g, ''),
+              )
+            }
           />
 
           {/* EMAIL */}
@@ -177,13 +230,14 @@ export default function CompanyEditScreen({route, navigation}: any) {
             autoCapitalize="none"
             keyboardType="email-address"
             placeholder="Email Address"
+            placeholderTextColor="#64748b"
             onChangeText={text => handleChange('companyEmail', text)}
           />
 
-          {/* ACTIONS */}
+          {/* BUTTONS */}
           <View style={styles.buttonRow}>
             <TouchableOpacity
-              style={styles.updateBtn}
+              style={[styles.updateBtn, loading && {opacity: 0.6}]}
               onPress={handleUpdate}
               disabled={loading}>
               {loading ? (
