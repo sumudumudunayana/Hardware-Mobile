@@ -5,11 +5,11 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import Toast from 'react-native-toast-message'; // ✅ ADD
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/customer/CustomerAddScreenStyles';
@@ -23,45 +23,57 @@ export default function CustomerAddScreen({navigation}: any) {
 
   const [loading, setLoading] = useState(false);
 
-  //  HANDLE INPUT CHANGE
+  // HANDLE INPUT CHANGE
   const handleChange = (key: string, value: string) => {
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       [key]: value,
-    });
+    }));
   };
 
   /**
    * CREATE CUSTOMER
    */
   const handleSubmit = async () => {
-    // Validation
+    // VALIDATION
     if (!formData.customerName.trim()) {
-      Alert.alert('Validation Error', 'Customer name is required');
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Customer name is required',
+      });
     }
 
     if (!formData.customerContactNumber.trim()) {
-      Alert.alert('Validation Error', 'Contact number is required');
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Contact number is required',
+      });
     }
 
     if (!formData.customerEmail.trim()) {
-      Alert.alert('Validation Error', 'Email is required');
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Email is required',
+      });
     }
 
     if (!/^\d{10}$/.test(formData.customerContactNumber)) {
-      Alert.alert(
-        'Validation Error',
-        'Contact number must be exactly 10 digits',
-      );
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Invalid Contact',
+        text2: 'Contact number must be exactly 10 digits',
+      });
     }
 
     if (!/^\S+@\S+\.\S+$/.test(formData.customerEmail)) {
-      Alert.alert('Validation Error', 'Invalid email address');
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Invalid Email',
+        text2: 'Please enter a valid email address',
+      });
     }
 
     try {
@@ -73,21 +85,36 @@ export default function CustomerAddScreen({navigation}: any) {
         customerEmail: formData.customerEmail,
       });
 
-      Alert.alert('Success', 'Customer added successfully');
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Customer added successfully',
+      });
 
-      navigation.goBack();
+      // small delay so user sees toast
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
+
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
 
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Add Failed',
-        error.response?.data?.message || 'Failed to add customer',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Add Failed',
+        text2:
+          error.response?.data?.message ||
+          'Failed to add customer',
+      });
     } finally {
       setLoading(false);
     }
@@ -110,6 +137,7 @@ export default function CustomerAddScreen({navigation}: any) {
               style={styles.input}
               value={formData.customerName}
               onChangeText={text => handleChange('customerName', text)}
+              placeholderTextColor="#64748b"
             />
 
             {/* CONTACT */}
@@ -118,7 +146,13 @@ export default function CustomerAddScreen({navigation}: any) {
               style={styles.input}
               keyboardType="numeric"
               value={formData.customerContactNumber}
-              onChangeText={text => handleChange('customerContactNumber', text)}
+              onChangeText={text =>
+                handleChange(
+                  'customerContactNumber',
+                  text.replace(/[^0-9]/g, ''), // 🔥 numbers only
+                )
+              }
+              placeholderTextColor="#64748b"
             />
 
             {/* EMAIL */}
@@ -129,11 +163,12 @@ export default function CustomerAddScreen({navigation}: any) {
               keyboardType="email-address"
               value={formData.customerEmail}
               onChangeText={text => handleChange('customerEmail', text)}
+              placeholderTextColor="#64748b"
             />
 
             {/* SUBMIT */}
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button, loading && {opacity: 0.6}]}
               onPress={handleSubmit}
               disabled={loading}>
               {loading ? (
