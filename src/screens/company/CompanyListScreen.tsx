@@ -4,14 +4,16 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useFocusEffect} from '@react-navigation/native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
+import ConfirmDialog from '../../components/ConfirmDialog'; // ✅ IMPORT
 import styles from '../../styles/company/CompanyListScreenStyles';
 
 export default function CompanyListScreen({navigation}: any) {
@@ -20,8 +22,11 @@ export default function CompanyListScreen({navigation}: any) {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // FETCH COMPANIES
+  // ✅ DIALOG STATE
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState<any>(null);
 
+  // FETCH COMPANIES
   const fetchCompanies = async () => {
     try {
       setLoading(true);
@@ -32,24 +37,35 @@ export default function CompanyListScreen({navigation}: any) {
       setFilteredCompanies(res.data);
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
 
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Error',
-        error.response?.data?.message || 'Failed to fetch companies',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2:
+          error.response?.data?.message || 'Failed to fetch companies',
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  /**
-   * SEARCH
-   */
+  // AUTO REFRESH
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCompanies();
+    }, []),
+  );
+
+  // SEARCH
   const handleSearch = (text: string) => {
     setSearch(text);
 
@@ -65,54 +81,13 @@ export default function CompanyListScreen({navigation}: any) {
     setFilteredCompanies(filtered);
   };
 
-  /**
-   * DELETE
-   */
-  const handleDelete = (company: any) => {
-    Alert.alert(
-      'Delete Company',
-      `Are you sure you want to delete "${company.companyName}"?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await api.delete(`/companies/${company._id}`);
-
-              Alert.alert('Success', 'Company deleted successfully');
-
-              fetchCompanies();
-            } catch (error: any) {
-              Alert.alert(
-                'Delete Failed',
-                error.response?.data?.message || 'Failed to delete company',
-              );
-            }
-          },
-        },
-      ],
-    );
+  // ✅ OPEN DIALOG
+  const openDeleteDialog = (company: any) => {
+    setSelectedCompany(company);
+    setShowDialog(true);
   };
 
-  useEffect(() => {
-    fetchCompanies();
-  }, []);
-
-  /**
-   * DASHBOARD VALUES
-   */
   const totalCompanies = companies.length;
-
-  const companiesWithEmail = companies.filter(item => item.companyEmail).length;
-
-  const companiesWithPhone = companies.filter(
-    item => item.companyContactNumber,
-  ).length;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -125,7 +100,8 @@ export default function CompanyListScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            {/* HEADING */}
+            
+            {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>Company Overview</Text>
               <Text style={styles.subHeading}>
@@ -133,7 +109,7 @@ export default function CompanyListScreen({navigation}: any) {
               </Text>
             </View>
 
-            {/* SUMMARY CARDS */}
+            {/* SUMMARY */}
             <View style={styles.summaryRow}>
               <View style={styles.summaryCard}>
                 <Text style={styles.summaryLabel}>Total Companies</Text>
@@ -168,10 +144,12 @@ export default function CompanyListScreen({navigation}: any) {
               onChangeText={handleSearch}
             />
 
-            {/* COMPANY LIST */}
+            {/* LIST */}
             {filteredCompanies.map(company => (
               <View key={company._id} style={styles.card}>
-                <Text style={styles.companyName}>{company.companyName}</Text>
+                <Text style={styles.companyName}>
+                  {company.companyName}
+                </Text>
 
                 <Text style={styles.companyMeta}>
                   Phone: {company.companyContactNumber}
@@ -182,6 +160,7 @@ export default function CompanyListScreen({navigation}: any) {
                 </Text>
 
                 <View style={styles.buttonRow}>
+                  {/* VIEW */}
                   <TouchableOpacity
                     style={[styles.btn, styles.viewBtn]}
                     onPress={() =>
@@ -190,6 +169,7 @@ export default function CompanyListScreen({navigation}: any) {
                     <Text style={styles.btnText}>View</Text>
                   </TouchableOpacity>
 
+                  {/* EDIT */}
                   <TouchableOpacity
                     style={[styles.btn, styles.editBtn]}
                     onPress={() =>
@@ -198,9 +178,10 @@ export default function CompanyListScreen({navigation}: any) {
                     <Text style={styles.btnText}>Edit</Text>
                   </TouchableOpacity>
 
+                  {/* DELETE */}
                   <TouchableOpacity
                     style={[styles.btn, styles.deleteBtn]}
-                    onPress={() => handleDelete(company)}>
+                    onPress={() => openDeleteDialog(company)}>
                     <Text style={styles.btnText}>Delete</Text>
                   </TouchableOpacity>
                 </View>
@@ -209,6 +190,36 @@ export default function CompanyListScreen({navigation}: any) {
           </ScrollView>
         )}
       </View>
+
+      {/* ✅ CONFIRM DIALOG */}
+      <ConfirmDialog
+        visible={showDialog}
+        title="Delete Company"
+        message={`Are you sure you want to delete "${selectedCompany?.companyName}"?`}
+        onCancel={() => setShowDialog(false)}
+        onConfirm={async () => {
+          try {
+            await api.delete(`/companies/${selectedCompany._id}`);
+
+            Toast.show({
+              type: 'success',
+              text1: 'Deleted',
+              text2: 'Company deleted successfully',
+            });
+
+            setShowDialog(false);
+            fetchCompanies();
+          } catch (error: any) {
+            Toast.show({
+              type: 'error',
+              text1: 'Delete Failed',
+              text2:
+                error.response?.data?.message ||
+                'Failed to delete company',
+            });
+          }
+        }}
+      />
     </SafeAreaView>
   );
 }
