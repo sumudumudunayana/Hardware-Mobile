@@ -1,317 +1,305 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/products/ProductEditScreenStyles';
 
-export default function ProductEditScreen({
-  route,
-  navigation,
-}: any) {
+export default function ProductEditScreen({route, navigation}: any) {
   const {item} = route.params;
 
   const [formData, setFormData] = useState({
-    ...item,
-    itemCostPrice: item.itemCostPrice || '',
-    itemSellingPrice: item.itemSellingPrice || item.price || '',
-    category: item.category || '',
-    company: item.company || '',
-    supplier: item.supplier || '',
+    _id: item._id || item.id,
+    name: item.itemName || '',
+    description: item.itemDescription || '',
+    category: item.itemCategory || '',
+    company: item.itemCompany || '',
+    supplier: item.itemDistributor || '',
+    itemCostPrice: String(item.itemCostPrice || ''),
+    itemSellingPrice: String(item.itemSellingPrice || ''),
+    itemLabeledPrice: String(item.itemLabeledPrice || ''),
   });
 
+  const [categories, setCategories] = useState<any[]>([]);
+  const [companies, setCompanies] = useState<any[]>([]);
+  const [suppliers, setSuppliers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (
-    key: string,
-    value: string,
-  ) => {
-    setFormData({
-      ...formData,
+  // LOAD DATA
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+
+        const [cat, com, sup] = await Promise.all([
+          api.get('/categories'),
+          api.get('/companies'),
+          api.get('/distributors'),
+        ]);
+
+        setCategories(cat.data);
+        setCompanies(com.data);
+        setSuppliers(sup.data);
+      } catch (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Failed to load data',
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  const handleChange = (key: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
       [key]: value,
-    });
+    }));
   };
 
-   // UPDATE PRODUCT
-  
+  // UPDATE PRODUCT
   const handleUpdate = async () => {
     const cost = Number(formData.itemCostPrice);
     const selling = Number(formData.itemSellingPrice);
+    const labeled = Number(formData.itemLabeledPrice);
 
-    if (!formData.name?.trim()) {
-      Alert.alert(
-        'Validation Error',
-        'Item name is required',
-      );
-      return;
+    // VALIDATION
+    if (!formData.name.trim()) {
+      return Toast.show({type: 'error', text1: 'Item name required'});
     }
 
-    if (!formData.category?.trim()) {
-      Alert.alert(
-        'Validation Error',
-        'Category is required',
-      );
-      return;
+    if (!formData.description.trim()) {
+      return Toast.show({type: 'error', text1: 'Description required'});
     }
 
-    if (!formData.company?.trim()) {
-      Alert.alert(
-        'Validation Error',
-        'Company is required',
-      );
-      return;
+    if (!formData.category) {
+      return Toast.show({type: 'error', text1: 'Select category'});
     }
 
-    if (!formData.supplier?.trim()) {
-      Alert.alert(
-        'Validation Error',
-        'Supplier is required',
-      );
-      return;
+    if (!formData.company) {
+      return Toast.show({type: 'error', text1: 'Select company'});
     }
 
-    if (cost < 0 || selling < 0) {
-      Alert.alert(
-        'Validation Error',
-        'Prices cannot be negative',
-      );
-      return;
+    if (!formData.supplier) {
+      return Toast.show({type: 'error', text1: 'Select supplier'});
     }
 
-    if (selling < cost) {
-      Alert.alert(
-        'Validation Warning',
-        'Selling price must be higher than cost price',
-      );
-      return;
+    if (cost < 0 || selling < 0 || labeled < 0) {
+      return Toast.show({type: 'error', text1: 'Invalid prices'});
+    }
+
+    if (selling <= cost) {
+      return Toast.show({type: 'error', text1: 'Selling must be > cost'});
+    }
+
+    if (labeled <= selling || labeled <= cost) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Labeled must be highest',
+      });
     }
 
     try {
       setLoading(true);
 
-      await api.put(`/items/${formData.id}`, {
+      await api.put(`/items/${formData._id}`, {
         itemName: formData.name,
+        itemDescription: formData.description,
         itemCategory: formData.category,
         itemCompany: formData.company,
         itemDistributor: formData.supplier,
         itemCostPrice: cost,
         itemSellingPrice: selling,
+        itemLabeledPrice: labeled,
       });
 
-      Alert.alert(
-        'Success',
-        'Product updated successfully',
-      );
+      Toast.show({
+        type: 'success',
+        text1: 'Product updated successfully',
+      });
 
-      navigation.goBack();
+      setTimeout(() => navigation.goBack(), 1000);
     } catch (error: any) {
-      if (error.response?.status === 401) {
-        Alert.alert(
-          'Session Expired',
-          'Please login again',
-        );
+      console.log(error.response?.data);
 
-        navigation.replace('Login');
-        return;
-      }
-
-      Alert.alert(
-        'Update Failed',
-        error.response?.data?.message ||
-          'Failed to update product',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Update failed',
+        text2: error?.response?.data?.message,
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  /**
-   * DELETE PRODUCT
-   */
-  const handleDelete = () => {
-    Alert.alert(
-      'Delete Product',
-      'This action cannot be undone',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              setLoading(true);
-
-              await api.delete(
-                `/items/${formData.id}`,
-              );
-
-              Alert.alert(
-                'Deleted',
-                'Product removed successfully',
-              );
-
-              navigation.goBack();
-            } catch (error: any) {
-              Alert.alert(
-                'Delete Failed',
-                error.response?.data?.message ||
-                  'Failed to delete product',
-              );
-            } finally {
-              setLoading(false);
-            }
-          },
-        },
-      ],
-    );
-  };
-
   return (
     <View style={styles.container}>
-      <AppHeader
-        title="Edit Product"
-        onBack={() => navigation.goBack()}
-      />
+      <AppHeader title="Edit Product" onBack={() => navigation.goBack()} />
 
-      <ScrollView
-        contentContainerStyle={
-          styles.scrollContent
-        }>
-        <View style={styles.card}>
-          <Text style={styles.title}>
-            Edit Product Details
-          </Text>
+      {loading ? (
+        <ActivityIndicator size="large" color="#f59e0b" />
+      ) : (
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.card}>
+            <Text style={styles.title}>Edit Product</Text>
 
-          {/* ITEM NAME */}
-          <Text style={styles.label}>
-            Item Name
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={formData.name}
-            placeholder="Enter item name"
-            onChangeText={text =>
-              handleChange('name', text)
-            }
-          />
+            {/* NAME */}
+            <Text style={styles.label}>Item Name</Text>
+            <TextInput
+              style={styles.input}
+              value={formData.name}
+              placeholder="Item name"
+              placeholderTextColor="#94a3b8"
+              onChangeText={t => handleChange('name', t)}
+            />
 
-          {/* CATEGORY */}
-          <Text style={styles.label}>
-            Category
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={formData.category}
-            placeholder="Enter category"
-            onChangeText={text =>
-              handleChange('category', text)
-            }
-          />
+            {/* DESCRIPTION */}
+            <Text style={styles.label}>Description</Text>
+            <TextInput
+              style={[styles.input, {height: 80}]}
+              multiline
+              value={formData.description}
+              placeholder="Description"
+              placeholderTextColor="#94a3b8"
+              onChangeText={t => handleChange('description', t)}
+            />
 
-          {/* COMPANY */}
-          <Text style={styles.label}>
-            Company
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={formData.company}
-            placeholder="Enter company"
-            onChangeText={text =>
-              handleChange('company', text)
-            }
-          />
+            {/* CATEGORY */}
+            <Text style={styles.label}>Category</Text>
+            <View style={styles.chipContainer}>
+              {categories.map(cat => (
+                <TouchableOpacity
+                  key={cat._id}
+                  style={[
+                    styles.chip,
+                    formData.category === cat.categoryName &&
+                      styles.chipActive,
+                  ]}
+                  onPress={() =>
+                    handleChange('category', cat.categoryName)
+                  }>
+                  <Text
+                    style={[
+                      styles.chipText,
+                      formData.category === cat.categoryName &&
+                        styles.chipTextActive,
+                    ]}>
+                    {cat.categoryName}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
 
-          {/* SUPPLIER */}
-          <Text style={styles.label}>
-            Supplier
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={formData.supplier}
-            placeholder="Enter supplier"
-            onChangeText={text =>
-              handleChange('supplier', text)
-            }
-          />
+            {/* COMPANY */}
+            <Text style={styles.label}>Company</Text>
+            <View style={styles.chipContainer}>
+              {companies.map(c => (
+                <TouchableOpacity
+                  key={c._id}
+                  style={[
+                    styles.chip,
+                    formData.company === c.companyName &&
+                      styles.chipActive,
+                  ]}
+                  onPress={() =>
+                    handleChange('company', c.companyName)
+                  }>
+                  <Text
+                    style={[
+                      styles.chipText,
+                      formData.company === c.companyName &&
+                        styles.chipTextActive,
+                    ]}>
+                    {c.companyName}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
 
-          {/* COST PRICE */}
-          <Text style={styles.label}>
-            Cost Price
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={String(
-              formData.itemCostPrice,
-            )}
-            keyboardType="numeric"
-            placeholder="Enter cost price"
-            onChangeText={text =>
-              handleChange(
-                'itemCostPrice',
-                text,
-              )
-            }
-          />
+            {/* SUPPLIER */}
+            <Text style={styles.label}>Supplier</Text>
+            <View style={styles.chipContainer}>
+              {suppliers.map(s => (
+                <TouchableOpacity
+                  key={s._id}
+                  style={[
+                    styles.chip,
+                    formData.supplier === s.distributorName &&
+                      styles.chipActive,
+                  ]}
+                  onPress={() =>
+                    handleChange('supplier', s.distributorName)
+                  }>
+                  <Text
+                    style={[
+                      styles.chipText,
+                      formData.supplier === s.distributorName &&
+                        styles.chipTextActive,
+                    ]}>
+                    {s.distributorName}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
 
-          {/* SELLING PRICE */}
-          <Text style={styles.label}>
-            Selling Price
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={String(
-              formData.itemSellingPrice,
-            )}
-            keyboardType="numeric"
-            placeholder="Enter selling price"
-            onChangeText={text =>
-              handleChange(
-                'itemSellingPrice',
-                text,
-              )
-            }
-          />
+            {/* PRICES */}
+            <Text style={styles.label}>Cost Price</Text>
+            <TextInput
+              style={styles.input}
+              value={formData.itemCostPrice}
+              keyboardType="numeric"
+              placeholder="Cost"
+              placeholderTextColor="#94a3b8"
+              onChangeText={t =>
+                handleChange('itemCostPrice', t.replace(/[^0-9]/g, ''))
+              }
+            />
 
-          {/* ACTION BUTTONS */}
-          <View style={styles.buttonRow}>
+            <Text style={styles.label}>Selling Price</Text>
+            <TextInput
+              style={styles.input}
+              value={formData.itemSellingPrice}
+              keyboardType="numeric"
+              placeholder="Selling"
+              placeholderTextColor="#94a3b8"
+              onChangeText={t =>
+                handleChange('itemSellingPrice', t.replace(/[^0-9]/g, ''))
+              }
+            />
+
+            <Text style={styles.label}>Labeled Price</Text>
+            <TextInput
+              style={styles.input}
+              value={formData.itemLabeledPrice}
+              keyboardType="numeric"
+              placeholder="Labeled"
+              placeholderTextColor="#94a3b8"
+              onChangeText={t =>
+                handleChange('itemLabeledPrice', t.replace(/[^0-9]/g, ''))
+              }
+            />
+
+            {/* BUTTON */}
             <TouchableOpacity
-              style={styles.updateBtn}
+              style={[styles.updateBtn, loading && {opacity: 0.6}]}
               onPress={handleUpdate}
               disabled={loading}>
-              {loading ? (
-                <ActivityIndicator
-                  color="#ffffff"
-                />
-              ) : (
-                <Text
-                  style={styles.updateText}>
-                  Save Changes
-                </Text>
-              )}
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.deleteBtn}
-              onPress={handleDelete}
-              disabled={loading}>
-              <Text style={styles.deleteText}>
-                Delete
-              </Text>
+              <Text style={styles.updateText}>Save Changes</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      )}
     </View>
   );
 }
