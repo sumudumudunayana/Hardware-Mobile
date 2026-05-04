@@ -65,6 +65,11 @@ import InvoiceScreen from '../screens/sales/InvoiceScreen';
 import SalesHistoryScreen from '../screens/sales/SalesHistoryScreen';
 import SalesDetailsScreen from '../screens/sales/SalesDetailsScreen';
 
+import AIInsightsScreen from '../screens/ai/AIInsightsScreen';
+import SalesReportScreen from '../screens/sales/SalesReportScreen';
+import StockReportScreen from '../screens/stock/StockReportScreen';
+import LowStockAlertScreen from '../screens/stock/LowStockAlertScreen';
+
 // ROOT STACK TYPES
 export type RootStackParamList = {
   Login: undefined;
@@ -208,6 +213,14 @@ function StockStackScreen() {
       <StockStack.Screen name="StockDetails" component={StockDetailsScreen} />
       <StockStack.Screen name="StockEdit" component={StockEditScreen} />
       <StockStack.Screen name="StockAdd" component={StockAddScreen} />
+      <StockStack.Screen
+        name="StockReportsScreen"
+        component={StockReportScreen}
+      />
+      <StockStack.Screen
+        name="LowStockAlertScreen"
+        component={LowStockAlertScreen}
+      />
     </StockStack.Navigator>
   );
 }
@@ -256,6 +269,10 @@ function SalesStackScreen() {
         name="SalesDetailsScreen"
         component={SalesDetailsScreen}
       />
+      <SalesStack.Screen
+        name="SalesReportScreen"
+        component={SalesReportScreen}
+      />
     </SalesStack.Navigator>
   );
 }
@@ -272,24 +289,20 @@ function HomeStackScreen() {
       {/* DASHBOARD */}
       <HomeStack.Screen name="Dashboard" component={DashboardScreen} />
 
+      {/* ✅ AI INSIGHTS (NEW) */}
+      <HomeStack.Screen name="AIInsights" component={AIInsightsScreen} />
+
       {/* MANAGEMENT MODULES */}
       <HomeStack.Screen name="Products" component={ProductStackScreen} />
-
       <HomeStack.Screen name="Customers" component={CustomerStackScreen} />
-
       <HomeStack.Screen name="Companies" component={CompanyStackScreen} />
-
       <HomeStack.Screen name="Categories" component={CategoryStackScreen} />
-
       <HomeStack.Screen
         name="Distributors"
         component={DistributorStackScreen}
       />
-
       <HomeStack.Screen name="Stocks" component={StockStackScreen} />
-
       <HomeStack.Screen name="Promotions" component={PromotionStackScreen} />
-
       <HomeStack.Screen name="Sales" component={SalesStackScreen} />
     </HomeStack.Navigator>
   );
@@ -306,39 +319,47 @@ function MainTabs() {
         headerShown: false,
 
         tabBarActiveTintColor: '#f59e0b',
-
         tabBarInactiveTintColor: '#64748b',
 
         tabBarStyle: {
-          height: 65,
-
-          paddingBottom: 8,
-
-          paddingTop: 8,
+          height: 75, // 🔥 increased height
+          paddingBottom: 10,
+          paddingTop: 6,
         },
 
-        tabBarIcon: ({color, size}) => {
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
+          marginTop: 2, // 🔥 spacing between icon + text
+        },
+
+        tabBarItemStyle: {
+          paddingVertical: 4, // 🔥 prevents clipping
+        },
+
+        tabBarIcon: ({color}) => {
           let iconName = '';
 
-          if (route.name === 'Home') {
-            iconName = 'home';
-          }
-
-          if (route.name === 'Settings') {
-            iconName = 'settings';
-          }
+          if (route.name === 'Home') iconName = 'home';
+          if (route.name === 'Settings') iconName = 'settings';
 
           return <Ionicons name={iconName} size={22} color={color} />;
         },
       })}>
       <Tab.Screen name="Home" component={HomeStackScreen} />
 
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: 'Settings', // 🔥 force full label (important)
+        }}
+      />
     </Tab.Navigator>
   );
 }
 
- // ROOT NAVIGATION
+// ROOT NAVIGATION
 function AppNavigator() {
   const {userToken, loading} = useContext(AuthContext);
 
