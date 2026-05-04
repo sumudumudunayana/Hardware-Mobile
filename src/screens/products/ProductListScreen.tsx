@@ -4,27 +4,35 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import styles from '../../styles/products/ProductListScreenStyles';
 
 export default function ProductListScreen({navigation}: any) {
   const [products, setProducts] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]); // ✅ NEW
   const [loading, setLoading] = useState(true);
 
-   // FETCH PRODUCTS
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+
+  // ✅ FETCH PRODUCTS + CATEGORIES
   const fetchProducts = async () => {
     try {
       setLoading(true);
 
-      const res = await api.get('/items');
+      const [productsRes, categoriesRes] = await Promise.all([
+        api.get('/items'),
+        api.get('/categories'),
+      ]);
 
-      // Fetch FULL backend data
-      const formatted = res.data.map((item: any) => ({
+      const formatted = productsRes.data.map((item: any) => ({
         id: item._id,
         itemId: item.itemId,
 
@@ -40,7 +48,7 @@ export default function ProductListScreen({navigation}: any) {
         itemCompany: item.itemCompany,
         itemDistributor: item.itemDistributor,
 
-        // UI-friendly aliases
+        // UI aliases
         name: item.itemName,
         price: Number(item.itemSellingPrice || 0),
         category: item.itemCategory,
@@ -49,17 +57,26 @@ export default function ProductListScreen({navigation}: any) {
       }));
 
       setProducts(formatted);
+      setCategories(categoriesRes.data); // ✅ FIXED
+
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
+
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Error',
-        error.response?.data?.message || 'Failed to fetch products',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2:
+          error.response?.data?.message || 'Failed to fetch data',
+      });
     } finally {
       setLoading(false);
     }
@@ -69,48 +86,17 @@ export default function ProductListScreen({navigation}: any) {
     fetchProducts();
   }, []);
 
-  /**
-   * DELETE PRODUCT
-   */
-  const handleDelete = (item: any) => {
-    Alert.alert(
-      'Delete Product',
-      `Are you sure you want to delete "${item.name}"?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await api.delete(`/items/${item.id}`);
-
-              Alert.alert('Success', 'Product deleted successfully');
-
-              fetchProducts();
-            } catch (error: any) {
-              Alert.alert(
-                'Delete Failed',
-                error.response?.data?.message || 'Failed to delete product',
-              );
-            }
-          },
-        },
-      ],
-    );
+  // OPEN DELETE DIALOG
+  const openDeleteDialog = (item: any) => {
+    setSelectedProduct(item);
+    setShowDialog(true);
   };
 
-  /**
-   * DASHBOARD VALUES
-   */
+  // ✅ DASHBOARD VALUES
   const totalProducts = products.length;
 
-  const totalCategories = new Set(
-    products.map(item => item.category).filter(Boolean),
-  ).size;
+  // ✅ FIXED CATEGORY COUNT
+  const totalCategories = categories.length;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -123,7 +109,8 @@ export default function ProductListScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            {/* PAGE HEADING */}
+            
+            {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>Inventory Overview</Text>
               <Text style={styles.subHeading}>
@@ -131,42 +118,40 @@ export default function ProductListScreen({navigation}: any) {
               </Text>
             </View>
 
-            {/* SUMMARY CARDS */}
+            {/* SUMMARY */}
             <View style={styles.summaryRow}>
               <View style={styles.summaryCard}>
                 <Text style={styles.summaryLabel}>Total Products</Text>
-
                 <Text style={styles.summaryValue}>{totalProducts}</Text>
               </View>
 
               <View style={styles.summaryCard}>
                 <Text style={styles.summaryLabel}>Categories</Text>
-
                 <Text style={styles.summaryValue}>{totalCategories}</Text>
               </View>
             </View>
 
-            {/* QUICK ACTION CARD */}
+            {/* QUICK ACTION */}
             <TouchableOpacity
               style={styles.quickActionCard}
               onPress={() => navigation.navigate('ProductAdd')}>
               <Text style={styles.quickActionTitle}>Quick Action</Text>
-
               <Text style={styles.quickActionText}>Add New Product</Text>
-
               <Text style={styles.quickActionSub}>
                 Tap here to register new product
               </Text>
             </TouchableOpacity>
 
-            {/* PRODUCT LIST */}
+            {/* LIST */}
             <Text style={styles.sectionTitle}>Product List</Text>
 
             {products.map(item => (
               <View key={item.id} style={styles.card}>
                 <Text style={styles.productName}>{item.name}</Text>
 
-                <Text style={styles.productMeta}>Price: Rs. {item.price}</Text>
+                <Text style={styles.productMeta}>
+                  Price: Rs. {item.price}
+                </Text>
 
                 <Text style={styles.productMeta}>
                   Category: {item.category}
@@ -185,14 +170,16 @@ export default function ProductListScreen({navigation}: any) {
                   {/* EDIT */}
                   <TouchableOpacity
                     style={[styles.btn, styles.editBtn]}
-                    onPress={() => navigation.navigate('ProductEdit', {item})}>
+                    onPress={() =>
+                      navigation.navigate('ProductEdit', {item})
+                    }>
                     <Text style={styles.btnText}>Edit</Text>
                   </TouchableOpacity>
 
                   {/* DELETE */}
                   <TouchableOpacity
                     style={[styles.btn, styles.deleteBtn]}
-                    onPress={() => handleDelete(item)}>
+                    onPress={() => openDeleteDialog(item)}>
                     <Text style={styles.btnText}>Delete</Text>
                   </TouchableOpacity>
                 </View>
@@ -201,6 +188,36 @@ export default function ProductListScreen({navigation}: any) {
           </ScrollView>
         )}
       </View>
+
+      {/* ✅ CONFIRM DIALOG */}
+      <ConfirmDialog
+        visible={showDialog}
+        title="Delete Product"
+        message={`Are you sure you want to delete "${selectedProduct?.name}"?`}
+        onCancel={() => setShowDialog(false)}
+        onConfirm={async () => {
+          try {
+            await api.delete(`/items/${selectedProduct.id}`);
+
+            Toast.show({
+              type: 'success',
+              text1: 'Deleted',
+              text2: 'Product deleted successfully',
+            });
+
+            setShowDialog(false);
+            fetchProducts();
+          } catch (error: any) {
+            Toast.show({
+              type: 'error',
+              text1: 'Delete Failed',
+              text2:
+                error.response?.data?.message ||
+                'Failed to delete product',
+            });
+          }
+        }}
+      />
     </SafeAreaView>
   );
 }
