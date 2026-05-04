@@ -4,14 +4,16 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useFocusEffect} from '@react-navigation/native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import styles from '../../styles/customer/CustomerListScreenStyles';
 
 export default function CustomerListScreen({navigation}: any) {
@@ -20,6 +22,11 @@ export default function CustomerListScreen({navigation}: any) {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
 
+  // ✅ DIALOG STATE
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+
+  // FETCH CUSTOMERS
   const fetchCustomers = async () => {
     try {
       setLoading(true);
@@ -30,20 +37,36 @@ export default function CustomerListScreen({navigation}: any) {
       setFilteredCustomers(res.data);
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
+
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Error',
-        error.response?.data?.message || 'Failed to fetch customers',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2:
+          error.response?.data?.message ||
+          'Failed to fetch customers',
+      });
     } finally {
       setLoading(false);
     }
   };
 
+  // ✅ AUTO REFRESH WHEN SCREEN FOCUSES
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCustomers();
+    }, []),
+  );
+
+  // SEARCH
   const handleSearch = (text: string) => {
     setSearch(text);
 
@@ -59,45 +82,15 @@ export default function CustomerListScreen({navigation}: any) {
     setFilteredCustomers(filtered);
   };
 
-  const handleDelete = (customer: any) => {
-    Alert.alert(
-      'Delete Customer',
-      `Are you sure you want to delete "${customer.customerName}"?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await api.delete(`/customers/${customer._id}`);
-
-              Alert.alert('Success', 'Customer deleted successfully');
-
-              fetchCustomers();
-            } catch (error: any) {
-              Alert.alert(
-                'Delete Failed',
-                error.response?.data?.message || 'Failed to delete customer',
-              );
-            }
-          },
-        },
-      ],
-    );
+  // ✅ OPEN DELETE DIALOG
+  const openDeleteDialog = (customer: any) => {
+    setSelectedCustomer(customer);
+    setShowDialog(true);
   };
-
-  useEffect(() => {
-    fetchCustomers();
-  }, []);
 
   // Dashboard values
   const totalCustomers = customers.length;
 
-  // Count customers with email
   const customersWithEmail = customers.filter(
     item => item.customerEmail,
   ).length;
@@ -113,7 +106,8 @@ export default function CustomerListScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            {/* PAGE HEADING */}
+            
+            {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>Customer Overview</Text>
               <Text style={styles.subHeading}>
@@ -121,7 +115,7 @@ export default function CustomerListScreen({navigation}: any) {
               </Text>
             </View>
 
-            {/* SUMMARY CARDS */}
+            {/* SUMMARY */}
             <View style={styles.summaryRow}>
               <View style={styles.summaryCard}>
                 <Text style={styles.summaryLabel}>Total Customers</Text>
@@ -130,11 +124,13 @@ export default function CustomerListScreen({navigation}: any) {
 
               <View style={styles.summaryCard}>
                 <Text style={styles.summaryLabel}>With Email</Text>
-                <Text style={styles.summaryValue}>{customersWithEmail}</Text>
+                <Text style={styles.summaryValue}>
+                  {customersWithEmail}
+                </Text>
               </View>
             </View>
 
-            {/* QUICK ACTION CARD */}
+            {/* QUICK ACTION */}
             <TouchableOpacity
               style={styles.quickActionCard}
               onPress={() => navigation.navigate('CustomerAdd')}>
@@ -156,9 +152,12 @@ export default function CustomerListScreen({navigation}: any) {
               onChangeText={handleSearch}
             />
 
+            {/* LIST */}
             {filteredCustomers.map(customer => (
               <View key={customer._id} style={styles.card}>
-                <Text style={styles.customerName}>{customer.customerName}</Text>
+                <Text style={styles.customerName}>
+                  {customer.customerName}
+                </Text>
 
                 <Text style={styles.customerMeta}>
                   ID: {customer.customerId}
@@ -187,7 +186,7 @@ export default function CustomerListScreen({navigation}: any) {
 
                   <TouchableOpacity
                     style={[styles.btn, styles.deleteBtn]}
-                    onPress={() => handleDelete(customer)}>
+                    onPress={() => openDeleteDialog(customer)}>
                     <Text style={styles.btnText}>Delete</Text>
                   </TouchableOpacity>
                 </View>
@@ -196,6 +195,36 @@ export default function CustomerListScreen({navigation}: any) {
           </ScrollView>
         )}
       </View>
+
+      {/* ✅ CONFIRM DIALOG */}
+      <ConfirmDialog
+        visible={showDialog}
+        title="Delete Customer"
+        message={`Are you sure you want to delete "${selectedCustomer?.customerName}"?`}
+        onCancel={() => setShowDialog(false)}
+        onConfirm={async () => {
+          try {
+            await api.delete(`/customers/${selectedCustomer._id}`);
+
+            Toast.show({
+              type: 'success',
+              text1: 'Deleted',
+              text2: 'Customer deleted successfully',
+            });
+
+            setShowDialog(false);
+            fetchCustomers();
+          } catch (error: any) {
+            Toast.show({
+              type: 'error',
+              text1: 'Delete Failed',
+              text2:
+                error.response?.data?.message ||
+                'Failed to delete customer',
+            });
+          }
+        }}
+      />
     </SafeAreaView>
   );
 }
