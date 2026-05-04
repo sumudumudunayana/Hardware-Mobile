@@ -5,11 +5,11 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/products/ProductAddScreenStyles';
@@ -32,7 +32,7 @@ export default function ProductAddScreen({navigation}: any) {
 
   const [loading, setLoading] = useState(false);
 
-   // LOAD DROPDOWN DATA
+  // LOAD DROPDOWN DATA
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -49,13 +49,20 @@ export default function ProductAddScreen({navigation}: any) {
         setDistributors(dist.data);
       } catch (error: any) {
         if (error.response?.status === 401) {
-          Alert.alert('Session Expired', 'Please login again');
-
+          Toast.show({
+            type: 'error',
+            text1: 'Session Expired',
+            text2: 'Please login again',
+          });
           navigation.replace('Login');
           return;
         }
 
-        Alert.alert('Error', 'Failed to load dropdown data');
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Failed to load dropdown data',
+        });
       } finally {
         setLoading(false);
       }
@@ -64,9 +71,7 @@ export default function ProductAddScreen({navigation}: any) {
     loadData();
   }, []);
 
-  /**
-   * HANDLE INPUT CHANGE
-   */
+  // HANDLE INPUT CHANGE
   const handleChange = (name: string, value: string) => {
     setFormData({
       ...formData,
@@ -74,45 +79,63 @@ export default function ProductAddScreen({navigation}: any) {
     });
   };
 
-  /**
-   * SUBMIT NEW PRODUCT
-   */
+  // SUBMIT NEW PRODUCT
   const handleSubmit = async () => {
     const cost = Number(formData.itemCostPrice);
     const selling = Number(formData.itemSellingPrice);
     const labeled = Number(formData.itemLabeledPrice);
 
-    // Validation
     if (!formData.itemName.trim()) {
-      Alert.alert('Validation Error', 'Item name is required');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Item name is required',
+      });
       return;
     }
 
     if (!formData.itemCategory) {
-      Alert.alert('Validation Error', 'Please select a category');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Select a category',
+      });
       return;
     }
 
     if (!formData.itemCompany) {
-      Alert.alert('Validation Error', 'Please select a company');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Select a company',
+      });
       return;
     }
 
     if (!formData.itemDistributor) {
-      Alert.alert('Validation Error', 'Please select a distributor');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Select a distributor',
+      });
       return;
     }
 
     if (cost < 0 || selling < 0 || labeled < 0) {
-      Alert.alert('Validation Error', 'Prices cannot be negative');
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid Prices',
+        text2: 'Prices cannot be negative',
+      });
       return;
     }
 
     if (selling < cost) {
-      Alert.alert(
-        'Validation Warning',
-        'Selling price must be higher than cost price',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid Pricing',
+        text2: 'Selling price must be higher than cost price',
+      });
       return;
     }
 
@@ -126,21 +149,30 @@ export default function ProductAddScreen({navigation}: any) {
         itemLabeledPrice: labeled,
       });
 
-      Alert.alert('Success', 'Product added successfully');
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Product added successfully',
+      });
 
       navigation.goBack();
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
 
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Add Failed',
-        error.response?.data?.message || 'Failed to add product',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Add Failed',
+        text2: error.response?.data?.message || 'Failed to add product',
+      });
     } finally {
       setLoading(false);
     }
@@ -166,9 +198,11 @@ export default function ProductAddScreen({navigation}: any) {
                 style={styles.input}
                 value={formData.itemName}
                 onChangeText={text => handleChange('itemName', text)}
+                placeholderTextColor="#64748b"
               />
 
               {/* CATEGORY */}
+              <Text style={styles.label}>Category</Text>
               <View style={styles.chipContainer}>
                 {categories.map(cat => (
                   <TouchableOpacity
@@ -200,6 +234,7 @@ export default function ProductAddScreen({navigation}: any) {
                 multiline
                 value={formData.itemDescription}
                 onChangeText={text => handleChange('itemDescription', text)}
+                placeholderTextColor="#64748b"
               />
 
               {/* PRICES */}
@@ -208,7 +243,10 @@ export default function ProductAddScreen({navigation}: any) {
                 style={styles.input}
                 keyboardType="numeric"
                 value={formData.itemCostPrice}
-                onChangeText={text => handleChange('itemCostPrice', text)}
+                onChangeText={text =>
+                  handleChange('itemCostPrice', text.replace(/[^0-9]/g, ''))
+                }
+                placeholderTextColor="#64748b"
               />
 
               <TextInput
@@ -216,7 +254,10 @@ export default function ProductAddScreen({navigation}: any) {
                 style={styles.input}
                 keyboardType="numeric"
                 value={formData.itemSellingPrice}
-                onChangeText={text => handleChange('itemSellingPrice', text)}
+                onChangeText={text =>
+                  handleChange('itemSellingPrice', text.replace(/[^0-9]/g, ''))
+                }
+                placeholderTextColor="#64748b"
               />
 
               <TextInput
@@ -224,10 +265,14 @@ export default function ProductAddScreen({navigation}: any) {
                 style={styles.input}
                 keyboardType="numeric"
                 value={formData.itemLabeledPrice}
-                onChangeText={text => handleChange('itemLabeledPrice', text)}
+                onChangeText={text =>
+                  handleChange('itemLabeledPrice', text.replace(/[^0-9]/g, ''))
+                }
+                placeholderTextColor="#64748b"
               />
 
               {/* COMPANY */}
+              <Text style={styles.label}>Company</Text>
               <View style={styles.chipContainer}>
                 {companies.map(c => (
                   <TouchableOpacity
@@ -251,6 +296,7 @@ export default function ProductAddScreen({navigation}: any) {
               </View>
 
               {/* DISTRIBUTOR */}
+              <Text style={styles.label}>Distributor</Text>
               <View style={styles.chipContainer}>
                 {distributors.map(d => (
                   <TouchableOpacity
