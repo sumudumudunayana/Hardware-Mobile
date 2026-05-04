@@ -193,4 +193,28 @@ export default StyleSheet.create({
     fontWeight: '700',
     color: '#0f172a',
   },
+
+
+  glowPrimary: {
+  position: 'absolute',
+  width: 250,
+  height: 250,
+  backgroundColor: 'rgba(251, 190, 36, 0.25)',
+  borderRadius: 200,
+  top: 40,
+  left: -80,
+  pointerEvents: 'none',
+},
+
+glowSecondary: {
+  position: 'absolute',
+  width: 280,
+  height: 280,
+  backgroundColor: 'rgba(96, 165, 250, 0.25)',
+  borderRadius: 200,
+  bottom: 40,
+  right: -100,
+  pointerEvents: 'none',
+},
 });
+
