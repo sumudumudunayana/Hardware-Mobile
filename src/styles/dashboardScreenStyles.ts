@@ -170,4 +170,79 @@ export default StyleSheet.create({
     color: "#fff",
     fontWeight: "600",
   },
+
+
+
+
+
+  /* ========================= */
+/* 🤖 AI CARD (ORANGE THEME) */
+/* ========================= */
+
+aiCard: {
+  borderRadius: 22,
+  marginBottom: 20,
+  overflow: "hidden",
+
+  // main color
+  backgroundColor: "#f59e0b",
+
+  // shadow
+  shadowColor: "#f59e0b",
+  shadowOpacity: 0.35,
+  shadowRadius: 20,
+  shadowOffset: { width: 0, height: 10 },
+  elevation: 10,
+},
+
+aiGlow: {
+  position: "absolute",
+  width: 220,
+  height: 220,
+  backgroundColor: "rgba(255,255,255,0.25)",
+  borderRadius: 200,
+  top: -60,
+  right: -60,
+},
+
+aiContent: {
+  padding: 20,
+},
+
+aiTopRow: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 10,
+},
+
+aiIcon: {
+  fontSize: 26,
+},
+
+aiBadge: {
+  fontSize: 11,
+  fontWeight: "700",
+  color: "#fff7ed",
+},
+
+aiTitle: {
+  fontSize: 20,
+  fontWeight: "800",
+  color: "#ffffff",
+  marginBottom: 6,
+},
+
+aiDesc: {
+  fontSize: 13,
+  color: "#fff7ed",
+  lineHeight: 18,
+},
+
+aiAction: {
+  marginTop: 12,
+  fontSize: 13,
+  fontWeight: "700",
+  color: "#ffffff",
+},
 });
