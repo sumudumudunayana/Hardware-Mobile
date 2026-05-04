@@ -1,232 +1,188 @@
-import React, {useState} from "react";
+import React, {useState} from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
-} from "react-native";
+} from 'react-native';
 
-import api from "../../api/api";
-import AppHeader from "../../components/AppHeader";
-import styles from "../../styles/distributor/DistributorEditScreenStyles";
+import Toast from 'react-native-toast-message';
+import api from '../../api/api';
+import AppHeader from '../../components/AppHeader';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import styles from '../../styles/distributor/DistributorEditScreenStyles';
 
-export default function DistributorEditScreen({
-  route,
-  navigation,
-}: any) {
+// ✅ TYPE DEFINITION
+type DistributorForm = {
+  _id?: string;
+  distributorName: string;
+  distributorDescription: string;
+  distributorContactNumber: string;
+  distributorEmail: string;
+};
+
+export default function DistributorEditScreen({route, navigation}: any) {
   const {distributor} = route.params;
 
-  const [formData, setFormData] = useState({
-    ...distributor,
+  // ✅ TYPED STATE (fixes prev issue)
+  const [formData, setFormData] = useState<DistributorForm>({
+    _id: distributor._id,
+    distributorName: distributor.distributorName || '',
+    distributorDescription: distributor.distributorDescription || '',
+    distributorContactNumber: distributor.distributorContactNumber || '',
+    distributorEmail: distributor.distributorEmail || '',
   });
 
   const [loading, setLoading] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
-  const handleChange = (
-    key: string,
-    value: string,
-  ) => {
-    setFormData({
-      ...formData,
+  // ✅ FIXED HANDLE CHANGE (typed key)
+  const handleChange = (key: keyof DistributorForm, value: string) => {
+    setFormData(prev => ({
+      ...prev,
       [key]: value,
-    });
+    }));
   };
 
+  // UPDATE
   const handleUpdate = async () => {
     if (
-      !formData.distributorName?.trim() ||
-      !formData.distributorDescription?.trim() ||
-      !formData.distributorContactNumber?.trim() ||
-      !formData.distributorEmail?.trim()
+      !formData.distributorName.trim() ||
+      !formData.distributorDescription.trim() ||
+      !formData.distributorContactNumber.trim() ||
+      !formData.distributorEmail.trim()
     ) {
-      Alert.alert(
-        "Validation Error",
-        "All fields are required",
-      );
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'All fields are required',
+      });
+    }
+
+    if (!/^\d{10}$/.test(formData.distributorContactNumber)) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Invalid Contact',
+        text2: 'Contact number must be exactly 10 digits',
+      });
+    }
+
+    if (!/^\S+@\S+\.\S+$/.test(formData.distributorEmail)) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Invalid Email',
+        text2: 'Please enter a valid email address',
+      });
     }
 
     try {
       setLoading(true);
 
-      await api.put(
-        `/distributors/${formData._id}`,
-        {
-          distributorName:
-            formData.distributorName,
-          distributorDescription:
-            formData.distributorDescription,
-          distributorContactNumber:
-            formData.distributorContactNumber,
-          distributorEmail:
-            formData.distributorEmail,
-        },
-      );
+      await api.put(`/distributors/${formData._id}`, {
+        distributorName: formData.distributorName,
+        distributorDescription: formData.distributorDescription,
+        distributorContactNumber: formData.distributorContactNumber,
+        distributorEmail: formData.distributorEmail,
+      });
 
-      Alert.alert(
-        "Success",
-        "Supplier updated successfully",
-      );
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Supplier updated successfully',
+      });
 
-      navigation.goBack();
+      setTimeout(() => navigation.goBack(), 1000);
     } catch (error: any) {
-      Alert.alert(
-        "Update Failed",
-        error.response?.data?.message ||
-          "Failed to update supplier",
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Update Failed',
+        text2:
+          error.response?.data?.message ||
+          'Failed to update supplier',
+      });
     } finally {
       setLoading(false);
     }
   };
 
+  // DELETE
   const handleDelete = () => {
-    Alert.alert(
-      "Delete Supplier",
-      "This action cannot be undone",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              setLoading(true);
-
-              await api.delete(
-                `/distributors/${formData._id}`,
-              );
-
-              Alert.alert(
-                "Deleted",
-                "Supplier removed successfully",
-              );
-
-              navigation.goBack();
-            } catch (error: any) {
-              Alert.alert(
-                "Delete Failed",
-                error.response?.data?.message ||
-                  "Failed to delete supplier",
-              );
-            } finally {
-              setLoading(false);
-            }
-          },
-        },
-      ],
-    );
+    setShowDialog(true);
   };
 
   return (
     <View style={styles.container}>
-      <AppHeader
-        title="Edit Supplier"
-        onBack={() => navigation.goBack()}
-      />
+      <AppHeader title="Edit Supplier" onBack={() => navigation.goBack()} />
 
-      <ScrollView
-        contentContainerStyle={
-          styles.scrollContent
-        }>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.card}>
-          <Text style={styles.title}>
-            Edit Supplier
-          </Text>
+          <Text style={styles.title}>Edit Supplier</Text>
 
           {/* NAME */}
-          <Text style={styles.label}>
-            Supplier Name
-          </Text>
+          <Text style={styles.label}>Supplier Name</Text>
           <TextInput
             style={styles.input}
             value={formData.distributorName}
             placeholder="Supplier Name"
-            onChangeText={(text) =>
-              handleChange(
-                "distributorName",
-                text,
-              )
-            }
+            placeholderTextColor="#64748b"
+            onChangeText={text => handleChange('distributorName', text)}
           />
 
           {/* DESCRIPTION */}
-          <Text style={styles.label}>
-            Description
-          </Text>
+          <Text style={styles.label}>Description</Text>
           <TextInput
-            style={[
-              styles.input,
-              styles.textArea,
-            ]}
+            style={[styles.input, styles.textArea]}
             multiline
-            value={
-              formData.distributorDescription
-            }
+            value={formData.distributorDescription}
             placeholder="Description"
-            onChangeText={(text) =>
-              handleChange(
-                "distributorDescription",
-                text,
-              )
+            placeholderTextColor="#64748b"
+            onChangeText={text =>
+              handleChange('distributorDescription', text)
             }
           />
 
           {/* CONTACT */}
-          <Text style={styles.label}>
-            Contact Number
-          </Text>
+          <Text style={styles.label}>Contact Number</Text>
           <TextInput
             style={styles.input}
-            value={
-              formData.distributorContactNumber
-            }
+            value={formData.distributorContactNumber}
             placeholder="Contact Number"
+            placeholderTextColor="#64748b"
             keyboardType="numeric"
-            onChangeText={(text) =>
+            onChangeText={text =>
               handleChange(
-                "distributorContactNumber",
-                text,
+                'distributorContactNumber',
+                text.replace(/[^0-9]/g, ''),
               )
             }
           />
 
           {/* EMAIL */}
-          <Text style={styles.label}>
-            Email Address
-          </Text>
+          <Text style={styles.label}>Email Address</Text>
           <TextInput
             style={styles.input}
             value={formData.distributorEmail}
             placeholder="Email Address"
+            placeholderTextColor="#64748b"
             autoCapitalize="none"
             keyboardType="email-address"
-            onChangeText={(text) =>
-              handleChange(
-                "distributorEmail",
-                text,
-              )
+            onChangeText={text =>
+              handleChange('distributorEmail', text)
             }
           />
 
-          {/* ACTIONS */}
+          {/* BUTTONS */}
           <View style={styles.buttonRow}>
             <TouchableOpacity
-              style={styles.updateBtn}
+              style={[styles.updateBtn, loading && {opacity: 0.6}]}
               onPress={handleUpdate}
               disabled={loading}>
               {loading ? (
-                <ActivityIndicator color="#ffffff" />
+                <ActivityIndicator color="#fff" />
               ) : (
-                <Text style={styles.updateText}>
-                  Save Changes
-                </Text>
+                <Text style={styles.updateText}>Save Changes</Text>
               )}
             </TouchableOpacity>
 
@@ -234,13 +190,45 @@ export default function DistributorEditScreen({
               style={styles.deleteBtn}
               onPress={handleDelete}
               disabled={loading}>
-              <Text style={styles.deleteText}>
-                Delete
-              </Text>
+              <Text style={styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
+
+      {/* CONFIRM DIALOG */}
+      <ConfirmDialog
+        visible={showDialog}
+        title="Delete Supplier"
+        message={`Are you sure you want to delete "${formData.distributorName}"?`}
+        onCancel={() => setShowDialog(false)}
+        onConfirm={async () => {
+          try {
+            setLoading(true);
+
+            await api.delete(`/distributors/${formData._id}`);
+
+            Toast.show({
+              type: 'success',
+              text1: 'Deleted',
+              text2: 'Supplier removed successfully',
+            });
+
+            setShowDialog(false);
+            navigation.goBack();
+          } catch (error: any) {
+            Toast.show({
+              type: 'error',
+              text1: 'Delete Failed',
+              text2:
+                error.response?.data?.message ||
+                'Failed to delete supplier',
+            });
+          } finally {
+            setLoading(false);
+          }
+        }}
+      />
     </View>
   );
 }
