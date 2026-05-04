@@ -80,9 +80,6 @@ export default function SettingsScreen({navigation}: any) {
 
             <Text style={styles.role}>Admin</Text>
 
-            <Text style={styles.email}>
-              hardwaremanagement@gmail.com
-            </Text>
           </View>
 
           {/* ACCOUNT SETTINGS */}
@@ -130,7 +127,7 @@ export default function SettingsScreen({navigation}: any) {
             <Text style={styles.infoText}>Version 1.0</Text>
 
             <Text style={styles.infoText}>
-              Developed by Sumudu
+              Developed by Team
             </Text>
           </View>
 
