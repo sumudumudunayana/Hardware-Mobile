@@ -5,61 +5,89 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import styles from '../../styles/customer/CustomerEditScreenStyles';
+
+// ✅ TYPE
+type CustomerForm = {
+  _id?: string;
+  customerName: string;
+  customerContactNumber: string;
+  customerEmail: string;
+};
 
 export default function CustomerEditScreen({route, navigation}: any) {
   const {customer} = route.params;
 
-  const [formData, setFormData] = useState({
-    ...customer,
+  // ✅ TYPED STATE
+  const [formData, setFormData] = useState<CustomerForm>({
+    _id: customer._id,
+    customerName: customer.customerName || '',
+    customerContactNumber: customer.customerContactNumber || '',
+    customerEmail: customer.customerEmail || '',
   });
 
   const [loading, setLoading] = useState(false);
 
-  //  HANDLE INPUT CHANGE
-  const handleChange = (key: string, value: string) => {
-    setFormData({
-      ...formData,
+  // ✅ DIALOG STATE
+  const [showDialog, setShowDialog] = useState(false);
+
+  // ✅ TYPED CHANGE HANDLER
+  const handleChange = (key: keyof CustomerForm, value: string) => {
+    setFormData(prev => ({
+      ...prev,
       [key]: value,
-    });
+    }));
   };
 
   /**
    * UPDATE CUSTOMER
    */
   const handleUpdate = async () => {
-    if (!formData.customerName?.trim()) {
-      Alert.alert('Validation Error', 'Customer name is required');
-      return;
+    if (!formData.customerName.trim()) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Customer name is required',
+      });
     }
 
-    if (!formData.customerContactNumber?.trim()) {
-      Alert.alert('Validation Error', 'Contact number is required');
-      return;
+    if (!formData.customerContactNumber.trim()) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Contact number is required',
+      });
     }
 
-    if (!formData.customerEmail?.trim()) {
-      Alert.alert('Validation Error', 'Email is required');
-      return;
+    if (!formData.customerEmail.trim()) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Email is required',
+      });
     }
 
     if (!/^\d{10}$/.test(formData.customerContactNumber)) {
-      Alert.alert(
-        'Validation Error',
-        'Contact number must be exactly 10 digits',
-      );
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Invalid Contact',
+        text2: 'Contact number must be exactly 10 digits',
+      });
     }
 
     if (!/^\S+@\S+\.\S+$/.test(formData.customerEmail)) {
-      Alert.alert('Validation Error', 'Invalid email address');
-      return;
+      return Toast.show({
+        type: 'error',
+        text1: 'Invalid Email',
+        text2: 'Please enter a valid email address',
+      });
     }
 
     try {
@@ -71,21 +99,35 @@ export default function CustomerEditScreen({route, navigation}: any) {
         customerEmail: formData.customerEmail,
       });
 
-      Alert.alert('Success', 'Customer updated successfully');
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Customer updated successfully',
+      });
 
-      navigation.goBack();
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
+
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
 
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Update Failed',
-        error.response?.data?.message || 'Failed to update customer',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Update Failed',
+        text2:
+          error.response?.data?.message ||
+          'Failed to update customer',
+      });
     } finally {
       setLoading(false);
     }
@@ -95,34 +137,7 @@ export default function CustomerEditScreen({route, navigation}: any) {
    * DELETE CUSTOMER
    */
   const handleDelete = () => {
-    Alert.alert('Delete Customer', 'This action cannot be undone', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            setLoading(true);
-
-            await api.delete(`/customers/${formData._id}`);
-
-            Alert.alert('Deleted', 'Customer removed successfully');
-
-            navigation.goBack();
-          } catch (error: any) {
-            Alert.alert(
-              'Delete Failed',
-              error.response?.data?.message || 'Failed to delete customer',
-            );
-          } finally {
-            setLoading(false);
-          }
-        },
-      },
-    ]);
+    setShowDialog(true);
   };
 
   return (
@@ -139,6 +154,7 @@ export default function CustomerEditScreen({route, navigation}: any) {
             style={styles.input}
             value={formData.customerName}
             placeholder="Customer Name"
+            placeholderTextColor="#64748b"
             onChangeText={text => handleChange('customerName', text)}
           />
 
@@ -149,7 +165,13 @@ export default function CustomerEditScreen({route, navigation}: any) {
             value={formData.customerContactNumber}
             keyboardType="numeric"
             placeholder="Contact Number"
-            onChangeText={text => handleChange('customerContactNumber', text)}
+            placeholderTextColor="#64748b"
+            onChangeText={text =>
+              handleChange(
+                'customerContactNumber',
+                text.replace(/[^0-9]/g, ''),
+              )
+            }
           />
 
           {/* EMAIL */}
@@ -160,13 +182,14 @@ export default function CustomerEditScreen({route, navigation}: any) {
             autoCapitalize="none"
             keyboardType="email-address"
             placeholder="Email Address"
+            placeholderTextColor="#64748b"
             onChangeText={text => handleChange('customerEmail', text)}
           />
 
-          {/* ACTIONS */}
+          {/* BUTTONS */}
           <View style={styles.buttonRow}>
             <TouchableOpacity
-              style={styles.updateBtn}
+              style={[styles.updateBtn, loading && {opacity: 0.6}]}
               onPress={handleUpdate}
               disabled={loading}>
               {loading ? (
@@ -185,6 +208,40 @@ export default function CustomerEditScreen({route, navigation}: any) {
           </View>
         </View>
       </ScrollView>
+
+      {/* ✅ CONFIRM DIALOG */}
+      <ConfirmDialog
+        visible={showDialog}
+        title="Delete Customer"
+        message="This action cannot be undone"
+        onCancel={() => setShowDialog(false)}
+        onConfirm={async () => {
+          try {
+            setLoading(true);
+
+            await api.delete(`/customers/${formData._id}`);
+
+            Toast.show({
+              type: 'success',
+              text1: 'Deleted',
+              text2: 'Customer removed successfully',
+            });
+
+            setShowDialog(false);
+            navigation.goBack();
+          } catch (error: any) {
+            Toast.show({
+              type: 'error',
+              text1: 'Delete Failed',
+              text2:
+                error.response?.data?.message ||
+                'Failed to delete customer',
+            });
+          } finally {
+            setLoading(false);
+          }
+        }}
+      />
     </View>
   );
 }
