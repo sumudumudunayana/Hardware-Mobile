@@ -68,7 +68,7 @@ export default StyleSheet.create({
   statValue: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#111827',
+    color: '#f59e0b',
     marginTop: 8,
   },
 
@@ -135,4 +135,8 @@ export default StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
   },
+
+  reportBtn: {
+  backgroundColor: '#f8fafc', // light orange highlight
+},
 });
