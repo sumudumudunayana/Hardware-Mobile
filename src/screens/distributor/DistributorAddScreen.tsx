@@ -32,9 +32,8 @@ export default function DistributorAddScreen({navigation}: any) {
     }));
   };
 
-  /**
-   * CREATE DISTRIBUTOR
-   */
+   // CREATE DISTRIBUTOR
+   
   const handleSubmit = async () => {
     if (
       !formData.distributorName.trim() ||
@@ -160,7 +159,7 @@ export default function DistributorAddScreen({navigation}: any) {
               onChangeText={text =>
                 handleChange(
                   'distributorContactNumber',
-                  text.replace(/[^0-9]/g, ''), // ✅ numbers only
+                  text.replace(/[^0-9]/g, ''), // numbers only
                 )
               }
               placeholderTextColor="#64748b"
