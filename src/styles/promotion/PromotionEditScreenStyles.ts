@@ -59,7 +59,7 @@ export default StyleSheet.create({
     paddingVertical: 14,
     fontSize: 14,
     marginBottom: 14,
-    color: '#64748b',
+    color: '#0f172a',
   },
 
   textArea: {
@@ -94,4 +94,47 @@ export default StyleSheet.create({
     fontWeight: "700",
     fontSize: 15,
   },
+
+
+
+
+  /* DATE INPUT (MATCH ADD SCREEN) */
+dateInput: {
+  flexDirection: 'row',
+  alignItems: 'center',
+
+  backgroundColor: '#ffffff',
+  borderRadius: 14,
+  paddingHorizontal: 14,
+  paddingVertical: 14,
+
+  borderWidth: 1,
+  borderColor: '#e2e8f0',
+
+  marginBottom: 12,
+
+  shadowColor: '#000',
+  shadowOpacity: 0.04,
+  shadowRadius: 6,
+  shadowOffset: {width: 0, height: 2},
+  elevation: 2,
+},
+
+dateIcon: {
+  fontSize: 16,
+  marginRight: 10,
+},
+
+dateText: {
+  fontSize: 14,
+},
+
+datePlaceholder: {
+  color: '#64748b',
+},
+
+dateValue: {
+  color: '#0f172a',
+  fontWeight: '600',
+},
 });
