@@ -5,11 +5,11 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  Alert,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/sales/CartScreenStyles';
@@ -31,27 +31,39 @@ export default function CartScreen() {
     applyPromotions();
   }, [cart, promotions]);
 
+
+
   // LOAD CART
   const loadCart = async () => {
     try {
       const res = await api.get('/cart');
       setCart(res.data.items || []);
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Failed to load cart');
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to load cart',
+      });
     }
   };
+
+
 
   // LOAD PROMOTIONS
   const loadPromotions = async () => {
     try {
       const res = await api.get('/promotions');
       setPromotions(res.data || []);
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Failed to load promotions');
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to load promotions',
+      });
     }
   };
+
+
 
   // APPLY PROMOTIONS
   const applyPromotions = () => {
@@ -85,40 +97,26 @@ export default function CartScreen() {
       (p: any) => p.discountType === 'fixed',
     );
 
-    // percentage first
     percentagePromos.forEach((promo: any) => {
       const amount = (runningTotal * Number(promo.discountValue)) / 100;
-
       if (amount > 0) {
         runningTotal -= amount;
-
-        applied.push({
-          ...promo,
-          amount,
-        });
+        applied.push({...promo, amount});
       }
     });
 
-    // fixed after percentage
     fixedPromos.forEach((promo: any) => {
       let amount = Number(promo.discountValue);
-
-      if (amount > runningTotal) {
-        amount = runningTotal;
-      }
-
+      if (amount > runningTotal) amount = runningTotal;
       if (amount > 0) {
         runningTotal -= amount;
-
-        applied.push({
-          ...promo,
-          amount,
-        });
+        applied.push({...promo, amount});
       }
     });
-
     setAppliedPromotions(applied);
   };
+
+
 
   // INCREASE QTY
   const increaseQty = async (item: any) => {
@@ -130,7 +128,11 @@ export default function CartScreen() {
 
       loadCart();
     } catch {
-      Alert.alert('Error', 'Failed to update quantity');
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to update quantity',
+      });
     }
   };
 
@@ -150,40 +152,45 @@ export default function CartScreen() {
 
       loadCart();
     } catch {
-      Alert.alert('Error', 'Failed to update quantity');
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to update quantity',
+      });
     }
   };
+
+
 
   // TYPE INPUT
   const updateQtyInput = (item: any, value: string) => {
     if (value === '') {
-      setCart(prev =>
+      setCart((prev: any[]) =>
         prev.map(i => (i.itemId === item.itemId ? {...i, quantity: ''} : i)),
       );
       return;
     }
-
     const qty = Number(value);
-
-    if (isNaN(qty) || qty < 0) {
-      return;
-    }
-
-    setCart(prev =>
+    if (isNaN(qty) || qty < 0) return;
+    setCart((prev: any[]) =>
       prev.map(i => (i.itemId === item.itemId ? {...i, quantity: value} : i)),
     );
   };
 
+
+
   // SAVE INPUT
   const saveQtyInput = async (item: any) => {
     const qty = Number(item.quantity);
-
     if (isNaN(qty) || qty <= 0) {
-      Alert.alert('Error', 'Quantity must be greater than 0');
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid Quantity',
+        text2: 'Quantity must be greater than 0',
+      });
       loadCart();
       return;
     }
-
     try {
       await api.put('/cart/update', {
         itemId: item.itemId,
@@ -192,9 +199,15 @@ export default function CartScreen() {
 
       loadCart();
     } catch {
-      Alert.alert('Error', 'Failed to update quantity');
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to update quantity',
+      });
     }
   };
+
+
 
   // CALCULATIONS
   const subtotal = useMemo(() => {
@@ -213,17 +226,20 @@ export default function CartScreen() {
 
   const finalTotal = Math.max(subtotal - totalDiscount, 0);
 
+
+
   // COMPLETE SALE
   const generateInvoice = async () => {
     if (cart.length === 0) {
-      Alert.alert('Warning', 'Cart is empty');
+      Toast.show({
+        type: 'error',
+        text1: 'Cart Empty',
+        text2: 'Please add items to cart',
+      });
       return;
     }
-
     if (loading) return;
-
     setLoading(true);
-
     try {
       const payload = {
         items: cart.map(item => ({
@@ -235,31 +251,27 @@ export default function CartScreen() {
         discount: totalDiscount,
         total: finalTotal,
       };
-
       const res = await api.post('/sales', payload);
-
       await api.delete('/cart/clear');
-
       const id = res.data._id || res.data.saleId;
 
-      if (!id) {
-        Alert.alert('Error', 'Sale created but ID missing');
-        return;
-      }
-
-      Alert.alert('Success', 'Sale completed');
-
-      navigation.navigate('InvoiceScreen', {
-        id,
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Sale completed successfully',
       });
+      navigation.navigate('InvoiceScreen', {id});
     } catch (error: any) {
-      console.log(error);
-
-      Alert.alert('Error', error.response?.data?.message || 'Sale failed');
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response?.data?.message || 'Sale failed',
+      });
     }
-
     setLoading(false);
   };
+
+
 
   return (
     <SafeAreaView style={styles.safeArea}>
