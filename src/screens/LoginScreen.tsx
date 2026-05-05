@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import Toast from 'react-native-toast-message'; // ✅ ADD THIS
+import Toast from 'react-native-toast-message';
 
 import api from '../api/api';
 import {AuthContext} from '../context/AuthContext';
@@ -22,7 +22,7 @@ export default function LoginScreen({navigation}: any) {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    // ✅ VALIDATION
+    //  VALIDATION
     if (!email || !password) {
       Toast.show({
         type: 'error',
@@ -53,7 +53,7 @@ export default function LoginScreen({navigation}: any) {
 
       await login(token);
 
-      // ✅ SUCCESS TOAST
+      // SUCCESS TOAST
       Toast.show({
         type: 'success',
         text1: 'Login Successful',
