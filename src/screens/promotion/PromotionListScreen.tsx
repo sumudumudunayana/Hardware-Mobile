@@ -1,17 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useFocusEffect} from '@react-navigation/native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
+import ConfirmDialog from '../../components/ConfirmDialog'; // ✅ custom dialog
 import styles from '../../styles/promotion/PromotionListScreenStyles';
 
 export default function PromotionListScreen({navigation}: any) {
@@ -20,9 +22,13 @@ export default function PromotionListScreen({navigation}: any) {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
-  /**
-   * FETCH PROMOTIONS
-   */
+  // dialog state
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedPromotion, setSelectedPromotion] = useState<any>(null);
+
+  
+   // FETCH PROMOTIONS
+   
   const fetchPromotions = async () => {
     try {
       setLoading(true);
@@ -52,25 +58,42 @@ export default function PromotionListScreen({navigation}: any) {
 
       setPromotions(formatted);
       setFilteredPromotions(formatted);
+
     } catch (error: any) {
       if (error.response?.status === 401) {
-        Alert.alert('Session Expired', 'Please login again');
+        Toast.show({
+          type: 'error',
+          text1: 'Session Expired',
+          text2: 'Please login again',
+        });
+
         navigation.replace('Login');
         return;
       }
 
-      Alert.alert(
-        'Error',
-        error.response?.data?.message || 'Failed to fetch promotions',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2:
+          error.response?.data?.message ||
+          'Failed to fetch promotions',
+      });
+
     } finally {
       setLoading(false);
     }
   };
 
-  /**
-   * SEARCH
-   */
+  // AUTO REFRESH WHEN SCREEN FOCUSES
+  useFocusEffect(
+    useCallback(() => {
+      fetchPromotions();
+    }, []),
+  );
+
+  
+   // SEARCH
+   
   const handleSearch = (text: string) => {
     setSearch(text);
 
@@ -89,43 +112,17 @@ export default function PromotionListScreen({navigation}: any) {
     setFilteredPromotions(filtered);
   };
 
-  useEffect(() => {
-    fetchPromotions();
-  }, []);
+  
+   // OPEN DELETE DIALOG
 
-  /**
-   * DELETE
-   */
-  const handleDelete = (item: any) => {
-    Alert.alert('Delete Promotion', `Delete "${item.promotionName}"?`, [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            await api.delete(`/promotions/${item._id}`);
-
-            Alert.alert('Success', 'Promotion deleted successfully');
-
-            fetchPromotions();
-          } catch (error: any) {
-            Alert.alert(
-              'Delete Failed',
-              error.response?.data?.message || 'Failed to delete promotion',
-            );
-          }
-        },
-      },
-    ]);
+  const openDeleteDialog = (item: any) => {
+    setSelectedPromotion(item);
+    setShowDialog(true);
   };
 
-  /**
-   * DASHBOARD VALUES
-   */
+  
+   // DASHBOARD VALUES
+  
   const totalPromotions = promotions.length;
 
   const activePromotions = promotions.filter(
@@ -152,7 +149,8 @@ export default function PromotionListScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            {/* HEADING */}
+
+            {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>Promotion Overview</Text>
               <Text style={styles.subHeading}>
@@ -160,7 +158,7 @@ export default function PromotionListScreen({navigation}: any) {
               </Text>
             </View>
 
-            {/* SUMMARY CARDS */}
+            {/* SUMMARY */}
             <View style={styles.summaryRow}>
               <View style={styles.summaryCard}>
                 <Text style={styles.summaryLabel}>Total Promotions</Text>
@@ -207,7 +205,7 @@ export default function PromotionListScreen({navigation}: any) {
               style={styles.searchInput}
             />
 
-            {/* PROMOTION LIST */}
+            {/* LIST */}
             {filteredPromotions.map(item => (
               <View key={item._id} style={styles.card}>
                 <Text style={styles.name}>{item.promotionName}</Text>
@@ -220,14 +218,18 @@ export default function PromotionListScreen({navigation}: any) {
                 <Text style={styles.meta}>Status: {item.status}</Text>
 
                 {item.item && (
-                  <Text style={styles.meta}>Product: {item.item.itemName}</Text>
+                  <Text style={styles.meta}>
+                    Product: {item.item.itemName}
+                  </Text>
                 )}
 
                 <View style={styles.buttonRow}>
                   <TouchableOpacity
                     style={[styles.btn, styles.viewBtn]}
                     onPress={() =>
-                      navigation.navigate('PromotionDetails', {promotion: item})
+                      navigation.navigate('PromotionDetails', {
+                        promotion: item,
+                      })
                     }>
                     <Text style={styles.btnText}>View</Text>
                   </TouchableOpacity>
@@ -235,14 +237,16 @@ export default function PromotionListScreen({navigation}: any) {
                   <TouchableOpacity
                     style={[styles.btn, styles.editBtn]}
                     onPress={() =>
-                      navigation.navigate('PromotionEdit', {promotion: item})
+                      navigation.navigate('PromotionEdit', {
+                        promotion: item,
+                      })
                     }>
                     <Text style={styles.btnText}>Edit</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={[styles.btn, styles.deleteBtn]}
-                    onPress={() => handleDelete(item)}>
+                    onPress={() => openDeleteDialog(item)}>
                     <Text style={styles.btnText}>Delete</Text>
                   </TouchableOpacity>
                 </View>
@@ -251,6 +255,37 @@ export default function PromotionListScreen({navigation}: any) {
           </ScrollView>
         )}
       </View>
+
+      {/* CONFIRMATION DIALOG */}
+      <ConfirmDialog
+        visible={showDialog}
+        title="Delete Promotion"
+        message={`Are you sure you want to delete "${selectedPromotion?.promotionName}"?`}
+        onCancel={() => setShowDialog(false)}
+        onConfirm={async () => {
+          try {
+            await api.delete(`/promotions/${selectedPromotion._id}`);
+
+            Toast.show({
+              type: 'success',
+              text1: 'Deleted',
+              text2: 'Promotion deleted successfully',
+            });
+
+            setShowDialog(false);
+            fetchPromotions();
+
+          } catch (error: any) {
+            Toast.show({
+              type: 'error',
+              text1: 'Delete Failed',
+              text2:
+                error.response?.data?.message ||
+                'Failed to delete promotion',
+            });
+          }
+        }}
+      />
     </SafeAreaView>
   );
 }
