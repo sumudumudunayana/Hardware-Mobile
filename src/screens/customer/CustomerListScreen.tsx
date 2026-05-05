@@ -22,7 +22,7 @@ export default function CustomerListScreen({navigation}: any) {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // ✅ DIALOG STATE
+  // DIALOG STATE
   const [showDialog, setShowDialog] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
 
@@ -59,7 +59,7 @@ export default function CustomerListScreen({navigation}: any) {
     }
   };
 
-  // ✅ AUTO REFRESH WHEN SCREEN FOCUSES
+  // AUTO REFRESH WHEN SCREEN FOCUSES
   useFocusEffect(
     React.useCallback(() => {
       fetchCustomers();
@@ -82,7 +82,7 @@ export default function CustomerListScreen({navigation}: any) {
     setFilteredCustomers(filtered);
   };
 
-  // ✅ OPEN DELETE DIALOG
+  // OPEN DELETE DIALOG
   const openDeleteDialog = (customer: any) => {
     setSelectedCustomer(customer);
     setShowDialog(true);
@@ -196,7 +196,7 @@ export default function CustomerListScreen({navigation}: any) {
         )}
       </View>
 
-      {/* ✅ CONFIRM DIALOG */}
+      {/* CONFIRM DIALOG */}
       <ConfirmDialog
         visible={showDialog}
         title="Delete Customer"
