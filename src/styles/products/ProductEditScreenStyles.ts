@@ -43,7 +43,7 @@ export default StyleSheet.create({
     borderRadius: 12,
     marginBottom: 12,
     borderWidth: 1,
-    color: '#64748b',
+    color: '#0f172a',
     borderColor: '#e2e8f0',
   },
 
@@ -75,4 +75,34 @@ export default StyleSheet.create({
     color: '#dc2626',
     fontWeight: '700',
   },
+
+
+  chipContainer: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  marginBottom: 12,
+},
+
+chip: {
+  paddingHorizontal: 14,
+  paddingVertical: 8,
+  backgroundColor: '#e2e8f0',
+  borderRadius: 20,
+  marginRight: 8,
+  marginBottom: 8,
+},
+
+chipActive: {
+  backgroundColor: '#f59e0b',
+},
+
+chipText: {
+  fontSize: 12,
+  fontWeight: '600',
+  color: '#334155',
+},
+
+chipTextActive: {
+  color: '#ffffff',
+},
 });
