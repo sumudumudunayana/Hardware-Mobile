@@ -1,9 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
+import ConfirmDialog from '../../components/ConfirmDialog'; // ✅ use same dialog
 import styles from '../../styles/sales/SalesHistoryScreenStyles';
 
 export default function SalesHistoryScreen({navigation}: any) {
@@ -11,17 +19,26 @@ export default function SalesHistoryScreen({navigation}: any) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // dialog state
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
   useEffect(() => {
     loadSales();
   }, []);
 
   const loadSales = async () => {
     try {
+      setLoading(true);
+
       const res = await api.get('/sales');
       setSales(res.data || []);
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Failed to load sales history');
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to load sales history',
+      });
     } finally {
       setLoading(false);
     }
@@ -31,35 +48,41 @@ export default function SalesHistoryScreen({navigation}: any) {
     setExpandedId(expandedId === id ? null : id);
   };
 
+  //  open confirm dialog
   const handleDelete = (id: string) => {
-    Alert.alert('Delete Sale', 'Are you sure you want to delete this sale?', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: () => deleteSale(id),
-      },
-    ]);
+    setSelectedId(id);
+    setShowDialog(true);
   };
 
-  const deleteSale = async (id: string) => {
+  //  delete sale
+  const deleteSale = async () => {
+    if (!selectedId) return;
+
     try {
-      await api.delete(`/sales/${id}`);
-      Alert.alert('Success', 'Sale deleted successfully');
+      await api.delete(`/sales/${selectedId}`);
+
+      Toast.show({
+        type: 'success',
+        text1: 'Deleted',
+        text2: 'Sale deleted successfully',
+      });
+
+      setShowDialog(false);
       loadSales();
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Failed to delete sale');
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Delete Failed',
+        text2: 'Failed to delete sale',
+      });
     }
   };
 
+  // LOADING SPINNER
   if (loading) {
     return (
       <View style={styles.center}>
-        <Text>Loading sales history...</Text>
+        <ActivityIndicator size="large" color="#f59e0b" />
       </View>
     );
   }
@@ -138,6 +161,15 @@ export default function SalesHistoryScreen({navigation}: any) {
           )}
         </ScrollView>
       </View>
+
+      {/* CONFIRM DIALOG */}
+      <ConfirmDialog
+        visible={showDialog}
+        title="Delete Sale"
+        message="Are you sure you want to delete this sale?"
+        onCancel={() => setShowDialog(false)}
+        onConfirm={deleteSale}
+      />
     </SafeAreaView>
   );
 }
