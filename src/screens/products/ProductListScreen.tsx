@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -13,16 +14,20 @@ import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import styles from '../../styles/products/ProductListScreenStyles';
+import {useFocusEffect} from '@react-navigation/native';
 
 export default function ProductListScreen({navigation}: any) {
   const [products, setProducts] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]); // ✅ NEW
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [showDialog, setShowDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
-  // ✅ FETCH PRODUCTS + CATEGORIES
+  // ✅ NEW: search state
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // FETCH PRODUCTS + CATEGORIES
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -35,16 +40,12 @@ export default function ProductListScreen({navigation}: any) {
       const formatted = productsRes.data.map((item: any) => ({
         id: item._id,
         itemId: item.itemId,
-
         itemName: item.itemName,
         itemDescription: item.itemDescription,
-
         itemCategory: item.itemCategory,
-
         itemCostPrice: item.itemCostPrice,
         itemSellingPrice: item.itemSellingPrice,
         itemLabeledPrice: item.itemLabeledPrice,
-
         itemCompany: item.itemCompany,
         itemDistributor: item.itemDistributor,
 
@@ -57,8 +58,7 @@ export default function ProductListScreen({navigation}: any) {
       }));
 
       setProducts(formatted);
-      setCategories(categoriesRes.data); // ✅ FIXED
-
+      setCategories(categoriesRes.data);
     } catch (error: any) {
       if (error.response?.status === 401) {
         Toast.show({
@@ -82,9 +82,12 @@ export default function ProductListScreen({navigation}: any) {
     }
   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // AUTO REFRESH ON FOCUS
+  useFocusEffect(
+    useCallback(() => {
+      fetchProducts();
+    }, [])
+  );
 
   // OPEN DELETE DIALOG
   const openDeleteDialog = (item: any) => {
@@ -92,11 +95,20 @@ export default function ProductListScreen({navigation}: any) {
     setShowDialog(true);
   };
 
-  // ✅ DASHBOARD VALUES
+  // DASHBOARD VALUES
   const totalProducts = products.length;
-
-  // ✅ FIXED CATEGORY COUNT
   const totalCategories = categories.length;
+
+  // ✅ FILTERED PRODUCTS
+  const filteredProducts = products.filter(item => {
+    const query = searchQuery.toLowerCase();
+
+    return (
+      item.name?.toLowerCase().includes(query) ||
+      item.category?.toLowerCase().includes(query) ||
+      item.company?.toLowerCase().includes(query)
+    );
+  });
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -145,7 +157,24 @@ export default function ProductListScreen({navigation}: any) {
             {/* LIST */}
             <Text style={styles.sectionTitle}>Product List</Text>
 
-            {products.map(item => (
+            {/* 🔍 SEARCH BAR */}
+            <TextInput
+              placeholder="Search by name, category, company..."
+              style={{
+                backgroundColor: '#fff',
+                padding: 12,
+                borderRadius: 10,
+                marginBottom: 12,
+                borderWidth: 1,
+                borderColor: '#e2e8f0',
+              }}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              placeholderTextColor="#64748b"
+            />
+
+            {/* PRODUCTS */}
+            {filteredProducts.map(item => (
               <View key={item.id} style={styles.card}>
                 <Text style={styles.productName}>{item.name}</Text>
 
@@ -158,7 +187,6 @@ export default function ProductListScreen({navigation}: any) {
                 </Text>
 
                 <View style={styles.buttonRow}>
-                  {/* VIEW */}
                   <TouchableOpacity
                     style={[styles.btn, styles.viewBtn]}
                     onPress={() =>
@@ -167,7 +195,6 @@ export default function ProductListScreen({navigation}: any) {
                     <Text style={styles.btnText}>View</Text>
                   </TouchableOpacity>
 
-                  {/* EDIT */}
                   <TouchableOpacity
                     style={[styles.btn, styles.editBtn]}
                     onPress={() =>
@@ -176,7 +203,6 @@ export default function ProductListScreen({navigation}: any) {
                     <Text style={styles.btnText}>Edit</Text>
                   </TouchableOpacity>
 
-                  {/* DELETE */}
                   <TouchableOpacity
                     style={[styles.btn, styles.deleteBtn]}
                     onPress={() => openDeleteDialog(item)}>
@@ -185,11 +211,18 @@ export default function ProductListScreen({navigation}: any) {
                 </View>
               </View>
             ))}
+
+            {/* EMPTY STATE */}
+            {filteredProducts.length === 0 && (
+              <Text style={{textAlign: 'center', marginTop: 20, color: '#64748b'}}>
+                No products found
+              </Text>
+            )}
           </ScrollView>
         )}
       </View>
 
-      {/* ✅ CONFIRM DIALOG */}
+      {/* CONFIRM DIALOG */}
       <ConfirmDialog
         visible={showDialog}
         title="Delete Product"
