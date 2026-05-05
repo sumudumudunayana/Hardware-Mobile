@@ -15,7 +15,7 @@ export default StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 20,
     padding: 20,
-    overflow: 'hidden', // 🔥 IMPORTANT for background shapes
+    overflow: 'hidden', 
 
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -24,13 +24,13 @@ export default StyleSheet.create({
     elevation: 8,
   },
 
-  // 🔥 BACKGROUND SHAPES
+  // BACKGROUND SHAPES
   bgCircleTop: {
     position: 'absolute',
     width: 140,
     height: 140,
     borderRadius: 70,
-    backgroundColor: '#facc15', // yellow
+    backgroundColor: '#facc15',
     opacity: 0.15,
     top: -40,
     left: -40,
@@ -41,7 +41,7 @@ export default StyleSheet.create({
     width: 160,
     height: 160,
     borderRadius: 80,
-    backgroundColor: '#60a5fa', // blue
+    backgroundColor: '#60a5fa', 
     opacity: 0.15,
     bottom: -60,
     right: -40,
