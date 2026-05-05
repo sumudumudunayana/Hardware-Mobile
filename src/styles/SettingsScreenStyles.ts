@@ -1,4 +1,3 @@
-// src/styles/SettingsScreenStyles.ts
 
 import {StyleSheet} from 'react-native';
 
