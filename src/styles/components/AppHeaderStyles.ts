@@ -11,7 +11,7 @@ export default StyleSheet.create({
 
     paddingHorizontal: 16,
 
-    // SHADOW (iOS)
+    // SHADOW
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 6,
