@@ -14,7 +14,7 @@ import AppHeader from '../../components/AppHeader';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import styles from '../../styles/distributor/DistributorEditScreenStyles';
 
-// ✅ TYPE DEFINITION
+// TYPE DEFINITION
 type DistributorForm = {
   _id?: string;
   distributorName: string;
@@ -26,7 +26,7 @@ type DistributorForm = {
 export default function DistributorEditScreen({route, navigation}: any) {
   const {distributor} = route.params;
 
-  // ✅ TYPED STATE (fixes prev issue)
+  // TYPE DEFINITION
   const [formData, setFormData] = useState<DistributorForm>({
     _id: distributor._id,
     distributorName: distributor.distributorName || '',
@@ -38,7 +38,7 @@ export default function DistributorEditScreen({route, navigation}: any) {
   const [loading, setLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
 
-  // ✅ FIXED HANDLE CHANGE (typed key)
+  // TYPE DEFINITION
   const handleChange = (key: keyof DistributorForm, value: string) => {
     setFormData(prev => ({
       ...prev,
