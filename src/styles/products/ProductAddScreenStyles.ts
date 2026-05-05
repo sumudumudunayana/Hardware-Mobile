@@ -1,23 +1,23 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  // ✅ SAFE AREA WRAPPER
+  // SAFE AREA WRAPPER
   safeArea: {
     flex: 1,
     backgroundColor: "#f5f7fb",
   },
 
-  // ✅ MAIN CONTAINER
+  //  MAIN CONTAINER
   container: {
     flex: 1,
   },
 
-  // ✅ SCROLL CONTENT
+  //  SCROLL CONTENT
   scrollContent: {
     paddingBottom: 30,
   },
 
-  // ✅ CARD
+  //  CARD
   card: {
     margin: 16,
     padding: 18,
@@ -31,7 +31,7 @@ export default StyleSheet.create({
     elevation: 4,
   },
 
-  // ✅ TITLE
+  //  TITLE
   title: {
     fontSize: 20,
     fontWeight: "800",
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     color: "#0f172a",
   },
 
-  // ✅ INPUT
+  //  INPUT
   input: {
     backgroundColor: "#f8fafc",
     padding: 12,
@@ -47,16 +47,16 @@ export default StyleSheet.create({
     marginBottom: 12,
     borderWidth: 1,
     borderColor: "#e2e8f0",
-    color: "#0f172a",
+    color: '#0f172a',
   },
 
-  // ✅ TEXT AREA
+  //  TEXT AREA
   textArea: {
     height: 90,
     textAlignVertical: "top", // 🔥 important for Android
   },
 
-  // ✅ BUTTON
+  //  BUTTON
   button: {
     backgroundColor: "#f59e0b",
     padding: 14,
@@ -77,14 +77,14 @@ export default StyleSheet.create({
     fontSize: 15,
   },
 
-  // ✅ CHIP CONTAINER (🔥 FIX FOR CUT ISSUE)
+  //  CHIP CONTAINER
   chipContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     marginBottom: 12,
   },
 
-  // ✅ CHIP
+  //  CHIP
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 8,
@@ -107,6 +107,15 @@ export default StyleSheet.create({
   chipTextActive: {
     color: "#ffffff",
   },
+
+
+  label: {
+  fontSize: 14,
+  fontWeight: '600',
+  marginTop: 12,
+  marginBottom: 6,
+  color: '#374151',
+},
 
   
 });
