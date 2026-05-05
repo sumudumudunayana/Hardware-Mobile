@@ -1,10 +1,15 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f5f7fb',
+  },
+
   container: {
     flex: 1,
     backgroundColor: '#f5f7fb',
-    padding: 16,
+    paddingHorizontal: 16,
   },
 
   center: {
@@ -13,24 +18,29 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  /*
+   HEADER
+  */
   header: {
-    marginBottom: 20,
+    marginBottom: 24,
+    marginTop: 10,
   },
 
   badge: {
     alignSelf: 'flex-start',
     backgroundColor: '#fef3c7',
     color: '#92400e',
-    paddingHorizontal: 14,
+    paddingHorizontal: 16,
     paddingVertical: 6,
-    borderRadius: 20,
+    borderRadius: 999,
     fontWeight: '700',
-    marginBottom: 10,
+    fontSize: 12,
+    marginBottom: 12,
   },
 
   title: {
     fontSize: 26,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#0f172a',
   },
 
@@ -40,18 +50,28 @@ export default StyleSheet.create({
     marginTop: 6,
   },
 
+  /*
+   CARD
+  */
   card: {
     backgroundColor: '#ffffff',
     padding: 18,
-    borderRadius: 16,
+    borderRadius: 18,
     marginBottom: 18,
+
     borderWidth: 1,
     borderColor: '#e2e8f0',
+
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    shadowOffset: {width: 0, height: 4},
+    elevation: 4,
   },
 
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#0f172a',
     marginBottom: 14,
   },
@@ -63,11 +83,17 @@ export default StyleSheet.create({
     fontWeight: '600',
   },
 
+  /*
+   ITEM BOX
+  */
   itemBox: {
     backgroundColor: '#f8fafc',
     padding: 14,
-    borderRadius: 12,
+    borderRadius: 14,
     marginBottom: 12,
+
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
 
   itemName: {
@@ -90,11 +116,17 @@ export default StyleSheet.create({
     color: '#0f172a',
   },
 
+  /*
+   PROMOTION BOX
+  */
   promoBox: {
     backgroundColor: '#f0fdf4',
     padding: 14,
-    borderRadius: 12,
+    borderRadius: 14,
     marginBottom: 12,
+
+    borderWidth: 1,
+    borderColor: '#bbf7d0',
   },
 
   promoName: {
@@ -113,8 +145,12 @@ export default StyleSheet.create({
   noPromo: {
     fontSize: 14,
     color: '#64748b',
+    fontStyle: 'italic',
   },
 
+  /*
+   SUMMARY
+  */
   summaryText: {
     fontSize: 15,
     fontWeight: '600',
@@ -130,17 +166,27 @@ export default StyleSheet.create({
   },
 
   finalTotal: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 22,
+    fontWeight: '800',
     color: '#f59e0b',
-    marginTop: 8,
+    marginTop: 10,
   },
 
+  /*
+   BUTTON
+  */
   invoiceBtn: {
     backgroundColor: '#f59e0b',
-    paddingVertical: 14,
-    borderRadius: 14,
+    paddingVertical: 16,
+    borderRadius: 16,
     alignItems: 'center',
+
+    shadowColor: '#f59e0b',
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    shadowOffset: {width: 0, height: 4},
+    elevation: 6,
+
     marginBottom: 30,
   },
 
