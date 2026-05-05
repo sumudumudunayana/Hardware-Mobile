@@ -86,7 +86,7 @@ export default function CategoryListScreen({navigation}: any) {
   return (
     <View style={{flex: 1, backgroundColor: '#ffffffcd'}}>
       
-      {/* ✅ GLOW BACKGROUND */}
+      {/* GLOW BACKGROUND */}
       <View style={styles.glowPrimary} />
       <View style={styles.glowSecondary} />
 
