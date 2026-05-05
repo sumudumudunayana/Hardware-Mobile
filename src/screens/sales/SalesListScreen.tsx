@@ -1,7 +1,14 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import styles from '../../styles/sales/SalesListScreenStyles';
 import AppHeader from '../../components/AppHeader';
@@ -10,41 +17,46 @@ export default function SalesListScreen({navigation}: any) {
   const [sales, setSales] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  /**
-   * LOAD SALES
-   */
+  
+   // LOAD SALES
+   
   const loadSales = async () => {
     try {
+      setLoading(true);
+
       const res = await api.get('/sales');
+
       setSales(res.data || []);
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Failed to load sales data');
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response?.data?.message || 'Failed to load sales data',
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  /**
-   * FIRST LOAD
-   */
+  
+   // FIRST LOAD
+   
   useEffect(() => {
     loadSales();
   }, []);
 
-  /**
-   * RELOAD WHEN SCREEN COMES BACK INTO FOCUS
-   * This fixes latest invoice not updating immediately
-   */
+  
+   // AUTO REFRESH ON SCREEN FOCUS
+
   useFocusEffect(
     useCallback(() => {
       loadSales();
     }, []),
   );
 
-  /**
-   * CALCULATIONS
-   */
+  
+   // CALCULATIONS
+  
   const totalRevenue = sales.reduce(
     (sum, sale) => sum + Number(sale.totalAmount || 0),
     0,
@@ -52,24 +64,20 @@ export default function SalesListScreen({navigation}: any) {
 
   const totalOrders = sales.length;
 
-  /**
-   * ALWAYS GET LATEST SALE
-   */
+  
+   // LATEST SALE
+   
   const latestSale =
     sales.length > 0
       ? [...sales].sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )[0]
-      : null;
-
-  /**
-   * LOADING STATE
-   */
+      : null;   
   if (loading) {
     return (
       <View style={styles.center}>
-        <Text>Loading sales...</Text>
+        <ActivityIndicator size="large" color="#f59e0b" />
       </View>
     );
   }
@@ -92,17 +100,15 @@ export default function SalesListScreen({navigation}: any) {
           </Text>
         </View>
 
-        {/* SUMMARY CARDS */}
+        {/* SUMMARY */}
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
             <Text style={styles.statLabel}>Orders</Text>
-
             <Text style={styles.statValue}>{totalOrders}</Text>
           </View>
 
           <View style={styles.statCard}>
             <Text style={styles.statLabel}>Revenue</Text>
-
             <Text style={styles.statValue}>
               Rs. {totalRevenue.toLocaleString()}
             </Text>
@@ -123,6 +129,13 @@ export default function SalesListScreen({navigation}: any) {
             style={styles.actionBtn}
             onPress={() => navigation.navigate('SalesHistoryScreen')}>
             <Text style={styles.actionText}>📜 Sales History</Text>
+          </TouchableOpacity>
+
+          {/* NEW: SALES REPORT */}
+          <TouchableOpacity
+            style={styles.actionBtn}
+            onPress={() => navigation.navigate('SalesReportScreen')}>
+            <Text style={styles.actionText}>📊 Sales Reports</Text>
           </TouchableOpacity>
         </View>
 
