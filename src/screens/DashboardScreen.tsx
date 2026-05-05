@@ -45,7 +45,7 @@ export default function DashboardScreen({navigation}: any) {
         {/* LOGOUT */}
         <TouchableOpacity
           style={styles.dashboardLogoutBtn}
-          onPress={() => setShowConfirm(true)} // 👈 OPEN DIALOG
+          onPress={() => setShowConfirm(true)}
         >
           <Text style={styles.dashboardLogoutText}>Logout</Text>
         </TouchableOpacity>
@@ -232,7 +232,7 @@ export default function DashboardScreen({navigation}: any) {
         </View>
       </ScrollView>
 
-      {/* 🔥 CONFIRM DIALOG */}
+      {/* CONFIRM DIALOG */}
       <ConfirmDialog
         visible={showConfirm}
         title="Logout"
