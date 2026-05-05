@@ -8,8 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
-import Toast from 'react-native-toast-message'; // ✅ ADD
+import Toast from 'react-native-toast-message'; 
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/customer/CustomerAddScreenStyles';
@@ -31,9 +30,9 @@ export default function CustomerAddScreen({navigation}: any) {
     }));
   };
 
-  /**
-   * CREATE CUSTOMER
-   */
+  
+   // CREATE CUSTOMER
+   
   const handleSubmit = async () => {
     // VALIDATION
     if (!formData.customerName.trim()) {
@@ -149,7 +148,7 @@ export default function CustomerAddScreen({navigation}: any) {
               onChangeText={text =>
                 handleChange(
                   'customerContactNumber',
-                  text.replace(/[^0-9]/g, ''), // 🔥 numbers only
+                  text.replace(/[^0-9]/g, ''), // numbers only
                 )
               }
               placeholderTextColor="#64748b"
