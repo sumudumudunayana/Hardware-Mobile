@@ -22,7 +22,7 @@ export default function CompanyListScreen({navigation}: any) {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // ✅ DIALOG STATE
+  // DIALOG STATE
   const [showDialog, setShowDialog] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState<any>(null);
 
@@ -81,7 +81,7 @@ export default function CompanyListScreen({navigation}: any) {
     setFilteredCompanies(filtered);
   };
 
-  // ✅ OPEN DIALOG
+  // OPEN DIALOG
   const openDeleteDialog = (company: any) => {
     setSelectedCompany(company);
     setShowDialog(true);
@@ -191,7 +191,7 @@ export default function CompanyListScreen({navigation}: any) {
         )}
       </View>
 
-      {/* ✅ CONFIRM DIALOG */}
+      {/* CONFIRM DIALOG */}
       <ConfirmDialog
         visible={showDialog}
         title="Delete Company"
