@@ -22,7 +22,7 @@ export default function DistributorListScreen({navigation}: any) {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
-  // ✅ dialog state
+  // dialog state
   const [showDialog, setShowDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
 
@@ -68,7 +68,7 @@ export default function DistributorListScreen({navigation}: any) {
     }
   };
 
-  // ✅ AUTO REFRESH
+  // AUTO REFRESH
   useFocusEffect(
     React.useCallback(() => {
       fetchDistributors();
@@ -96,7 +96,7 @@ export default function DistributorListScreen({navigation}: any) {
     setFilteredDistributors(filtered);
   };
 
-  // ✅ OPEN DELETE DIALOG
+  // OPEN DELETE DIALOG
   const openDeleteDialog = (item: any) => {
     setSelectedItem(item);
     setShowDialog(true);
@@ -213,7 +213,7 @@ export default function DistributorListScreen({navigation}: any) {
         )}
       </View>
 
-      {/* ✅ CONFIRM DIALOG */}
+      {/* CONFIRM DIALOG */}
       <ConfirmDialog
         visible={showDialog}
         title="Delete Supplier"
