@@ -160,7 +160,7 @@ export default function CompanyAddScreen({navigation}: any) {
               onChangeText={text =>
                 handleChange(
                   'companyContactNumber',
-                  text.replace(/[^0-9]/g, ''), // 🔥 only numbers
+                  text.replace(/[^0-9]/g, ''), // only numbers
                 )
               }
               placeholderTextColor="#64748b"
