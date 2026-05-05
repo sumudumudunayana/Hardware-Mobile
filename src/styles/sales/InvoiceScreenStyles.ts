@@ -1,10 +1,15 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f5f7fb',
+  },
+
   container: {
     flex: 1,
     backgroundColor: '#f5f7fb',
-    padding: 16,
+    paddingHorizontal: 16,
   },
 
   center: {
@@ -13,40 +18,55 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  /*
+   HEADER
+  */
   header: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 24,
+    marginTop: 10,
   },
 
   badge: {
     backgroundColor: '#fef3c7',
     color: '#92400e',
-    paddingHorizontal: 14,
+    paddingHorizontal: 16,
     paddingVertical: 6,
-    borderRadius: 20,
+    borderRadius: 999,
     fontWeight: '700',
-    marginBottom: 10,
+    fontSize: 12,
+    marginBottom: 12,
   },
 
   title: {
     fontSize: 24,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#0f172a',
   },
 
   subtitle: {
     fontSize: 14,
     color: '#64748b',
-    marginTop: 4,
+    marginTop: 6,
   },
 
+  /*
+   INFO CARD
+  */
   infoCard: {
     backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 16,
+    padding: 18,
+    borderRadius: 18,
     marginBottom: 18,
+
     borderWidth: 1,
     borderColor: '#e2e8f0',
+
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    shadowOffset: {width: 0, height: 4},
+    elevation: 4,
   },
 
   infoText: {
@@ -56,24 +76,37 @@ export default StyleSheet.create({
     fontWeight: '600',
   },
 
+  /*
+   SECTION
+  */
   section: {
     marginBottom: 18,
   },
 
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#0f172a',
-    marginBottom: 12,
+    marginBottom: 14,
   },
 
+  /*
+   ITEM CARD
+  */
   itemCard: {
     backgroundColor: '#ffffff',
-    padding: 14,
-    borderRadius: 14,
+    padding: 16,
+    borderRadius: 16,
     marginBottom: 12,
+
     borderWidth: 1,
     borderColor: '#e2e8f0',
+
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    shadowOffset: {width: 0, height: 3},
+    elevation: 3,
   },
 
   itemName: {
@@ -90,19 +123,30 @@ export default StyleSheet.create({
   },
 
   itemSubtotal: {
-    marginTop: 6,
+    marginTop: 8,
     fontSize: 15,
     fontWeight: '700',
     color: '#0f172a',
   },
 
+  /*
+   SUMMARY
+  */
   summaryCard: {
     backgroundColor: '#ffffff',
     padding: 18,
-    borderRadius: 16,
+    borderRadius: 18,
+
     borderWidth: 1,
     borderColor: '#e2e8f0',
+
     marginBottom: 24,
+
+    shadowColor: '#000',
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
+    shadowOffset: {width: 0, height: 5},
+    elevation: 5,
   },
 
   summaryText: {
@@ -120,17 +164,27 @@ export default StyleSheet.create({
   },
 
   totalText: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 20,
+    fontWeight: '800',
     color: '#0f172a',
-    marginTop: 10,
+    marginTop: 12,
   },
 
+  /*
+   BUTTON
+  */
   doneBtn: {
     backgroundColor: '#f59e0b',
-    paddingVertical: 14,
-    borderRadius: 14,
+    paddingVertical: 16,
+    borderRadius: 16,
     alignItems: 'center',
+
+    shadowColor: '#f59e0b',
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    shadowOffset: {width: 0, height: 4},
+    elevation: 6,
+
     marginBottom: 30,
   },
 
