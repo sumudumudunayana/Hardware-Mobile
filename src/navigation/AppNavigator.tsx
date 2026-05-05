@@ -50,6 +50,8 @@ import StockListScreen from '../screens/stock/StockListScreen';
 import StockDetailsScreen from '../screens/stock/StockDetailsScreen';
 import StockEditScreen from '../screens/stock/StockEditScreen';
 import StockAddScreen from '../screens/stock/StockAddScreen';
+import StockReportScreen from '../screens/stock/StockReportScreen';
+import LowStockAlertScreen from '../screens/stock/LowStockAlertScreen';
 
 // PROMOTION SCREENS
 import PromotionListScreen from '../screens/promotion/PromotionListScreen';
@@ -64,11 +66,10 @@ import CartScreen from '../screens/sales/CartScreen';
 import InvoiceScreen from '../screens/sales/InvoiceScreen';
 import SalesHistoryScreen from '../screens/sales/SalesHistoryScreen';
 import SalesDetailsScreen from '../screens/sales/SalesDetailsScreen';
-
-import AIInsightsScreen from '../screens/ai/AIInsightsScreen';
 import SalesReportScreen from '../screens/sales/SalesReportScreen';
-import StockReportScreen from '../screens/stock/StockReportScreen';
-import LowStockAlertScreen from '../screens/stock/LowStockAlertScreen';
+
+// AI SCREENS
+import AIInsightsScreen from '../screens/ai/AIInsightsScreen';
 
 // ROOT STACK TYPES
 export type RootStackParamList = {
@@ -78,28 +79,18 @@ export type RootStackParamList = {
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
 const Tab = createBottomTabNavigator();
-
 const ProductStack = createNativeStackNavigator();
-
 const CustomerStack = createNativeStackNavigator();
-
 const CompanyStack = createNativeStackNavigator();
-
 const CategoryStack = createNativeStackNavigator();
-
 const DistributorStack = createNativeStackNavigator();
-
 const StockStack = createNativeStackNavigator();
-
 const PromotionStack = createNativeStackNavigator();
-
 const SalesStack = createNativeStackNavigator();
 
-/**
- * PRODUCT STACK
- */
+// PRODUCT STACK
+
 function ProductStackScreen() {
   return (
     <ProductStack.Navigator screenOptions={{headerShown: false}}>
@@ -114,9 +105,8 @@ function ProductStackScreen() {
   );
 }
 
-/**
- * CUSTOMER STACK
- */
+// CUSTOMER STACK
+
 function CustomerStackScreen() {
   return (
     <CustomerStack.Navigator screenOptions={{headerShown: false}}>
@@ -137,9 +127,10 @@ function CustomerStackScreen() {
   );
 }
 
-/**
- * COMPANY STACK
- */
+
+
+// COMPANY STACK
+ 
 function CompanyStackScreen() {
   return (
     <CompanyStack.Navigator screenOptions={{headerShown: false}}>
@@ -154,9 +145,11 @@ function CompanyStackScreen() {
   );
 }
 
-/**
- * CATEGORY STACK
- */
+
+
+
+ // CATEGORY STACK
+
 function CategoryStackScreen() {
   return (
     <CategoryStack.Navigator screenOptions={{headerShown: false}}>
@@ -177,9 +170,10 @@ function CategoryStackScreen() {
   );
 }
 
-/**
- * DISTRIBUTOR STACK
- */
+
+
+ // DISTRIBUTOR STACK
+ 
 function DistributorStackScreen() {
   return (
     <DistributorStack.Navigator screenOptions={{headerShown: false}}>
@@ -203,9 +197,11 @@ function DistributorStackScreen() {
   );
 }
 
-/**
- * STOCK STACK
- */
+
+
+
+ // STOCK STACK
+ 
 function StockStackScreen() {
   return (
     <StockStack.Navigator screenOptions={{headerShown: false}}>
@@ -225,9 +221,11 @@ function StockStackScreen() {
   );
 }
 
-/**
- * PROMOTION STACK
- */
+
+
+
+ // PROMOTION STACK
+ 
 function PromotionStackScreen() {
   return (
     <PromotionStack.Navigator screenOptions={{headerShown: false}}>
@@ -251,9 +249,11 @@ function PromotionStackScreen() {
   );
 }
 
-/**
- * SALES STACK
- */
+
+
+
+ // SALES STACK
+ 
 function SalesStackScreen() {
   return (
     <SalesStack.Navigator screenOptions={{headerShown: false}}>
@@ -277,10 +277,12 @@ function SalesStackScreen() {
   );
 }
 
-/**
- * HOME STACK
- * Keeps bottom tabs visible while navigating
- */
+
+
+
+// HOME STACK
+// Keeps bottom tabs visible while navigating
+
 const HomeStack = createNativeStackNavigator();
 
 function HomeStackScreen() {
@@ -289,7 +291,7 @@ function HomeStackScreen() {
       {/* DASHBOARD */}
       <HomeStack.Screen name="Dashboard" component={DashboardScreen} />
 
-      {/* ✅ AI INSIGHTS (NEW) */}
+      {/* AI INSIGHTS (NEW) */}
       <HomeStack.Screen name="AIInsights" component={AIInsightsScreen} />
 
       {/* MANAGEMENT MODULES */}
@@ -308,10 +310,11 @@ function HomeStackScreen() {
   );
 }
 
-/**
- * MAIN TABS
- * Only Home + Settings
- */
+
+
+ // MAIN TABS
+ // Only Home + Settings
+ 
 function MainTabs() {
   return (
     <Tab.Navigator
@@ -322,7 +325,7 @@ function MainTabs() {
         tabBarInactiveTintColor: '#64748b',
 
         tabBarStyle: {
-          height: 75, // 🔥 increased height
+          height: 75,
           paddingBottom: 10,
           paddingTop: 6,
         },
@@ -330,11 +333,11 @@ function MainTabs() {
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600',
-          marginTop: 2, // 🔥 spacing between icon + text
+          marginTop: 2,
         },
 
         tabBarItemStyle: {
-          paddingVertical: 4, // 🔥 prevents clipping
+          paddingVertical: 4,
         },
 
         tabBarIcon: ({color}) => {
@@ -352,12 +355,14 @@ function MainTabs() {
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarLabel: 'Settings', // 🔥 force full label (important)
+          tabBarLabel: 'Settings',
         }}
       />
     </Tab.Navigator>
   );
 }
+
+
 
 // ROOT NAVIGATION
 function AppNavigator() {
