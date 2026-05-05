@@ -112,4 +112,77 @@ export default StyleSheet.create({
     fontSize: 15,
     fontWeight: "700",
   },
+
+
+
+
+  /* DATE INPUT (MODERN) */
+dateInput: {
+  flexDirection: 'row',
+  alignItems: 'center',
+
+  backgroundColor: '#ffffff',
+  borderRadius: 14,
+  paddingHorizontal: 14,
+  paddingVertical: 14,
+
+  borderWidth: 1,
+  borderColor: '#e2e8f0',
+
+  marginBottom: 12,
+
+  shadowColor: '#000',
+  shadowOpacity: 0.04,
+  shadowRadius: 6,
+  shadowOffset: {width: 0, height: 2},
+  elevation: 2,
+},
+
+dateIcon: {
+  fontSize: 16,
+  marginRight: 10,
+},
+
+dateText: {
+  fontSize: 14,
+},
+
+datePlaceholder: {
+  color: '#64748b',
+},
+
+dateValue: {
+  color: '#0f172a',
+  fontWeight: '600',
+},
+
+
+
+modalOverlay: {
+  flex: 1,
+  justifyContent: 'flex-end',
+  backgroundColor: 'rgba(0,0,0,0.4)',
+},
+
+modalContainer: {
+  backgroundColor: '#ffffff',
+  borderTopLeftRadius: 20,
+  borderTopRightRadius: 20,
+  padding: 16,
+  paddingBottom: 20,
+},
+
+cancelButton: {
+  paddingVertical: 12,
+  marginTop: 10,
+  borderTopWidth: 1,
+  borderTopColor: '#e2e8f0',
+},
+
+cancelText: {
+  textAlign: 'center',
+  color: '#ef4444',
+  fontWeight: '600',
+  fontSize: 16,
+},
 });
