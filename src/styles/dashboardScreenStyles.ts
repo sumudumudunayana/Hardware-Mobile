@@ -175,9 +175,7 @@ export default StyleSheet.create({
 
 
 
-  /* ========================= */
-/* 🤖 AI CARD (ORANGE THEME) */
-/* ========================= */
+/*  AI CARD (ORANGE THEME) */
 
 aiCard: {
   borderRadius: 22,
