@@ -47,25 +47,18 @@ export default function AIInsightsScreen({navigation}: any) {
 
   const topDemand =
     data.length > 0
-      ? [...data].sort(
-          (a, b) => b.predicted_demand - a.predicted_demand,
-        )[0]
+      ? [...data].sort((a, b) => b.predicted_demand - a.predicted_demand)[0]
       : null;
 
   const topRevenue =
     data.length > 0
-      ? [...data].sort(
-          (a, b) => b.predicted_revenue - a.predicted_revenue,
-        )[0]
+      ? [...data].sort((a, b) => b.predicted_revenue - a.predicted_revenue)[0]
       : null;
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <AppHeader
-          title="AI Insights"
-          onBack={() => navigation.goBack()}
-        />
+        <AppHeader title="AI Insights" onBack={() => navigation.goBack()} />
 
         {loading ? (
           <ActivityIndicator size="large" color="#f59e0b" />
@@ -73,7 +66,6 @@ export default function AIInsightsScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            
             {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>AI Forecast</Text>
@@ -82,11 +74,8 @@ export default function AIInsightsScreen({navigation}: any) {
               </Text>
             </View>
 
-            {/* ===================== */}
-            {/* TOP CARDS */}
-            {/* ===================== */}
+             {/* TOP CARDS  */}
             <View style={styles.topCardsRow}>
-
               {/* TOP DEMAND */}
               {topDemand && (
                 <View style={[styles.topCard, styles.gradientDemand]}>
@@ -119,24 +108,16 @@ export default function AIInsightsScreen({navigation}: any) {
             </View>
 
             {/* REFRESH BUTTON */}
-            <TouchableOpacity
-              style={styles.refreshBtn}
-              onPress={fetchAI}>
-              <Text style={styles.refreshText}>
-                Refresh Predictions
-              </Text>
+            <TouchableOpacity style={styles.refreshBtn} onPress={fetchAI}>
+              <Text style={styles.refreshText}>Refresh Predictions</Text>
             </TouchableOpacity>
 
             {/* LIST */}
-            <Text style={styles.sectionTitle}>
-              All Predictions
-            </Text>
+            <Text style={styles.sectionTitle}>All Predictions</Text>
 
             {data.map((item, index) => (
               <View key={index} style={styles.card}>
-                <Text style={styles.productName}>
-                  {item.product_name}
-                </Text>
+                <Text style={styles.productName}>{item.product_name}</Text>
 
                 <View style={styles.metricsRow}>
                   <Text style={styles.metric}>
@@ -149,9 +130,7 @@ export default function AIInsightsScreen({navigation}: any) {
                 </View>
 
                 <View style={styles.metricsRow}>
-                  <Text style={styles.metric}>
-                    Stock: {item.current_stock}
-                  </Text>
+                  <Text style={styles.metric}>Stock: {item.current_stock}</Text>
 
                   <Text style={styles.metricHighlight}>
                     Recommended: {item.recommended_stock}
