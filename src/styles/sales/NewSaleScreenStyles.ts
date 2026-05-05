@@ -24,29 +24,29 @@ export default StyleSheet.create({
 
   categoryBtn: {
   backgroundColor: '#ffffff',
-  height: 48,
-  minWidth: 110,
-  maxWidth: 160,
-  paddingHorizontal: 18,
-  borderRadius: 12,
-  marginRight: 12,
+  height: 36,              // 🔽 smaller
+  minWidth: 90,
+  paddingHorizontal: 14,
+  borderRadius: 20,        // 🔥 more rounded (pill style)
+  marginRight: 10,
   borderWidth: 1,
   borderColor: '#dbe2ea',
   justifyContent: 'center',
   alignItems: 'center',
+  marginTop: 5,
+},
+
+categoryText: {
+  fontSize: 13,            // 🔽 slightly smaller
+  fontWeight: '600',
+  color: '#0f172a',
+  textAlign: 'center',
 },
 
   activeCategory: {
     backgroundColor: '#f59e0b',
     borderColor: '#f59e0b',
   },
-
-  categoryText: {
-  fontSize: 14,
-  fontWeight: '700',
-  color: '#0f172a',
-  textAlign: 'center',
-},
 
   /*
    HEADER
