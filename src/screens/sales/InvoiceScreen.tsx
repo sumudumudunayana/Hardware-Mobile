@@ -1,6 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
+import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/sales/InvoiceScreenStyles';
 
 export default function InvoiceScreen({route, navigation}: any) {
@@ -15,32 +25,48 @@ export default function InvoiceScreen({route, navigation}: any) {
 
   const loadInvoice = async () => {
     try {
+      setLoading(true);
+
       const res = await api.get(`/sales/${id}`);
       setSale(res.data);
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Failed to load invoice');
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to load invoice',
+      });
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
+  // LOADING STATE (spinner)
   if (loading) {
     return (
-      <View style={styles.center}>
-        <Text>Loading invoice...</Text>
-      </View>
+      <SafeAreaView style={styles.safeArea}>
+        <AppHeader title="Invoice" onBack={() => navigation.goBack()} />
+
+        <View style={styles.center}>
+          <ActivityIndicator size="large" color="#f59e0b" />
+        </View>
+      </SafeAreaView>
     );
   }
 
+  //  NOT FOUND
   if (!sale) {
     return (
-      <View style={styles.center}>
-        <Text>Invoice not found</Text>
-      </View>
+      <SafeAreaView style={styles.safeArea}>
+        <AppHeader title="Invoice" onBack={() => navigation.goBack()} />
+
+        <View style={styles.center}>
+          <Text>Invoice not found</Text>
+        </View>
+      </SafeAreaView>
     );
   }
 
+  // CALCULATIONS
   const subtotal =
     sale.items?.reduce(
       (sum: number, item: any) =>
@@ -55,90 +81,95 @@ export default function InvoiceScreen({route, navigation}: any) {
     Number(sale.finalTotal) || Number(sale.totalAmount) || subtotal - discount;
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
       {/* HEADER */}
-      <View style={styles.header}>
-        <Text style={styles.badge}>INVOICE</Text>
-        <Text style={styles.title}>Hardware Management</Text>
-        <Text style={styles.subtitle}>Sales Receipt</Text>
-      </View>
+      <AppHeader title="Invoice" onBack={() => navigation.goBack()} />
 
-      {/* DETAILS */}
-      <View style={styles.infoCard}>
-        <Text style={styles.infoText}>
-          Invoice No: {sale.invoiceNumber || '-'}
-        </Text>
+      <ScrollView style={styles.container}>
+        {/* HEADER SECTION */}
+        <View style={styles.header}>
+          <Text style={styles.badge}>INVOICE</Text>
+          <Text style={styles.title}>Hardware Management</Text>
+          <Text style={styles.subtitle}>Sales Receipt</Text>
+        </View>
 
-        <Text style={styles.infoText}>
-          Date:{' '}
-          {sale.createdAt ? new Date(sale.createdAt).toLocaleString() : '-'}
-        </Text>
-      </View>
-
-      {/* ITEMS */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Purchased Items</Text>
-
-        {sale.items?.map((item: any, index: number) => {
-          const price = Number(item.unitPrice || item.price || 0);
-
-          const qty = Number(item.quantity || 0);
-
-          const sub = price * qty;
-
-          return (
-            <View key={index} style={styles.itemCard}>
-              <Text style={styles.itemName}>
-                {item.itemId?.itemName || 'Item'}
-              </Text>
-
-              <Text style={styles.itemText}>Qty: {qty}</Text>
-
-              <Text style={styles.itemText}>
-                Price: Rs. {price.toLocaleString()}
-              </Text>
-
-              <Text style={styles.itemSubtotal}>
-                Subtotal: Rs. {sub.toLocaleString()}
-              </Text>
-            </View>
-          );
-        })}
-      </View>
-
-      {/* SUMMARY */}
-      <View style={styles.summaryCard}>
-        <Text style={styles.summaryText}>
-          Subtotal: Rs. {subtotal.toLocaleString()}
-        </Text>
-
-        {sale.promotions?.map((promo: any, index: number) => (
-          <Text key={index} style={styles.discountText}>
-            {promo.name} (
-            {promo.discountType === 'percentage'
-              ? `${promo.discountValue}%`
-              : `Rs. ${promo.discountValue}`}
-            ) : - Rs. {Number(promo.amount).toLocaleString()}
+        {/* DETAILS */}
+        <View style={styles.infoCard}>
+          <Text style={styles.infoText}>
+            Invoice No: {sale.invoiceNumber || '-'}
           </Text>
-        ))}
 
-        {discount > 0 && (
-          <Text style={styles.discountText}>
-            Total Discount: - Rs. {discount.toLocaleString()}
+          <Text style={styles.infoText}>
+            Date:{' '}
+            {sale.createdAt ? new Date(sale.createdAt).toLocaleString() : '-'}
           </Text>
-        )}
+        </View>
 
-        <Text style={styles.totalText}>
-          Final Total: Rs. {finalTotal.toLocaleString()}
-        </Text>
-      </View>
+        {/* ITEMS */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Purchased Items</Text>
 
-      {/* ACTIONS */}
-      <TouchableOpacity
-        style={styles.doneBtn}
-        onPress={() => navigation.navigate('NewSaleScreen')}>
-        <Text style={styles.doneText}>Done</Text>
-      </TouchableOpacity>
-    </ScrollView>
+          {sale.items?.map((item: any, index: number) => {
+            const price = Number(item.unitPrice || item.price || 0);
+            const qty = Number(item.quantity || 0);
+            const sub = price * qty;
+
+            return (
+              <View key={index} style={styles.itemCard}>
+                <Text style={styles.itemName}>
+                  {item.itemId?.itemName || 'Item'}
+                </Text>
+
+                <Text style={styles.itemText}>Qty: {qty}</Text>
+
+                <Text style={styles.itemText}>
+                  Price: Rs. {price.toLocaleString()}
+                </Text>
+
+                <Text style={styles.itemSubtotal}>
+                  Subtotal: Rs. {sub.toLocaleString()}
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+
+        {/* SUMMARY */}
+        <View style={styles.summaryCard}>
+          <Text style={styles.summaryText}>
+            Subtotal: Rs. {subtotal.toLocaleString()}
+          </Text>
+
+          {sale.promotions?.map((promo: any, index: number) => (
+            <Text key={index} style={styles.discountText}>
+              {promo.name} (
+              {promo.discountType === 'percentage'
+                ? `${promo.discountValue}%`
+                : `Rs. ${promo.discountValue}`}
+              ) : - Rs. {Number(promo.amount).toLocaleString()}
+            </Text>
+          ))}
+
+          {discount > 0 && (
+            <Text style={styles.discountText}>
+              Total Discount: - Rs. {discount.toLocaleString()}
+            </Text>
+          )}
+
+          <Text style={styles.totalText}>
+            Final Total: Rs. {finalTotal.toLocaleString()}
+          </Text>
+        </View>
+
+        {/* ACTION */}
+        <TouchableOpacity
+          style={styles.doneBtn}
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Text style={styles.doneText}>Done</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
