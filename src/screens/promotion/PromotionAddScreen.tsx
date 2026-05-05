@@ -1,3 +1,6 @@
+// @ts-ignore
+import DatePicker from 'react-native-modern-datepicker';
+
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -5,16 +8,21 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
+  Modal,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/promotion/PromotionAddScreenStyles';
 
 export default function PromotionAddScreen({navigation}: any) {
   const [items, setItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [dateField, setDateField] = useState<'start' | 'end'>('start');
 
   const [formData, setFormData] = useState({
     promotionName: '',
@@ -34,27 +42,41 @@ export default function PromotionAddScreen({navigation}: any) {
       try {
         const res = await api.get('/items');
         setItems(res.data);
-      } catch (error) {
-        Alert.alert('Error', 'Failed to load products');
+      } catch (error: any) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Failed to load products',
+        });
       }
     };
 
     fetchItems();
   }, []);
 
-  /**
-   * HANDLE CHANGE
-   */
   const handleChange = (key: string, value: string) => {
-    setFormData({
-      ...formData,
+    setFormData((prev: any) => ({
+      ...prev,
       [key]: value,
-    });
+    }));
   };
 
-  /**
-   * SUBMIT
-   */
+  // OPEN DATE PICKER
+  const openDatePicker = (field: 'start' | 'end') => {
+    setDateField(field);
+    setShowDatePicker(true);
+  };
+
+  // HANDLE DATE SELECT
+  const handleDateSelect = (date: string) => {
+    if (dateField === 'start') {
+      handleChange('startDate', date);
+    } else {
+      handleChange('endDate', date);
+    }
+    setShowDatePicker(false);
+  };
+
   const handleSubmit = async () => {
     if (
       !formData.promotionName.trim() ||
@@ -63,27 +85,46 @@ export default function PromotionAddScreen({navigation}: any) {
       !formData.startDate ||
       !formData.endDate
     ) {
-      return Alert.alert('Validation Error', 'Please fill all required fields');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Please fill all required fields',
+      });
+      return;
     }
 
     if (formData.applyTo === 'specific' && !formData.itemId) {
-      return Alert.alert('Validation Error', 'Please select a product');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Please select a product',
+      });
+      return;
     }
 
     try {
+      setLoading(true);
+
       await api.post('/promotions', {
         ...formData,
         discountValue: Number(formData.discountValue),
       });
 
-      Alert.alert('Success', 'Promotion added successfully');
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Promotion added successfully',
+      });
 
-      navigation.goBack();
+      setTimeout(() => navigation.goBack(), 1000);
     } catch (error: any) {
-      Alert.alert(
-        'Error',
-        error.response?.data?.message || 'Failed to add promotion',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response?.data?.message || 'Failed to add promotion',
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,9 +133,7 @@ export default function PromotionAddScreen({navigation}: any) {
       <View style={styles.container}>
         <AppHeader title="Add Promotion" onBack={() => navigation.goBack()} />
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContent}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.card}>
             <Text style={styles.title}>Add New Promotion</Text>
 
@@ -104,6 +143,7 @@ export default function PromotionAddScreen({navigation}: any) {
               style={styles.input}
               value={formData.promotionName}
               onChangeText={text => handleChange('promotionName', text)}
+              placeholderTextColor="#64748b"
             />
 
             {/* DESCRIPTION */}
@@ -113,6 +153,7 @@ export default function PromotionAddScreen({navigation}: any) {
               multiline
               value={formData.promotionDescription}
               onChangeText={text => handleChange('promotionDescription', text)}
+              placeholderTextColor="#64748b"
             />
 
             {/* DISCOUNT VALUE */}
@@ -121,28 +162,46 @@ export default function PromotionAddScreen({navigation}: any) {
               style={styles.input}
               keyboardType="numeric"
               value={formData.discountValue}
-              onChangeText={text => handleChange('discountValue', text)}
+              onChangeText={text =>
+                handleChange('discountValue', text.replace(/[^0-9]/g, ''))
+              }
+              placeholderTextColor="#64748b"
             />
 
             {/* START DATE */}
-            <TextInput
-              placeholder="Start Date (YYYY-MM-DD)"
-              style={styles.input}
-              value={formData.startDate}
-              onChangeText={text => handleChange('startDate', text)}
-            />
+            <TouchableOpacity
+              style={styles.dateInput}
+              onPress={() => openDatePicker('start')}>
+              <Text style={styles.dateIcon}>📅</Text>
+
+              <Text
+                style={[
+                  styles.dateText,
+                  formData.startDate
+                    ? styles.dateValue
+                    : styles.datePlaceholder,
+                ]}>
+                {formData.startDate || 'Select Start Date'}
+              </Text>
+            </TouchableOpacity>
 
             {/* END DATE */}
-            <TextInput
-              placeholder="End Date (YYYY-MM-DD)"
-              style={styles.input}
-              value={formData.endDate}
-              onChangeText={text => handleChange('endDate', text)}
-            />
+            <TouchableOpacity
+              style={styles.dateInput}
+              onPress={() => openDatePicker('end')}>
+              <Text style={styles.dateIcon}>📅</Text>
+
+              <Text
+                style={[
+                  styles.dateText,
+                  formData.endDate ? styles.dateValue : styles.datePlaceholder,
+                ]}>
+                {formData.endDate || 'Select End Date'}
+              </Text>
+            </TouchableOpacity>
 
             {/* DISCOUNT TYPE */}
             <Text style={styles.label}>Discount Type</Text>
-
             <View style={styles.chipContainer}>
               {['percentage', 'fixed'].map(type => (
                 <TouchableOpacity
@@ -165,7 +224,6 @@ export default function PromotionAddScreen({navigation}: any) {
 
             {/* APPLY TO */}
             <Text style={styles.label}>Apply To</Text>
-
             <View style={styles.chipContainer}>
               {['all', 'specific'].map(type => (
                 <TouchableOpacity
@@ -190,7 +248,6 @@ export default function PromotionAddScreen({navigation}: any) {
             {formData.applyTo === 'specific' && (
               <>
                 <Text style={styles.label}>Select Product</Text>
-
                 <View style={styles.chipContainer}>
                   {items.map(item => (
                     <TouchableOpacity
@@ -215,7 +272,6 @@ export default function PromotionAddScreen({navigation}: any) {
 
             {/* STATUS */}
             <Text style={styles.label}>Status</Text>
-
             <View style={styles.chipContainer}>
               {['active', 'inactive'].map(status => (
                 <TouchableOpacity
@@ -237,11 +293,29 @@ export default function PromotionAddScreen({navigation}: any) {
             </View>
 
             {/* SUBMIT */}
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <TouchableOpacity
+              style={[styles.button, loading && {opacity: 0.6}]}
+              onPress={handleSubmit}
+              disabled={loading}>
               <Text style={styles.buttonText}>Add Promotion</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
+
+        {/* DATE PICKER MODAL */}
+        <Modal visible={showDatePicker} transparent animationType="slide">
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContainer}>
+              <DatePicker mode="calendar" onSelectedChange={handleDateSelect} />
+
+              <TouchableOpacity
+                onPress={() => setShowDatePicker(false)}
+                style={styles.cancelButton}>
+                <Text style={styles.cancelText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     </SafeAreaView>
   );
