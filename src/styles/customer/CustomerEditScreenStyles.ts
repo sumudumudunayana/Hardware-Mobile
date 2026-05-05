@@ -54,7 +54,7 @@ label: {
     paddingHorizontal: 14,
     paddingVertical: 14,
     fontSize: 14,
-    color: '#64748b',
+    color: '#0f172a',
     marginBottom: 14,
   },
 
