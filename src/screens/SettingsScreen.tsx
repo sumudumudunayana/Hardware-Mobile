@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import Toast from 'react-native-toast-message'; // ✅ ADD
+import Toast from 'react-native-toast-message'; 
 
 import AppHeader from '../components/AppHeader';
 import {AuthContext} from '../context/AuthContext';
@@ -30,14 +30,14 @@ export default function SettingsScreen({navigation}: any) {
           try {
             await logout();
 
-            // ✅ SUCCESS TOAST
+            // SUCCESS TOAST
             Toast.show({
               type: 'success',
               text1: 'Logged Out',
               text2: 'You have been logged out successfully',
             });
           } catch (error) {
-            // ❌ ERROR TOAST
+            //  ERROR TOAST
             Toast.show({
               type: 'error',
               text1: 'Logout Failed',
@@ -50,7 +50,7 @@ export default function SettingsScreen({navigation}: any) {
   };
 
   const showComingSoon = (title: string) => {
-    // ✅ TOAST INSTEAD OF ALERT
+    //  TOAST INSTEAD OF ALERT
     Toast.show({
       type: 'info',
       text1: title,
