@@ -14,7 +14,7 @@ import AppHeader from '../../components/AppHeader';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import styles from '../../styles/customer/CustomerEditScreenStyles';
 
-// ✅ TYPE
+// TYPE
 type CustomerForm = {
   _id?: string;
   customerName: string;
@@ -25,7 +25,7 @@ type CustomerForm = {
 export default function CustomerEditScreen({route, navigation}: any) {
   const {customer} = route.params;
 
-  // ✅ TYPED STATE
+  // TYPED STATE
   const [formData, setFormData] = useState<CustomerForm>({
     _id: customer._id,
     customerName: customer.customerName || '',
@@ -35,10 +35,10 @@ export default function CustomerEditScreen({route, navigation}: any) {
 
   const [loading, setLoading] = useState(false);
 
-  // ✅ DIALOG STATE
+  // DIALOG STATE
   const [showDialog, setShowDialog] = useState(false);
 
-  // ✅ TYPED CHANGE HANDLER
+  // TYPED CHANGE HANDLER
   const handleChange = (key: keyof CustomerForm, value: string) => {
     setFormData(prev => ({
       ...prev,
@@ -46,9 +46,9 @@ export default function CustomerEditScreen({route, navigation}: any) {
     }));
   };
 
-  /**
-   * UPDATE CUSTOMER
-   */
+  
+   // UPDATE CUSTOMER
+  
   const handleUpdate = async () => {
     if (!formData.customerName.trim()) {
       return Toast.show({
@@ -133,9 +133,9 @@ export default function CustomerEditScreen({route, navigation}: any) {
     }
   };
 
-  /**
-   * DELETE CUSTOMER
-   */
+  
+   // DELETE CUSTOMER
+   
   const handleDelete = () => {
     setShowDialog(true);
   };
@@ -209,7 +209,7 @@ export default function CustomerEditScreen({route, navigation}: any) {
         </View>
       </ScrollView>
 
-      {/* ✅ CONFIRM DIALOG */}
+      {/* CONFIRM DIALOG */}
       <ConfirmDialog
         visible={showDialog}
         title="Delete Customer"
