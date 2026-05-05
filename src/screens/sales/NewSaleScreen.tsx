@@ -1,18 +1,16 @@
 import React, {useEffect, useState, useCallback} from 'react';
-
 import {
   View,
   Text,
   TouchableOpacity,
   ScrollView,
   FlatList,
-  Alert,
 } from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/sales/NewSaleScreenStyles';
@@ -26,25 +24,25 @@ export default function NewSaleScreen() {
   const [cart, setCart] = useState<any[]>([]);
   const [cartCount, setCartCount] = useState(0);
 
-  /**
-   * LOAD ITEMS ONCE
-   */
+  
+   // LOAD ITEMS
+  
   useEffect(() => {
     loadItems();
   }, []);
 
-  /**
-   * RELOAD CART EVERY TIME SCREEN FOCUSES
-   */
+  
+   // AUTO REFRESH CART
+   
   useFocusEffect(
     useCallback(() => {
       loadCart();
     }, []),
   );
 
-  /**
-   * LOAD ITEMS + STOCK
-   */
+  
+   // LOAD ITEMS + STOCK
+  
   const loadItems = async () => {
     try {
       const [itemRes, stockRes] = await Promise.all([
@@ -52,16 +50,12 @@ export default function NewSaleScreen() {
         api.get('/stocks'),
       ]);
 
-      const stockMap: {
-        [key: string]: number;
-      } = {};
+      const stockMap: {[key: string]: number} = {};
 
       stockRes.data.forEach((stock: any) => {
         const id = stock.itemId?._id || stock.itemId;
 
-        if (!stockMap[id]) {
-          stockMap[id] = 0;
-        }
+        if (!stockMap[id]) stockMap[id] = 0;
 
         stockMap[id] += Number(stock.quantity || 0);
       });
@@ -72,15 +66,19 @@ export default function NewSaleScreen() {
       }));
 
       setProducts(mergedProducts);
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Failed to load items');
+
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to load items',
+      });
     }
   };
 
-  /**
-   * LOAD CART
-   */
+  
+   // LOAD CART
+  
   const loadCart = async () => {
     try {
       const res = await api.get('/cart');
@@ -94,22 +92,29 @@ export default function NewSaleScreen() {
       );
 
       setCartCount(totalCount);
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Failed to load cart');
+
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to load cart',
+      });
     }
   };
 
-  /**
-   * ADD TO CART
-   */
+  
+   // ADD TO CART
+   
   const handleAdd = async (product: any) => {
     const cartItem = cart.find((c: any) => c.itemId === product._id);
-
     const currentQty = cartItem ? Number(cartItem.quantity) : 0;
 
     if (currentQty >= product.quantity) {
-      Alert.alert('Warning', 'Stock limit reached');
+      Toast.show({
+        type: 'error',
+        text1: 'Stock Limit',
+        text2: 'Stock limit reached',
+      });
       return;
     }
 
@@ -122,16 +127,24 @@ export default function NewSaleScreen() {
 
       await loadCart();
 
-      Alert.alert('Success', 'Item added to cart');
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Failed to add item');
+      Toast.show({
+        type: 'success',
+        text1: 'Added',
+        text2: 'Item added to cart',
+      });
+
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to add item',
+      });
     }
   };
 
-  /**
-   * CATEGORY FILTER
-   */
+  
+   // CATEGORY FILTER
+  
   const categories = [
     'All',
     ...new Set(products.map((p: any) => p.itemCategory)),
@@ -143,18 +156,18 @@ export default function NewSaleScreen() {
       : product.itemCategory === selectedCategory,
   );
 
-  /**
-   * TOTAL PRICE
-   */
+
+   // TOTAL PRICE
+   
   const totalPrice = cart.reduce(
     (total: number, item: any) =>
       total + Number(item.price) * Number(item.quantity),
     0,
   );
 
-  /**
-   * PRODUCT CARD
-   */
+  
+   // PRODUCT CARD
+   
   const renderProduct = ({item}: any) => (
     <View style={styles.card}>
       <Text style={styles.productName}>{item.itemName}</Text>
