@@ -25,8 +25,7 @@ export default function ConfirmDialog({
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
         <View style={styles.card}>
-          
-          {/* 🔥 BACKGROUND DESIGN */}
+          {/* BACKGROUND DESIGN */}
           <View style={styles.bgCircleTop} />
           <View style={styles.bgCircleBottom} />
 
