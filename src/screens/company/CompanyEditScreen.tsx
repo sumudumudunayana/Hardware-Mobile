@@ -14,7 +14,7 @@ import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/company/CompanyEditScreenStyles';
 
-// ✅ TYPE DEFINITION
+// TYPE DEFINITION
 type CompanyForm = {
   _id?: string;
   companyName: string;
@@ -27,7 +27,7 @@ type CompanyForm = {
 export default function CompanyEditScreen({route, navigation}: any) {
   const {company} = route.params;
 
-  // ✅ TYPED STATE
+  // TYPED STATE
   const [formData, setFormData] = useState<CompanyForm>({
     _id: company._id,
     companyName: company.companyName || '',
@@ -39,7 +39,7 @@ export default function CompanyEditScreen({route, navigation}: any) {
 
   const [loading, setLoading] = useState(false);
 
-  // ✅ TYPED HANDLE CHANGE
+  // TYPED HANDLE CHANGE
   const handleChange = (key: keyof CompanyForm, value: string) => {
     setFormData(prev => ({
       ...prev,
