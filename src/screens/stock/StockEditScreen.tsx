@@ -8,6 +8,8 @@ import {
   Alert,
 } from 'react-native';
 
+import Toast from 'react-native-toast-message';
+
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/stock/StockEditScreenStyles';
@@ -16,6 +18,7 @@ export default function StockEditScreen({route, navigation}: any) {
   const {stock} = route.params;
 
   const [quantity, setQuantity] = useState(String(stock.quantity));
+  const [loading, setLoading] = useState(false);
 
   /**
    * UPDATE STOCK
@@ -24,26 +27,49 @@ export default function StockEditScreen({route, navigation}: any) {
     const updatedQty = Number(quantity);
 
     if (isNaN(updatedQty)) {
-      return Alert.alert('Validation Error', 'Please enter a valid quantity');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Please enter a valid quantity',
+      });
+      return;
     }
 
     if (updatedQty < 0) {
-      return Alert.alert('Validation Error', 'Quantity cannot be negative');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Quantity cannot be negative',
+      });
+      return;
     }
 
     try {
+      setLoading(true);
+
       await api.put(`/stocks/${stock._id}`, {
         quantity: updatedQty,
       });
 
-      Alert.alert('Success', 'Stock updated successfully');
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Stock updated successfully',
+      });
 
-      navigation.goBack();
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
     } catch (error: any) {
-      Alert.alert(
-        'Update Failed',
-        error.response?.data?.message || 'Failed to update stock',
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Update Failed',
+        text2:
+          error.response?.data?.message ||
+          'Failed to update stock',
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,14 +89,21 @@ export default function StockEditScreen({route, navigation}: any) {
           try {
             await api.delete(`/stocks/${stock._id}`);
 
-            Alert.alert('Deleted', 'Stock deleted successfully');
+            Toast.show({
+              type: 'success',
+              text1: 'Deleted',
+              text2: 'Stock deleted successfully',
+            });
 
             navigation.goBack();
           } catch (error: any) {
-            Alert.alert(
-              'Delete Failed',
-              error.response?.data?.message || 'Failed to delete stock',
-            );
+            Toast.show({
+              type: 'error',
+              text1: 'Delete Failed',
+              text2:
+                error.response?.data?.message ||
+                'Failed to delete stock',
+            });
           }
         },
       },
@@ -92,6 +125,7 @@ export default function StockEditScreen({route, navigation}: any) {
             style={styles.readOnlyInput}
             value={stock.item?.itemName}
             editable={false}
+            placeholderTextColor="#64748b"
           />
 
           {/* QUANTITY */}
@@ -102,16 +136,27 @@ export default function StockEditScreen({route, navigation}: any) {
             value={quantity}
             keyboardType="numeric"
             placeholder="Enter quantity"
-            onChangeText={setQuantity}
+            onChangeText={text =>
+              setQuantity(text.replace(/[^0-9]/g, ''))
+            }
+            placeholderTextColor="#64748b"
           />
 
           {/* ACTIONS */}
           <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.updateBtn} onPress={handleUpdate}>
-              <Text style={styles.updateText}>Save Changes</Text>
+            <TouchableOpacity
+              style={[styles.updateBtn, loading && {opacity: 0.6}]}
+              onPress={handleUpdate}
+              disabled={loading}>
+              <Text style={styles.updateText}>
+                {loading ? 'Saving...' : 'Save Changes'}
+              </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.deleteBtn} onPress={handleDelete}>
+            <TouchableOpacity
+              style={styles.deleteBtn}
+              onPress={handleDelete}
+              disabled={loading}>
               <Text style={styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
