@@ -68,7 +68,6 @@ export default function CategoryAddScreen({navigation}: any) {
       setTimeout(() => {
         navigation.goBack();
       }, 1000);
-
     } catch (error: any) {
       if (error.response?.status === 401) {
         Toast.show({
@@ -84,8 +83,7 @@ export default function CategoryAddScreen({navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Add Failed',
-        text2:
-          error.response?.data?.message || 'Failed to add category',
+        text2: error.response?.data?.message || 'Failed to add category',
       });
     } finally {
       setLoading(false);
