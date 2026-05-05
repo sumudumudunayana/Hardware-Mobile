@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import Toast from 'react-native-toast-message'; // ✅ ADD THIS
+import Toast from 'react-native-toast-message';
 
 import api from '../api/api';
 import styles from '../styles/registerScreenStyles';
@@ -20,7 +20,7 @@ export default function RegisterScreen({navigation}: any) {
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
-    // ✅ VALIDATION
+    // VALIDATION
     if (!name || !email || !password) {
       Toast.show({
         type: 'error',
@@ -59,7 +59,7 @@ export default function RegisterScreen({navigation}: any) {
         password,
       });
 
-      // ✅ SUCCESS
+      // SUCCESS
       Toast.show({
         type: 'success',
         text1: 'Registration Successful',
