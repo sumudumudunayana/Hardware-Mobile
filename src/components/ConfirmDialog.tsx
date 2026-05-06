@@ -31,9 +31,7 @@ export default function ConfirmDialog({
 
           {/* CONTENT */}
           <Text style={styles.title}>{title}</Text>
-
           <Text style={styles.message}>{message}</Text>
-
           <View style={styles.actions}>
             <TouchableOpacity style={styles.cancelBtn} onPress={onCancel}>
               <Text style={styles.cancelText}>{cancelText}</Text>
