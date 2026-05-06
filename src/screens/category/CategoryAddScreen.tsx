@@ -49,21 +49,17 @@ export default function CategoryAddScreen({navigation}: any) {
       });
       return;
     }
-
     try {
       setLoading(true);
-
       await api.post('/categories', {
         categoryName: formData.categoryName,
         categoryDescription: formData.categoryDescription,
       });
-
       Toast.show({
         type: 'success',
         text1: 'Success',
         text2: 'Category added successfully',
       });
-
       // small delay for better UX
       setTimeout(() => {
         navigation.goBack();
