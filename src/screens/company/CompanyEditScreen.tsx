@@ -26,7 +26,6 @@ type CompanyForm = {
 
 export default function CompanyEditScreen({route, navigation}: any) {
   const {company} = route.params;
-
   // TYPED STATE
   const [formData, setFormData] = useState<CompanyForm>({
     _id: company._id,
@@ -38,7 +37,6 @@ export default function CompanyEditScreen({route, navigation}: any) {
   });
 
   const [loading, setLoading] = useState(false);
-
   // TYPED HANDLE CHANGE
   const handleChange = (key: keyof CompanyForm, value: string) => {
     setFormData(prev => ({
@@ -62,7 +60,6 @@ export default function CompanyEditScreen({route, navigation}: any) {
         text2: 'All fields are required',
       });
     }
-
     if (!/^\d{10}$/.test(formData.companyContactNumber)) {
       return Toast.show({
         type: 'error',
@@ -70,7 +67,6 @@ export default function CompanyEditScreen({route, navigation}: any) {
         text2: 'Contact number must be exactly 10 digits',
       });
     }
-
     if (!/^\S+@\S+\.\S+$/.test(formData.companyEmail)) {
       return Toast.show({
         type: 'error',
