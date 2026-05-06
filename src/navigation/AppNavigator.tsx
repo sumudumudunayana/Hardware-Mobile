@@ -90,7 +90,6 @@ const PromotionStack = createNativeStackNavigator();
 const SalesStack = createNativeStackNavigator();
 
 // PRODUCT STACK
-
 function ProductStackScreen() {
   return (
     <ProductStack.Navigator screenOptions={{headerShown: false}}>
@@ -105,8 +104,8 @@ function ProductStackScreen() {
   );
 }
 
-// CUSTOMER STACK
 
+// CUSTOMER STACK
 function CustomerStackScreen() {
   return (
     <CustomerStack.Navigator screenOptions={{headerShown: false}}>
@@ -130,7 +129,6 @@ function CustomerStackScreen() {
 
 
 // COMPANY STACK
- 
 function CompanyStackScreen() {
   return (
     <CompanyStack.Navigator screenOptions={{headerShown: false}}>
@@ -149,7 +147,6 @@ function CompanyStackScreen() {
 
 
  // CATEGORY STACK
-
 function CategoryStackScreen() {
   return (
     <CategoryStack.Navigator screenOptions={{headerShown: false}}>
