@@ -24,7 +24,6 @@ export default function AIInsightsScreen({navigation}: any) {
       const res = await api.post('/ai/predict');
 
       setData(res.data || []);
-
       Toast.show({
         type: 'success',
         text1: 'AI Loaded',
@@ -49,7 +48,6 @@ export default function AIInsightsScreen({navigation}: any) {
     data.length > 0
       ? [...data].sort((a, b) => b.predicted_demand - a.predicted_demand)[0]
       : null;
-
   const topRevenue =
     data.length > 0
       ? [...data].sort((a, b) => b.predicted_revenue - a.predicted_revenue)[0]
@@ -73,8 +71,7 @@ export default function AIInsightsScreen({navigation}: any) {
                 Smart demand & revenue insights
               </Text>
             </View>
-
-             {/* TOP CARDS  */}
+            {/* TOP CARDS  */}
             <View style={styles.topCardsRow}>
               {/* TOP DEMAND */}
               {topDemand && (
