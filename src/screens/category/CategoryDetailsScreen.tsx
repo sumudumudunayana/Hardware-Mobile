@@ -16,19 +16,16 @@ export default function CategoryDetailsScreen({route, navigation}: any) {
         showsVerticalScrollIndicator={false}>
         <View style={styles.card}>
           <Text style={styles.title}>Category Information</Text>
-
           {/* CATEGORY ID */}
           <View style={styles.infoRow}>
             <Text style={styles.label}>Category ID</Text>
             <Text style={styles.value}>{category.categoryId}</Text>
           </View>
-
           {/* CATEGORY NAME */}
           <View style={styles.infoRow}>
             <Text style={styles.label}>Category Name</Text>
             <Text style={styles.value}>{category.categoryName}</Text>
           </View>
-
           {/* DESCRIPTION */}
           <View style={styles.infoRow}>
             <Text style={styles.label}>Description</Text>
