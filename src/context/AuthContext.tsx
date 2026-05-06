@@ -7,7 +7,6 @@ interface AuthContextType {
   login: (token: string) => Promise<void>;
   logout: () => Promise<void>;
 }
-
 interface AuthProviderProps {
   children: ReactNode;
 }
@@ -25,7 +24,6 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
     const checkLogin = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
-
         if (token) {
           setUserToken(token);
         }
@@ -35,7 +33,6 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         setLoading(false);
       }
     };
-
     checkLogin();
   }, []);
 
