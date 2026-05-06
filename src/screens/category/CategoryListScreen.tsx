@@ -44,7 +44,6 @@ export default function CategoryListScreen({navigation}: any) {
         navigation.replace('Login');
         return;
       }
-
       Toast.show({
         type: 'error',
         text1: 'Error',
@@ -65,13 +64,11 @@ export default function CategoryListScreen({navigation}: any) {
 
   const handleSearch = (text: string) => {
     setSearch(text);
-
     const filtered = categories.filter(category =>
       category.categoryName
         ?.toLowerCase()
         .includes(text.toLowerCase()),
     );
-
     setFilteredCategories(filtered);
   };
 
