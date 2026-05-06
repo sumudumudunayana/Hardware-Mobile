@@ -47,7 +47,6 @@ export default function CompanyAddScreen({navigation}: any) {
         text2: 'All fields are required',
       });
     }
-
     if (!/^\d{10}$/.test(formData.companyContactNumber)) {
       return Toast.show({
         type: 'error',
@@ -55,7 +54,6 @@ export default function CompanyAddScreen({navigation}: any) {
         text2: 'Contact number must be exactly 10 digits',
       });
     }
-
     if (!/^\S+@\S+\.\S+$/.test(formData.companyEmail)) {
       return Toast.show({
         type: 'error',
@@ -63,7 +61,6 @@ export default function CompanyAddScreen({navigation}: any) {
         text2: 'Please enter a valid email address',
       });
     }
-
     try {
       setLoading(true);
 
