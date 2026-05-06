@@ -43,7 +43,6 @@ export default function CategoryEditScreen({route, navigation}: any) {
       });
       return;
     }
-
     if (formData.categoryName.trim().length < 3) {
       Toast.show({
         type: 'error',
@@ -52,15 +51,12 @@ export default function CategoryEditScreen({route, navigation}: any) {
       });
       return;
     }
-
     try {
       setLoading(true);
-
       await api.put(`/categories/${formData._id}`, {
         categoryName: formData.categoryName,
         categoryDescription: formData.categoryDescription,
       });
-
       Toast.show({
         type: 'success',
         text1: 'Success',
