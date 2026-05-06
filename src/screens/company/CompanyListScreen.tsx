@@ -46,7 +46,6 @@ export default function CompanyListScreen({navigation}: any) {
         navigation.replace('Login');
         return;
       }
-
       Toast.show({
         type: 'error',
         text1: 'Error',
@@ -64,7 +63,6 @@ export default function CompanyListScreen({navigation}: any) {
       fetchCompanies();
     }, []),
   );
-
   // SEARCH
   const handleSearch = (text: string) => {
     setSearch(text);
@@ -77,7 +75,6 @@ export default function CompanyListScreen({navigation}: any) {
           ?.toLowerCase()
           .includes(text.toLowerCase()),
     );
-
     setFilteredCompanies(filtered);
   };
 
