@@ -20,14 +20,12 @@ export default function AppHeader({
           </TouchableOpacity>
         )}
       </View>
-
       {/* CENTER */}
       <View style={styles.center}>
         <Text numberOfLines={1} style={styles.title}>
           {title}
         </Text>
       </View>
-
       {/* RIGHT (placeholder for future icons) */}
       <View style={styles.side} />
     </View>
