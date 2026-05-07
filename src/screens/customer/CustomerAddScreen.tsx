@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Toast from 'react-native-toast-message'; 
+import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/customer/CustomerAddScreenStyles';
@@ -30,9 +30,8 @@ export default function CustomerAddScreen({navigation}: any) {
     }));
   };
 
-  
-   // CREATE CUSTOMER
-   
+  // CREATE CUSTOMER
+
   const handleSubmit = async () => {
     // VALIDATION
     if (!formData.customerName.trim()) {
@@ -66,7 +65,6 @@ export default function CustomerAddScreen({navigation}: any) {
         text2: 'Contact number must be exactly 10 digits',
       });
     }
-
     if (!/^\S+@\S+\.\S+$/.test(formData.customerEmail)) {
       return Toast.show({
         type: 'error',
@@ -74,7 +72,6 @@ export default function CustomerAddScreen({navigation}: any) {
         text2: 'Please enter a valid email address',
       });
     }
-
     try {
       setLoading(true);
 
@@ -94,7 +91,6 @@ export default function CustomerAddScreen({navigation}: any) {
       setTimeout(() => {
         navigation.goBack();
       }, 1000);
-
     } catch (error: any) {
       if (error.response?.status === 401) {
         Toast.show({
@@ -110,9 +106,7 @@ export default function CustomerAddScreen({navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Add Failed',
-        text2:
-          error.response?.data?.message ||
-          'Failed to add customer',
+        text2: error.response?.data?.message || 'Failed to add customer',
       });
     } finally {
       setLoading(false);
