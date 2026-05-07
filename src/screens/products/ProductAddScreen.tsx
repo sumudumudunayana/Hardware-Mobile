@@ -43,7 +43,6 @@ export default function ProductAddScreen({navigation}: any) {
           api.get('/companies'),
           api.get('/distributors'),
         ]);
-
         setCategories(cat.data);
         setCompanies(com.data);
         setDistributors(dist.data);
@@ -57,7 +56,6 @@ export default function ProductAddScreen({navigation}: any) {
           navigation.replace('Login');
           return;
         }
-
         Toast.show({
           type: 'error',
           text1: 'Error',
@@ -93,7 +91,6 @@ export default function ProductAddScreen({navigation}: any) {
       });
       return;
     }
-
     if (!formData.itemCategory) {
       Toast.show({
         type: 'error',
@@ -102,7 +99,6 @@ export default function ProductAddScreen({navigation}: any) {
       });
       return;
     }
-
     if (!formData.itemCompany) {
       Toast.show({
         type: 'error',
