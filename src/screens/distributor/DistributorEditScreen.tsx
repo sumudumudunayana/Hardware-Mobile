@@ -98,9 +98,7 @@ export default function DistributorEditScreen({route, navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Update Failed',
-        text2:
-          error.response?.data?.message ||
-          'Failed to update supplier',
+        text2: error.response?.data?.message || 'Failed to update supplier',
       });
     } finally {
       setLoading(false);
@@ -138,9 +136,7 @@ export default function DistributorEditScreen({route, navigation}: any) {
             value={formData.distributorDescription}
             placeholder="Description"
             placeholderTextColor="#64748b"
-            onChangeText={text =>
-              handleChange('distributorDescription', text)
-            }
+            onChangeText={text => handleChange('distributorDescription', text)}
           />
 
           {/* CONTACT */}
@@ -168,9 +164,7 @@ export default function DistributorEditScreen({route, navigation}: any) {
             placeholderTextColor="#64748b"
             autoCapitalize="none"
             keyboardType="email-address"
-            onChangeText={text =>
-              handleChange('distributorEmail', text)
-            }
+            onChangeText={text => handleChange('distributorEmail', text)}
           />
 
           {/* BUTTONS */}
@@ -221,8 +215,7 @@ export default function DistributorEditScreen({route, navigation}: any) {
               type: 'error',
               text1: 'Delete Failed',
               text2:
-                error.response?.data?.message ||
-                'Failed to delete supplier',
+                error.response?.data?.message || 'Failed to delete supplier',
             });
           } finally {
             setLoading(false);
