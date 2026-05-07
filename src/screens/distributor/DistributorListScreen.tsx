@@ -59,9 +59,7 @@ export default function DistributorListScreen({navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2:
-          error.response?.data?.message ||
-          'Failed to fetch suppliers',
+        text2: error.response?.data?.message || 'Failed to fetch suppliers',
       });
     } finally {
       setLoading(false);
@@ -123,7 +121,6 @@ export default function DistributorListScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            
             {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>Supplier Overview</Text>
@@ -176,9 +173,7 @@ export default function DistributorListScreen({navigation}: any) {
                   Phone: {item.distributorContactNumber}
                 </Text>
 
-                <Text style={styles.meta}>
-                  Email: {item.distributorEmail}
-                </Text>
+                <Text style={styles.meta}>Email: {item.distributorEmail}</Text>
 
                 <View style={styles.buttonRow}>
                   <TouchableOpacity
@@ -236,8 +231,7 @@ export default function DistributorListScreen({navigation}: any) {
               type: 'error',
               text1: 'Delete Failed',
               text2:
-                error.response?.data?.message ||
-                'Failed to delete supplier',
+                error.response?.data?.message || 'Failed to delete supplier',
             });
           }
         }}
