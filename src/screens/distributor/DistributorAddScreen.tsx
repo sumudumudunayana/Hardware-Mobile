@@ -32,8 +32,8 @@ export default function DistributorAddScreen({navigation}: any) {
     }));
   };
 
-   // CREATE DISTRIBUTOR
-   
+  // CREATE DISTRIBUTOR
+
   const handleSubmit = async () => {
     if (
       !formData.distributorName.trim() ||
@@ -91,7 +91,6 @@ export default function DistributorAddScreen({navigation}: any) {
       setTimeout(() => {
         navigation.goBack();
       }, 1000);
-
     } catch (error: any) {
       if (error.response?.status === 401) {
         Toast.show({
@@ -107,9 +106,7 @@ export default function DistributorAddScreen({navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Add Failed',
-        text2:
-          error.response?.data?.message ||
-          'Failed to add supplier',
+        text2: error.response?.data?.message || 'Failed to add supplier',
       });
     } finally {
       setLoading(false);
@@ -132,9 +129,7 @@ export default function DistributorAddScreen({navigation}: any) {
               placeholder="Supplier Name"
               style={styles.input}
               value={formData.distributorName}
-              onChangeText={text =>
-                handleChange('distributorName', text)
-              }
+              onChangeText={text => handleChange('distributorName', text)}
               placeholderTextColor="#64748b"
             />
 
@@ -172,9 +167,7 @@ export default function DistributorAddScreen({navigation}: any) {
               keyboardType="email-address"
               autoCapitalize="none"
               value={formData.distributorEmail}
-              onChangeText={text =>
-                handleChange('distributorEmail', text)
-              }
+              onChangeText={text => handleChange('distributorEmail', text)}
               placeholderTextColor="#64748b"
             />
 
