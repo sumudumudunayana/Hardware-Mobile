@@ -50,9 +50,7 @@ export default function CustomerListScreen({navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2:
-          error.response?.data?.message ||
-          'Failed to fetch customers',
+        text2: error.response?.data?.message || 'Failed to fetch customers',
       });
     } finally {
       setLoading(false);
@@ -106,7 +104,6 @@ export default function CustomerListScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            
             {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>Customer Overview</Text>
@@ -124,9 +121,7 @@ export default function CustomerListScreen({navigation}: any) {
 
               <View style={styles.summaryCard}>
                 <Text style={styles.summaryLabel}>With Email</Text>
-                <Text style={styles.summaryValue}>
-                  {customersWithEmail}
-                </Text>
+                <Text style={styles.summaryValue}>{customersWithEmail}</Text>
               </View>
             </View>
 
@@ -155,9 +150,7 @@ export default function CustomerListScreen({navigation}: any) {
             {/* LIST */}
             {filteredCustomers.map(customer => (
               <View key={customer._id} style={styles.card}>
-                <Text style={styles.customerName}>
-                  {customer.customerName}
-                </Text>
+                <Text style={styles.customerName}>{customer.customerName}</Text>
 
                 <Text style={styles.customerMeta}>
                   ID: {customer.customerId}
@@ -219,8 +212,7 @@ export default function CustomerListScreen({navigation}: any) {
               type: 'error',
               text1: 'Delete Failed',
               text2:
-                error.response?.data?.message ||
-                'Failed to delete customer',
+                error.response?.data?.message || 'Failed to delete customer',
             });
           }
         }}
