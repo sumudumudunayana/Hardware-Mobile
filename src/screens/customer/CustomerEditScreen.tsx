@@ -46,9 +46,8 @@ export default function CustomerEditScreen({route, navigation}: any) {
     }));
   };
 
-  
-   // UPDATE CUSTOMER
-  
+  // UPDATE CUSTOMER
+
   const handleUpdate = async () => {
     if (!formData.customerName.trim()) {
       return Toast.show({
@@ -108,7 +107,6 @@ export default function CustomerEditScreen({route, navigation}: any) {
       setTimeout(() => {
         navigation.goBack();
       }, 1000);
-
     } catch (error: any) {
       if (error.response?.status === 401) {
         Toast.show({
@@ -124,18 +122,15 @@ export default function CustomerEditScreen({route, navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Update Failed',
-        text2:
-          error.response?.data?.message ||
-          'Failed to update customer',
+        text2: error.response?.data?.message || 'Failed to update customer',
       });
     } finally {
       setLoading(false);
     }
   };
 
-  
-   // DELETE CUSTOMER
-   
+  // DELETE CUSTOMER
+
   const handleDelete = () => {
     setShowDialog(true);
   };
@@ -167,10 +162,7 @@ export default function CustomerEditScreen({route, navigation}: any) {
             placeholder="Contact Number"
             placeholderTextColor="#64748b"
             onChangeText={text =>
-              handleChange(
-                'customerContactNumber',
-                text.replace(/[^0-9]/g, ''),
-              )
+              handleChange('customerContactNumber', text.replace(/[^0-9]/g, ''))
             }
           />
 
@@ -234,8 +226,7 @@ export default function CustomerEditScreen({route, navigation}: any) {
               type: 'error',
               text1: 'Delete Failed',
               text2:
-                error.response?.data?.message ||
-                'Failed to delete customer',
+                error.response?.data?.message || 'Failed to delete customer',
             });
           } finally {
             setLoading(false);
