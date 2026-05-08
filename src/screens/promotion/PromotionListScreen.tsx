@@ -26,9 +26,8 @@ export default function PromotionListScreen({navigation}: any) {
   const [showDialog, setShowDialog] = useState(false);
   const [selectedPromotion, setSelectedPromotion] = useState<any>(null);
 
-  
-   // FETCH PROMOTIONS
-   
+  // FETCH PROMOTIONS
+
   const fetchPromotions = async () => {
     try {
       setLoading(true);
@@ -58,7 +57,6 @@ export default function PromotionListScreen({navigation}: any) {
 
       setPromotions(formatted);
       setFilteredPromotions(formatted);
-
     } catch (error: any) {
       if (error.response?.status === 401) {
         Toast.show({
@@ -74,11 +72,8 @@ export default function PromotionListScreen({navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2:
-          error.response?.data?.message ||
-          'Failed to fetch promotions',
+        text2: error.response?.data?.message || 'Failed to fetch promotions',
       });
-
     } finally {
       setLoading(false);
     }
@@ -91,9 +86,8 @@ export default function PromotionListScreen({navigation}: any) {
     }, []),
   );
 
-  
-   // SEARCH
-   
+  // SEARCH
+
   const handleSearch = (text: string) => {
     setSearch(text);
 
@@ -112,17 +106,15 @@ export default function PromotionListScreen({navigation}: any) {
     setFilteredPromotions(filtered);
   };
 
-  
-   // OPEN DELETE DIALOG
+  // OPEN DELETE DIALOG
 
   const openDeleteDialog = (item: any) => {
     setSelectedPromotion(item);
     setShowDialog(true);
   };
 
-  
-   // DASHBOARD VALUES
-  
+  // DASHBOARD VALUES
+
   const totalPromotions = promotions.length;
 
   const activePromotions = promotions.filter(
@@ -149,7 +141,6 @@ export default function PromotionListScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-
             {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>Promotion Overview</Text>
@@ -218,9 +209,7 @@ export default function PromotionListScreen({navigation}: any) {
                 <Text style={styles.meta}>Status: {item.status}</Text>
 
                 {item.item && (
-                  <Text style={styles.meta}>
-                    Product: {item.item.itemName}
-                  </Text>
+                  <Text style={styles.meta}>Product: {item.item.itemName}</Text>
                 )}
 
                 <View style={styles.buttonRow}>
@@ -274,14 +263,12 @@ export default function PromotionListScreen({navigation}: any) {
 
             setShowDialog(false);
             fetchPromotions();
-
           } catch (error: any) {
             Toast.show({
               type: 'error',
               text1: 'Delete Failed',
               text2:
-                error.response?.data?.message ||
-                'Failed to delete promotion',
+                error.response?.data?.message || 'Failed to delete promotion',
             });
           }
         }}
