@@ -1,11 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, FlatList} from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
@@ -24,25 +18,22 @@ export default function NewSaleScreen() {
   const [cart, setCart] = useState<any[]>([]);
   const [cartCount, setCartCount] = useState(0);
 
-  
-   // LOAD ITEMS
-  
+  // LOAD ITEMS
+
   useEffect(() => {
     loadItems();
   }, []);
 
-  
-   // AUTO REFRESH CART
-   
+  // AUTO REFRESH CART
+
   useFocusEffect(
     useCallback(() => {
       loadCart();
     }, []),
   );
 
-  
-   // LOAD ITEMS + STOCK
-  
+  // LOAD ITEMS + STOCK
+
   const loadItems = async () => {
     try {
       const [itemRes, stockRes] = await Promise.all([
@@ -66,7 +57,6 @@ export default function NewSaleScreen() {
       }));
 
       setProducts(mergedProducts);
-
     } catch (error: any) {
       Toast.show({
         type: 'error',
@@ -76,9 +66,8 @@ export default function NewSaleScreen() {
     }
   };
 
-  
-   // LOAD CART
-  
+  // LOAD CART
+
   const loadCart = async () => {
     try {
       const res = await api.get('/cart');
@@ -92,7 +81,6 @@ export default function NewSaleScreen() {
       );
 
       setCartCount(totalCount);
-
     } catch (error: any) {
       Toast.show({
         type: 'error',
@@ -102,9 +90,8 @@ export default function NewSaleScreen() {
     }
   };
 
-  
-   // ADD TO CART
-   
+  // ADD TO CART
+
   const handleAdd = async (product: any) => {
     const cartItem = cart.find((c: any) => c.itemId === product._id);
     const currentQty = cartItem ? Number(cartItem.quantity) : 0;
@@ -132,7 +119,6 @@ export default function NewSaleScreen() {
         text1: 'Added',
         text2: 'Item added to cart',
       });
-
     } catch (error: any) {
       Toast.show({
         type: 'error',
@@ -142,9 +128,8 @@ export default function NewSaleScreen() {
     }
   };
 
-  
-   // CATEGORY FILTER
-  
+  // CATEGORY FILTER
+
   const categories = [
     'All',
     ...new Set(products.map((p: any) => p.itemCategory)),
@@ -156,18 +141,16 @@ export default function NewSaleScreen() {
       : product.itemCategory === selectedCategory,
   );
 
+  // TOTAL PRICE
 
-   // TOTAL PRICE
-   
   const totalPrice = cart.reduce(
     (total: number, item: any) =>
       total + Number(item.price) * Number(item.quantity),
     0,
   );
 
-  
-   // PRODUCT CARD
-   
+  // PRODUCT CARD
+
   const renderProduct = ({item}: any) => (
     <View style={styles.card}>
       <Text style={styles.productName}>{item.itemName}</Text>
