@@ -44,10 +44,7 @@ export default function SalesDetailsScreen({route, navigation}: any) {
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <AppHeader
-          title="Sale Details"
-          onBack={() => navigation.goBack()}
-        />
+        <AppHeader title="Sale Details" onBack={() => navigation.goBack()} />
 
         <View style={styles.center}>
           <ActivityIndicator size="large" color="#f59e0b" />
@@ -60,10 +57,7 @@ export default function SalesDetailsScreen({route, navigation}: any) {
   if (!sale) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <AppHeader
-          title="Sale Details"
-          onBack={() => navigation.goBack()}
-        />
+        <AppHeader title="Sale Details" onBack={() => navigation.goBack()} />
 
         <View style={styles.center}>
           <Text>Sale not found</Text>
@@ -76,8 +70,7 @@ export default function SalesDetailsScreen({route, navigation}: any) {
     sale.items?.reduce(
       (sum: number, item: any) =>
         sum +
-        Number(item.unitPrice || item.price || 0) *
-          Number(item.quantity || 0),
+        Number(item.unitPrice || item.price || 0) * Number(item.quantity || 0),
       0,
     ) || 0;
 
@@ -90,19 +83,14 @@ export default function SalesDetailsScreen({route, navigation}: any) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <AppHeader
-        title="Sale Details"
-        onBack={() => navigation.goBack()}
-      />
+      <AppHeader title="Sale Details" onBack={() => navigation.goBack()} />
 
       <ScrollView style={styles.container}>
         {/* HEADER */}
         <View style={styles.header}>
           <Text style={styles.badge}>SALE DETAILS</Text>
           <Text style={styles.title}>Order Summary</Text>
-          <Text style={styles.subtitle}>
-            Admin sales management view
-          </Text>
+          <Text style={styles.subtitle}>Admin sales management view</Text>
         </View>
 
         {/* SALE INFO */}
@@ -115,14 +103,10 @@ export default function SalesDetailsScreen({route, navigation}: any) {
 
           <Text style={styles.infoText}>
             Date:{' '}
-            {sale.createdAt
-              ? new Date(sale.createdAt).toLocaleString()
-              : '-'}
+            {sale.createdAt ? new Date(sale.createdAt).toLocaleString() : '-'}
           </Text>
 
-          <Text style={styles.infoText}>
-            Sale ID: {sale.saleId || '-'}
-          </Text>
+          <Text style={styles.infoText}>Sale ID: {sale.saleId || '-'}</Text>
         </View>
 
         {/* ITEMS */}
@@ -171,15 +155,12 @@ export default function SalesDetailsScreen({route, navigation}: any) {
                 </Text>
 
                 <Text style={styles.discountText}>
-                  Discount: - Rs.{' '}
-                  {Number(promo.amount).toLocaleString()}
+                  Discount: - Rs. {Number(promo.amount).toLocaleString()}
                 </Text>
               </View>
             ))
           ) : (
-            <Text style={styles.noPromo}>
-              No promotions applied
-            </Text>
+            <Text style={styles.noPromo}>No promotions applied</Text>
           )}
         </View>
 
@@ -192,8 +173,7 @@ export default function SalesDetailsScreen({route, navigation}: any) {
           </Text>
 
           <Text style={styles.discountText}>
-            Total Discount: - Rs.{' '}
-            {totalDiscount.toLocaleString()}
+            Total Discount: - Rs. {totalDiscount.toLocaleString()}
           </Text>
 
           <Text style={styles.finalTotal}>
@@ -215,9 +195,7 @@ export default function SalesDetailsScreen({route, navigation}: any) {
               id: sale._id,
             });
           }}>
-          <Text style={styles.invoiceBtnText}>
-            View Invoice
-          </Text>
+          <Text style={styles.invoiceBtnText}>View Invoice</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
