@@ -17,9 +17,8 @@ export default function SalesListScreen({navigation}: any) {
   const [sales, setSales] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  
-   // LOAD SALES
-   
+  // LOAD SALES
+
   const loadSales = async () => {
     try {
       setLoading(true);
@@ -38,15 +37,13 @@ export default function SalesListScreen({navigation}: any) {
     }
   };
 
-  
-   // FIRST LOAD
-   
+  // FIRST LOAD
+
   useEffect(() => {
     loadSales();
   }, []);
 
-  
-   // AUTO REFRESH ON SCREEN FOCUS
+  // AUTO REFRESH ON SCREEN FOCUS
 
   useFocusEffect(
     useCallback(() => {
@@ -54,9 +51,8 @@ export default function SalesListScreen({navigation}: any) {
     }, []),
   );
 
-  
-   // CALCULATIONS
-  
+  // CALCULATIONS
+
   const totalRevenue = sales.reduce(
     (sum, sale) => sum + Number(sale.totalAmount || 0),
     0,
@@ -64,16 +60,15 @@ export default function SalesListScreen({navigation}: any) {
 
   const totalOrders = sales.length;
 
-  
-   // LATEST SALE
-   
+  // LATEST SALE
+
   const latestSale =
     sales.length > 0
       ? [...sales].sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )[0]
-      : null;   
+      : null;
   if (loading) {
     return (
       <View style={styles.center}>
