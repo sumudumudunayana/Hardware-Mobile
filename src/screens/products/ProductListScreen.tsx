@@ -74,8 +74,7 @@ export default function ProductListScreen({navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2:
-          error.response?.data?.message || 'Failed to fetch data',
+        text2: error.response?.data?.message || 'Failed to fetch data',
       });
     } finally {
       setLoading(false);
@@ -86,7 +85,7 @@ export default function ProductListScreen({navigation}: any) {
   useFocusEffect(
     useCallback(() => {
       fetchProducts();
-    }, [])
+    }, []),
   );
 
   // OPEN DELETE DIALOG
@@ -121,7 +120,6 @@ export default function ProductListScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            
             {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>Inventory Overview</Text>
@@ -178,9 +176,7 @@ export default function ProductListScreen({navigation}: any) {
               <View key={item.id} style={styles.card}>
                 <Text style={styles.productName}>{item.name}</Text>
 
-                <Text style={styles.productMeta}>
-                  Price: Rs. {item.price}
-                </Text>
+                <Text style={styles.productMeta}>Price: Rs. {item.price}</Text>
 
                 <Text style={styles.productMeta}>
                   Category: {item.category}
@@ -197,9 +193,7 @@ export default function ProductListScreen({navigation}: any) {
 
                   <TouchableOpacity
                     style={[styles.btn, styles.editBtn]}
-                    onPress={() =>
-                      navigation.navigate('ProductEdit', {item})
-                    }>
+                    onPress={() => navigation.navigate('ProductEdit', {item})}>
                     <Text style={styles.btnText}>Edit</Text>
                   </TouchableOpacity>
 
@@ -214,7 +208,8 @@ export default function ProductListScreen({navigation}: any) {
 
             {/* EMPTY STATE */}
             {filteredProducts.length === 0 && (
-              <Text style={{textAlign: 'center', marginTop: 20, color: '#64748b'}}>
+              <Text
+                style={{textAlign: 'center', marginTop: 20, color: '#64748b'}}>
                 No products found
               </Text>
             )}
@@ -245,8 +240,7 @@ export default function ProductListScreen({navigation}: any) {
               type: 'error',
               text1: 'Delete Failed',
               text2:
-                error.response?.data?.message ||
-                'Failed to delete product',
+                error.response?.data?.message || 'Failed to delete product',
             });
           }
         }}
