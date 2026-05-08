@@ -92,7 +92,6 @@ export default function PromotionAddScreen({navigation}: any) {
       });
       return;
     }
-
     if (formData.applyTo === 'specific' && !formData.itemId) {
       Toast.show({
         type: 'error',
@@ -101,7 +100,6 @@ export default function PromotionAddScreen({navigation}: any) {
       });
       return;
     }
-
     try {
       setLoading(true);
 
