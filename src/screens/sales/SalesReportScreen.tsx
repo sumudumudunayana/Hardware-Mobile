@@ -157,7 +157,6 @@ export default function SalesReportScreen({navigation}: any) {
         <AppHeader title="Sales Reports" onBack={() => navigation.goBack()} />
 
         <ScrollView contentContainerStyle={styles.scroll}>
-
           {/* FILTER */}
           <View style={styles.filterRow}>
             {['today', 'week', 'month', 'all'].map(f => (
@@ -244,9 +243,7 @@ export default function SalesReportScreen({navigation}: any) {
               <BarChart
                 data={{
                   labels: topProducts.map((p: any) => p.name),
-                  datasets: [
-                    {data: topProducts.map((p: any) => p.quantity)},
-                  ],
+                  datasets: [{data: topProducts.map((p: any) => p.quantity)}],
                 }}
                 width={Math.max(screenWidth, topProducts.length * 80)}
                 height={260}
@@ -277,13 +274,10 @@ export default function SalesReportScreen({navigation}: any) {
                   Rs. {p.revenue.toLocaleString()}
                 </Text>
 
-                <Text style={styles.productMeta}>
-                  {p.quantity} sold
-                </Text>
+                <Text style={styles.productMeta}>{p.quantity} sold</Text>
               </View>
             </View>
           ))}
-
         </ScrollView>
       </View>
     </SafeAreaView>
