@@ -31,8 +31,6 @@ export default function CartScreen() {
     applyPromotions();
   }, [cart, promotions]);
 
-
-
   // LOAD CART
   const loadCart = async () => {
     try {
@@ -47,8 +45,6 @@ export default function CartScreen() {
     }
   };
 
-
-
   // LOAD PROMOTIONS
   const loadPromotions = async () => {
     try {
@@ -62,8 +58,6 @@ export default function CartScreen() {
       });
     }
   };
-
-
 
   // APPLY PROMOTIONS
   const applyPromotions = () => {
@@ -116,8 +110,6 @@ export default function CartScreen() {
     setAppliedPromotions(applied);
   };
 
-
-
   // INCREASE QTY
   const increaseQty = async (item: any) => {
     try {
@@ -160,8 +152,6 @@ export default function CartScreen() {
     }
   };
 
-
-
   // TYPE INPUT
   const updateQtyInput = (item: any, value: string) => {
     if (value === '') {
@@ -176,8 +166,6 @@ export default function CartScreen() {
       prev.map(i => (i.itemId === item.itemId ? {...i, quantity: value} : i)),
     );
   };
-
-
 
   // SAVE INPUT
   const saveQtyInput = async (item: any) => {
@@ -207,8 +195,6 @@ export default function CartScreen() {
     }
   };
 
-
-
   // CALCULATIONS
   const subtotal = useMemo(() => {
     return cart.reduce(
@@ -225,8 +211,6 @@ export default function CartScreen() {
   }, [appliedPromotions]);
 
   const finalTotal = Math.max(subtotal - totalDiscount, 0);
-
-
 
   // COMPLETE SALE
   const generateInvoice = async () => {
@@ -270,8 +254,6 @@ export default function CartScreen() {
     }
     setLoading(false);
   };
-
-
 
   return (
     <SafeAreaView style={styles.safeArea}>
