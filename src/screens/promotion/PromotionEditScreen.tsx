@@ -76,7 +76,6 @@ export default function PromotionEditScreen({route, navigation}: any) {
       });
       return;
     }
-
     try {
       setLoading(true);
 
@@ -108,15 +107,12 @@ export default function PromotionEditScreen({route, navigation}: any) {
   const handleDelete = async () => {
     try {
       setLoading(true);
-
       await api.delete(`/promotions/${promotion._id}`);
-
       Toast.show({
         type: 'success',
         text1: 'Deleted',
         text2: 'Promotion deleted successfully',
       });
-
       setTimeout(() => navigation.goBack(), 1000);
     } catch (error: any) {
       Toast.show({
