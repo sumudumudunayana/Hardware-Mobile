@@ -183,12 +183,9 @@ export default function ProductEditScreen({route, navigation}: any) {
                   key={cat._id}
                   style={[
                     styles.chip,
-                    formData.category === cat.categoryName &&
-                      styles.chipActive,
+                    formData.category === cat.categoryName && styles.chipActive,
                   ]}
-                  onPress={() =>
-                    handleChange('category', cat.categoryName)
-                  }>
+                  onPress={() => handleChange('category', cat.categoryName)}>
                   <Text
                     style={[
                       styles.chipText,
@@ -209,12 +206,9 @@ export default function ProductEditScreen({route, navigation}: any) {
                   key={c._id}
                   style={[
                     styles.chip,
-                    formData.company === c.companyName &&
-                      styles.chipActive,
+                    formData.company === c.companyName && styles.chipActive,
                   ]}
-                  onPress={() =>
-                    handleChange('company', c.companyName)
-                  }>
+                  onPress={() => handleChange('company', c.companyName)}>
                   <Text
                     style={[
                       styles.chipText,
@@ -238,9 +232,7 @@ export default function ProductEditScreen({route, navigation}: any) {
                     formData.supplier === s.distributorName &&
                       styles.chipActive,
                   ]}
-                  onPress={() =>
-                    handleChange('supplier', s.distributorName)
-                  }>
+                  onPress={() => handleChange('supplier', s.distributorName)}>
                   <Text
                     style={[
                       styles.chipText,
