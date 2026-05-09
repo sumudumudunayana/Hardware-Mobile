@@ -73,8 +73,7 @@ export default function RegisterScreen({navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Registration Failed',
-        text2:
-          error.response?.data?.message || 'Registration failed',
+        text2: error.response?.data?.message || 'Registration failed',
       });
     } finally {
       setLoading(false);
