@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f7fb",
+    backgroundColor: '#f5f7fb',
   },
 
   scrollContent: {
@@ -12,12 +12,12 @@ export default StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     padding: 20,
     borderRadius: 16,
     marginTop: 10,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
     shadowOffset: {
@@ -27,13 +27,13 @@ export default StyleSheet.create({
     elevation: 4,
 
     borderWidth: 1,
-    borderColor: "#eef2f7",
+    borderColor: '#eef2f7',
   },
 
   title: {
     fontSize: 18,
-    fontWeight: "700",
-    color: "#0f172a",
+    fontWeight: '700',
+    color: '#0f172a',
     marginBottom: 20,
   },
 
@@ -41,33 +41,33 @@ export default StyleSheet.create({
     marginBottom: 18,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#f1f5f9",
+    borderBottomColor: '#f1f5f9',
   },
 
   label: {
     fontSize: 13,
-    color: "#64748b",
+    color: '#64748b',
     marginBottom: 6,
-    fontWeight: "600",
+    fontWeight: '600',
   },
 
   value: {
     fontSize: 15,
-    color: "#0f172a",
-    fontWeight: "600",
+    color: '#0f172a',
+    fontWeight: '600',
   },
 
   button: {
-    backgroundColor: "#f59e0b",
+    backgroundColor: '#f59e0b',
     paddingVertical: 15,
     borderRadius: 14,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 20,
   },
 
   buttonText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 });
