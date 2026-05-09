@@ -27,9 +27,8 @@ export default function StockListScreen({navigation}: any) {
   const [showDialog, setShowDialog] = useState(false);
   const [selectedStock, setSelectedStock] = useState<any>(null);
 
-  
   // FETCH STOCKS
-  
+
   const fetchStocks = async () => {
     try {
       setLoading(true);
@@ -76,25 +75,22 @@ export default function StockListScreen({navigation}: any) {
     }
   };
 
-  
-   // AUTO RELOAD ON SCREEN FOCUS
-   
+  // AUTO RELOAD ON SCREEN FOCUS
+
   useFocusEffect(
     useCallback(() => {
       fetchStocks();
     }, []),
   );
 
-  
-   // INITIAL LOAD
-   
+  // INITIAL LOAD
+
   useEffect(() => {
     fetchStocks();
   }, []);
 
-  
-   // SEARCH
-   
+  // SEARCH
+
   const handleSearch = (text: string) => {
     setSearch(text);
 
@@ -113,17 +109,15 @@ export default function StockListScreen({navigation}: any) {
     setFilteredStocks(filtered);
   };
 
-  
-   // OPEN DELETE DIALOG
-   
+  // OPEN DELETE DIALOG
+
   const openDeleteDialog = (item: any) => {
     setSelectedStock(item);
     setShowDialog(true);
   };
 
-  
-   // DASHBOARD VALUES
-   
+  // DASHBOARD VALUES
+
   const availableStockItems = stocks.filter(item => item.quantity > 0).length;
 
   const lowStockItems = stocks.filter(
@@ -208,8 +202,7 @@ export default function StockListScreen({navigation}: any) {
               <Text style={styles.reportArrow}>→</Text>
             </TouchableOpacity>
 
-
-             {/* LOW STOCK ALERT (SIMPLE) */}
+            {/* LOW STOCK ALERT (SIMPLE) */}
             <TouchableOpacity
               style={styles.reportRow}
               onPress={() => navigation.navigate('LowStockAlertScreen')}>
