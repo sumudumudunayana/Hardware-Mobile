@@ -13,7 +13,6 @@ import Toast from 'react-native-toast-message';
 import {Dropdown} from 'react-native-element-dropdown';
 // @ts-ignore
 import DatePicker from 'react-native-modern-datepicker';
-
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/stock/StockAddScreenStyles';
@@ -39,7 +38,6 @@ export default function StockAddScreen({navigation}: any) {
         value: item._id,
         full: item,
       }));
-
       setItems(formatted);
     } catch (error: any) {
       Toast.show({
