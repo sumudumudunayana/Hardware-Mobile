@@ -7,9 +7,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-
 import Toast from 'react-native-toast-message';
-
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/stock/StockEditScreenStyles';
@@ -64,9 +62,7 @@ export default function StockEditScreen({route, navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Update Failed',
-        text2:
-          error.response?.data?.message ||
-          'Failed to update stock',
+        text2: error.response?.data?.message || 'Failed to update stock',
       });
     } finally {
       setLoading(false);
@@ -100,9 +96,7 @@ export default function StockEditScreen({route, navigation}: any) {
             Toast.show({
               type: 'error',
               text1: 'Delete Failed',
-              text2:
-                error.response?.data?.message ||
-                'Failed to delete stock',
+              text2: error.response?.data?.message || 'Failed to delete stock',
             });
           }
         },
@@ -136,9 +130,7 @@ export default function StockEditScreen({route, navigation}: any) {
             value={quantity}
             keyboardType="numeric"
             placeholder="Enter quantity"
-            onChangeText={text =>
-              setQuantity(text.replace(/[^0-9]/g, ''))
-            }
+            onChangeText={text => setQuantity(text.replace(/[^0-9]/g, ''))}
             placeholderTextColor="#64748b"
           />
 
