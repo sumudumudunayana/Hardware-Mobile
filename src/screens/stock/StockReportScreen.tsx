@@ -6,10 +6,8 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BarChart, PieChart, LineChart} from 'react-native-chart-kit';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -69,7 +67,6 @@ export default function StockReportScreen({navigation}: any) {
     ).length;
 
     const outOfStock = stocks.filter(s => s.quantity === 0).length;
-
     const mostStock = [...stocks].sort((a, b) => b.quantity - a.quantity)[0];
     const leastStock = [...stocks].sort((a, b) => a.quantity - b.quantity)[0];
 
