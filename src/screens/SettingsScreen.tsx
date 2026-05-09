@@ -1,14 +1,8 @@
 import React, {useContext} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import Toast from 'react-native-toast-message'; 
+import Toast from 'react-native-toast-message';
 
 import AppHeader from '../components/AppHeader';
 import {AuthContext} from '../context/AuthContext';
@@ -61,15 +55,11 @@ export default function SettingsScreen({navigation}: any) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <AppHeader
-          title="Settings"
-          onBack={() => navigation.goBack()}
-        />
+        <AppHeader title="Settings" onBack={() => navigation.goBack()} />
 
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}>
-          
           {/* PROFILE CARD */}
           <View style={styles.profileCard}>
             <View style={styles.avatar}>
@@ -79,7 +69,6 @@ export default function SettingsScreen({navigation}: any) {
             <Text style={styles.name}>Sumudu</Text>
 
             <Text style={styles.role}>Admin</Text>
-
           </View>
 
           {/* ACCOUNT SETTINGS */}
@@ -120,21 +109,15 @@ export default function SettingsScreen({navigation}: any) {
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>About System</Text>
 
-            <Text style={styles.infoText}>
-              Hardware Management System
-            </Text>
+            <Text style={styles.infoText}>Hardware Management System</Text>
 
             <Text style={styles.infoText}>Version 1.0</Text>
 
-            <Text style={styles.infoText}>
-              Developed by Team
-            </Text>
+            <Text style={styles.infoText}>Developed by Team</Text>
           </View>
 
           {/* LOGOUT */}
-          <TouchableOpacity
-            style={styles.logoutBtn}
-            onPress={handleLogout}>
+          <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
             <Text style={styles.logoutText}>Logout</Text>
           </TouchableOpacity>
         </ScrollView>
