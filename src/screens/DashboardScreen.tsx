@@ -40,13 +40,11 @@ export default function DashboardScreen({navigation}: any) {
       {/* CONTENT */}
       <ScrollView
         contentContainerStyle={{padding: 16, paddingBottom: 40}}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         {/* LOGOUT */}
         <TouchableOpacity
           style={styles.dashboardLogoutBtn}
-          onPress={() => setShowConfirm(true)}
-        >
+          onPress={() => setShowConfirm(true)}>
           <Text style={styles.dashboardLogoutText}>Logout</Text>
         </TouchableOpacity>
 
@@ -79,8 +77,7 @@ export default function DashboardScreen({navigation}: any) {
         {/* AI CARD */}
         <TouchableOpacity
           style={styles.aiCard}
-          onPress={() => navigation.navigate('AIInsights')}
-        >
+          onPress={() => navigation.navigate('AIInsights')}>
           <View style={styles.aiGlow} />
 
           <View style={styles.aiContent}>
@@ -105,8 +102,7 @@ export default function DashboardScreen({navigation}: any) {
           {/* Products */}
           <TouchableOpacity
             style={styles.dashboardCard}
-            onPress={() => navigation.navigate('Products')}
-          >
+            onPress={() => navigation.navigate('Products')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>📦</Text>
               <Text style={styles.dashboardStatus}>Inventory</Text>
@@ -121,8 +117,7 @@ export default function DashboardScreen({navigation}: any) {
           {/* Customers */}
           <TouchableOpacity
             style={styles.dashboardCard}
-            onPress={() => navigation.navigate('Customers')}
-          >
+            onPress={() => navigation.navigate('Customers')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>👥</Text>
               <Text style={styles.dashboardStatus}>Customers</Text>
@@ -137,8 +132,7 @@ export default function DashboardScreen({navigation}: any) {
           {/* Sales */}
           <TouchableOpacity
             style={styles.dashboardCard}
-            onPress={() => navigation.navigate('Sales')}
-          >
+            onPress={() => navigation.navigate('Sales')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🧾</Text>
               <Text style={styles.dashboardStatus}>Sales</Text>
@@ -153,8 +147,7 @@ export default function DashboardScreen({navigation}: any) {
           {/* Suppliers */}
           <TouchableOpacity
             style={styles.dashboardCard}
-            onPress={() => navigation.navigate('Distributors')}
-          >
+            onPress={() => navigation.navigate('Distributors')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🚚</Text>
               <Text style={styles.dashboardStatus}>Suppliers</Text>
@@ -169,8 +162,7 @@ export default function DashboardScreen({navigation}: any) {
           {/* Stock */}
           <TouchableOpacity
             style={styles.dashboardCard}
-            onPress={() => navigation.navigate('Stocks')}
-          >
+            onPress={() => navigation.navigate('Stocks')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>📊</Text>
               <Text style={styles.dashboardStatus}>Stock</Text>
@@ -185,8 +177,7 @@ export default function DashboardScreen({navigation}: any) {
           {/* Promotions */}
           <TouchableOpacity
             style={styles.dashboardCard}
-            onPress={() => navigation.navigate('Promotions')}
-          >
+            onPress={() => navigation.navigate('Promotions')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🏷️</Text>
               <Text style={styles.dashboardStatus}>Promotions</Text>
@@ -201,8 +192,7 @@ export default function DashboardScreen({navigation}: any) {
           {/* Categories */}
           <TouchableOpacity
             style={styles.dashboardCard}
-            onPress={() => navigation.navigate('Categories')}
-          >
+            onPress={() => navigation.navigate('Categories')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🗂️</Text>
               <Text style={styles.dashboardStatus}>Categories</Text>
@@ -217,8 +207,7 @@ export default function DashboardScreen({navigation}: any) {
           {/* Companies */}
           <TouchableOpacity
             style={styles.dashboardCard}
-            onPress={() => navigation.navigate('Companies')}
-          >
+            onPress={() => navigation.navigate('Companies')}>
             <View style={styles.dashboardCardTop}>
               <Text style={styles.dashboardIcon}>🏢</Text>
               <Text style={styles.dashboardStatus}>Companies</Text>
