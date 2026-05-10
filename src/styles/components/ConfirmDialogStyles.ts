@@ -15,8 +15,7 @@ export default StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 20,
     padding: 20,
-    overflow: 'hidden', 
-
+    overflow: 'hidden',
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 15,
@@ -41,7 +40,7 @@ export default StyleSheet.create({
     width: 160,
     height: 160,
     borderRadius: 80,
-    backgroundColor: '#60a5fa', 
+    backgroundColor: '#60a5fa',
     opacity: 0.15,
     bottom: -60,
     right: -40,
