@@ -16,7 +16,6 @@ export default StyleSheet.create({
     padding: 20,
     borderRadius: 16,
     marginTop: 10,
-
     shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
@@ -25,7 +24,6 @@ export default StyleSheet.create({
       height: 4,
     },
     elevation: 4,
-
     borderWidth: 1,
     borderColor: '#eef2f7',
   },
