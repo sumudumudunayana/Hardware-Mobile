@@ -1,31 +1,31 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   dashboardContainer: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
   },
 
   dashboardGlowPrimary: {
-    position: "absolute",
+    position: 'absolute',
     width: 250,
     height: 250,
-    backgroundColor: "rgba(251, 190, 36, 0.31)",
+    backgroundColor: 'rgba(251, 190, 36, 0.31)',
     borderRadius: 200,
     top: 40,
     left: -80,
-    pointerEvents: "none",
+    pointerEvents: 'none',
   },
 
   dashboardGlowSecondary: {
-    position: "absolute",
+    position: 'absolute',
     width: 280,
     height: 280,
-    backgroundColor: "rgba(96, 165, 250, 0.36)",
+    backgroundColor: 'rgba(96, 165, 250, 0.36)',
     borderRadius: 200,
     bottom: 40,
     right: -100,
-    pointerEvents: "none",
+    pointerEvents: 'none',
   },
 
   dashboardHeader: {
@@ -34,65 +34,65 @@ export default StyleSheet.create({
   },
 
   dashboardBadge: {
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 5,
     borderRadius: 20,
-    backgroundColor: "rgba(251,191,36,0.2)",
+    backgroundColor: 'rgba(251,191,36,0.2)',
     marginBottom: 10,
   },
 
   dashboardBadgeText: {
     fontSize: 11,
-    fontWeight: "700",
-    color: "#b45309",
+    fontWeight: '700',
+    color: '#b45309',
   },
 
   dashboardTitle: {
     fontSize: 24,
-    fontWeight: "800",
-    color: "#0f172a",
+    fontWeight: '800',
+    color: '#0f172a',
   },
 
   dashboardSubtitle: {
-    color: "#475569",
+    color: '#475569',
     marginTop: 5,
     fontSize: 13,
   },
 
   dashboardStatsRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 15,
   },
 
   dashboardStatCard: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     padding: 16,
     borderRadius: 16,
     marginRight: 10,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
 
     elevation: 4,
 
     borderWidth: 1,
-    borderColor: "#f1f5f9",
+    borderColor: '#f1f5f9',
   },
 
   dashboardStatTitle: {
     fontSize: 12,
-    color: "#64748b",
+    color: '#64748b',
   },
 
   dashboardStatValue: {
     fontSize: 20,
-    fontWeight: "800",
+    fontWeight: '800',
     marginTop: 5,
-    color: "#0f172a",
+    color: '#0f172a',
   },
 
   dashboardGrid: {
@@ -100,25 +100,25 @@ export default StyleSheet.create({
   },
 
   dashboardCard: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     padding: 18,
     borderRadius: 20,
     marginBottom: 16,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.08,
     shadowRadius: 14,
-    shadowOffset: { width: 0, height: 6 },
+    shadowOffset: {width: 0, height: 6},
 
     elevation: 5,
 
     borderWidth: 1,
-    borderColor: "#eef2f7",
+    borderColor: '#eef2f7',
   },
 
   dashboardCardTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 10,
   },
 
@@ -128,119 +128,115 @@ export default StyleSheet.create({
 
   dashboardStatus: {
     fontSize: 11,
-    color: "#16a34a",
-    fontWeight: "600",
+    color: '#16a34a',
+    fontWeight: '600',
   },
 
   dashboardCardTitle: {
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: '700',
     marginBottom: 5,
-    color: "#0f172a",
+    color: '#0f172a',
   },
 
   dashboardCardDesc: {
     fontSize: 12,
-    color: "#64748b",
+    color: '#64748b',
   },
 
   dashboardLink: {
     marginTop: 10,
-    color: "#2563eb",
-    fontWeight: "600",
+    color: '#2563eb',
+    fontWeight: '600',
   },
 
   dashboardLogoutBtn: {
-    position: "absolute",
+    position: 'absolute',
     top: 30,
     right: 20,
-    backgroundColor: "#ef4444",
+    backgroundColor: '#ef4444',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 12,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.15,
     shadowRadius: 8,
-    shadowOffset: { width: 0, height: 3 },
+    shadowOffset: {width: 0, height: 3},
     elevation: 4,
   },
 
   dashboardLogoutText: {
-    color: "#fff",
-    fontWeight: "600",
+    color: '#fff',
+    fontWeight: '600',
   },
 
+  /*  AI CARD (ORANGE THEME) */
 
+  aiCard: {
+    borderRadius: 22,
+    marginBottom: 20,
+    overflow: 'hidden',
 
+    // main color
+    backgroundColor: '#f59e0b',
 
+    // shadow
+    shadowColor: '#f59e0b',
+    shadowOpacity: 0.35,
+    shadowRadius: 20,
+    shadowOffset: {width: 0, height: 10},
+    elevation: 10,
+  },
 
-/*  AI CARD (ORANGE THEME) */
+  aiGlow: {
+    position: 'absolute',
+    width: 220,
+    height: 220,
+    backgroundColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 200,
+    top: -60,
+    right: -60,
+  },
 
-aiCard: {
-  borderRadius: 22,
-  marginBottom: 20,
-  overflow: "hidden",
+  aiContent: {
+    padding: 20,
+  },
 
-  // main color
-  backgroundColor: "#f59e0b",
+  aiTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
 
-  // shadow
-  shadowColor: "#f59e0b",
-  shadowOpacity: 0.35,
-  shadowRadius: 20,
-  shadowOffset: { width: 0, height: 10 },
-  elevation: 10,
-},
+  aiIcon: {
+    fontSize: 26,
+  },
 
-aiGlow: {
-  position: "absolute",
-  width: 220,
-  height: 220,
-  backgroundColor: "rgba(255,255,255,0.25)",
-  borderRadius: 200,
-  top: -60,
-  right: -60,
-},
+  aiBadge: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#fff7ed',
+  },
 
-aiContent: {
-  padding: 20,
-},
+  aiTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#ffffff',
+    marginBottom: 6,
+  },
 
-aiTopRow: {
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: 10,
-},
+  aiDesc: {
+    fontSize: 13,
+    color: '#fff7ed',
+    lineHeight: 18,
+  },
 
-aiIcon: {
-  fontSize: 26,
-},
-
-aiBadge: {
-  fontSize: 11,
-  fontWeight: "700",
-  color: "#fff7ed",
-},
-
-aiTitle: {
-  fontSize: 20,
-  fontWeight: "800",
-  color: "#ffffff",
-  marginBottom: 6,
-},
-
-aiDesc: {
-  fontSize: 13,
-  color: "#fff7ed",
-  lineHeight: 18,
-},
-
-aiAction: {
-  marginTop: 12,
-  fontSize: 13,
-  fontWeight: "700",
-  color: "#ffffff",
-},
+  aiAction: {
+    marginTop: 12,
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#ffffff',
+  },
 });
