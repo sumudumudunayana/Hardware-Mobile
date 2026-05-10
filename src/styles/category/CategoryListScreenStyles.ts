@@ -46,7 +46,6 @@ export default StyleSheet.create({
     padding: 18,
     borderRadius: 18,
     marginHorizontal: 4,
-
     shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
@@ -104,10 +103,8 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 14,
-
     fontSize: 14,
     color: '#0f172a',
-
     borderWidth: 1,
     borderColor: '#eef2f7',
 
