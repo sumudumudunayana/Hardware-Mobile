@@ -1,10 +1,10 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   // SAFE AREA WRAPPER
   safeArea: {
     flex: 1,
-    backgroundColor: "#f5f7fb",
+    backgroundColor: '#f5f7fb',
   },
 
   //  MAIN CONTAINER
@@ -22,65 +22,65 @@ export default StyleSheet.create({
     margin: 16,
     padding: 18,
     borderRadius: 20,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     elevation: 4,
   },
 
   //  TITLE
   title: {
     fontSize: 20,
-    fontWeight: "800",
+    fontWeight: '800',
     marginBottom: 15,
-    color: "#0f172a",
+    color: '#0f172a',
   },
 
   //  INPUT
   input: {
-    backgroundColor: "#f8fafc",
+    backgroundColor: '#f8fafc',
     padding: 12,
     borderRadius: 12,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: "#e2e8f0",
+    borderColor: '#e2e8f0',
     color: '#0f172a',
   },
 
   //  TEXT AREA
   textArea: {
     height: 90,
-    textAlignVertical: "top", // 🔥 important for Android
+    textAlignVertical: 'top', // 🔥 important for Android
   },
 
   //  BUTTON
   button: {
-    backgroundColor: "#f59e0b",
+    backgroundColor: '#f59e0b',
     padding: 14,
     borderRadius: 14,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 12,
 
-    shadowColor: "#f59e0b",
+    shadowColor: '#f59e0b',
     shadowOpacity: 0.3,
     shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: {width: 0, height: 5},
     elevation: 5,
   },
 
   buttonText: {
-    color: "#fff",
-    fontWeight: "700",
+    color: '#fff',
+    fontWeight: '700',
     fontSize: 15,
   },
 
   //  CHIP CONTAINER
   chipContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     marginBottom: 12,
   },
 
@@ -88,34 +88,31 @@ export default StyleSheet.create({
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 8,
-    backgroundColor: "#e2e8f0",
+    backgroundColor: '#e2e8f0',
     borderRadius: 20,
     marginRight: 8,
     marginBottom: 8,
   },
 
   chipActive: {
-    backgroundColor: "#f59e0b",
+    backgroundColor: '#f59e0b',
   },
 
   chipText: {
     fontSize: 12,
-    fontWeight: "600",
-    color: "#334155",
+    fontWeight: '600',
+    color: '#334155',
   },
 
   chipTextActive: {
-    color: "#ffffff",
+    color: '#ffffff',
   },
 
-
   label: {
-  fontSize: 14,
-  fontWeight: '600',
-  marginTop: 12,
-  marginBottom: 6,
-  color: '#374151',
-},
-
-  
+    fontSize: 14,
+    fontWeight: '600',
+    marginTop: 12,
+    marginBottom: 6,
+    color: '#374151',
+  },
 });
