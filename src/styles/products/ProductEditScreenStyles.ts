@@ -76,33 +76,32 @@ export default StyleSheet.create({
     fontWeight: '700',
   },
 
-
   chipContainer: {
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  marginBottom: 12,
-},
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 12,
+  },
 
-chip: {
-  paddingHorizontal: 14,
-  paddingVertical: 8,
-  backgroundColor: '#e2e8f0',
-  borderRadius: 20,
-  marginRight: 8,
-  marginBottom: 8,
-},
+  chip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    backgroundColor: '#e2e8f0',
+    borderRadius: 20,
+    marginRight: 8,
+    marginBottom: 8,
+  },
 
-chipActive: {
-  backgroundColor: '#f59e0b',
-},
+  chipActive: {
+    backgroundColor: '#f59e0b',
+  },
 
-chipText: {
-  fontSize: 12,
-  fontWeight: '600',
-  color: '#334155',
-},
+  chipText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#334155',
+  },
 
-chipTextActive: {
-  color: '#ffffff',
-},
+  chipTextActive: {
+    color: '#ffffff',
+  },
 });
