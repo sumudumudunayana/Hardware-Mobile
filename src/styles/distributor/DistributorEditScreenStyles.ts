@@ -45,7 +45,6 @@ export default StyleSheet.create({
     marginTop: 12,
   },
 
-
   input: {
     backgroundColor: '#ffffff',
     borderWidth: 1,
