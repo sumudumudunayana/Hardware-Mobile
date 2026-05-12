@@ -137,6 +137,6 @@ export default StyleSheet.create({
   },
 
   reportBtn: {
-  backgroundColor: '#f8fafc', // light orange highlight
-},
+    backgroundColor: '#f8fafc', // light orange highlight
+  },
 });
