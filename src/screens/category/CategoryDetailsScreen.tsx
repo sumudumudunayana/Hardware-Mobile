@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/category/CategoryDetailsScreenStyles';
 
@@ -10,7 +9,6 @@ export default function CategoryDetailsScreen({route, navigation}: any) {
   return (
     <View style={styles.container}>
       <AppHeader title="Category Details" onBack={() => navigation.goBack()} />
-
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
