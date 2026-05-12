@@ -1,9 +1,9 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f5f7fb",
+    backgroundColor: '#f5f7fb',
   },
 
   container: {
@@ -16,12 +16,12 @@ export default StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     padding: 20,
     borderRadius: 16,
     marginTop: 10,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
     shadowOffset: {
@@ -31,51 +31,51 @@ export default StyleSheet.create({
     elevation: 4,
 
     borderWidth: 1,
-    borderColor: "#eef2f7",
+    borderColor: '#eef2f7',
   },
 
   title: {
     fontSize: 20,
-    fontWeight: "700",
-    color: "#0f172a",
+    fontWeight: '700',
+    color: '#0f172a',
     marginBottom: 20,
   },
 
   input: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: "#e2e8f0",
+    borderColor: '#e2e8f0',
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 14,
     fontSize: 14,
     marginBottom: 14,
-    color: "#0f172a",
+    color: '#0f172a',
   },
 
   textArea: {
     minHeight: 100,
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
   },
 
   label: {
     fontSize: 14,
-    fontWeight: "600",
-    color: "#334155",
+    fontWeight: '600',
+    color: '#334155',
     marginBottom: 10,
     marginTop: 6,
   },
 
   chipContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     marginBottom: 16,
   },
 
   chip: {
-    backgroundColor: "#f8fafc",
+    backgroundColor: '#f8fafc',
     borderWidth: 1,
-    borderColor: "#cbd5e1",
+    borderColor: '#cbd5e1',
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 30,
@@ -84,105 +84,100 @@ export default StyleSheet.create({
   },
 
   chipActive: {
-    backgroundColor: "#f59e0b",
-    borderColor: "#f59e0b",
+    backgroundColor: '#f59e0b',
+    borderColor: '#f59e0b',
   },
 
   chipText: {
-    color: "#334155",
+    color: '#334155',
     fontSize: 13,
-    fontWeight: "500",
+    fontWeight: '500',
   },
 
   chipTextActive: {
-    color: "#ffffff",
-    fontWeight: "600",
+    color: '#ffffff',
+    fontWeight: '600',
   },
 
   button: {
-    backgroundColor: "#f59e0b",
+    backgroundColor: '#f59e0b',
     paddingVertical: 15,
     borderRadius: 14,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 10,
   },
 
   buttonText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 
-
-
-
   /* DATE INPUT (MODERN) */
-dateInput: {
-  flexDirection: 'row',
-  alignItems: 'center',
+  dateInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
 
-  backgroundColor: '#ffffff',
-  borderRadius: 14,
-  paddingHorizontal: 14,
-  paddingVertical: 14,
+    backgroundColor: '#ffffff',
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
 
-  borderWidth: 1,
-  borderColor: '#e2e8f0',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
 
-  marginBottom: 12,
+    marginBottom: 12,
 
-  shadowColor: '#000',
-  shadowOpacity: 0.04,
-  shadowRadius: 6,
-  shadowOffset: {width: 0, height: 2},
-  elevation: 2,
-},
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    shadowOffset: {width: 0, height: 2},
+    elevation: 2,
+  },
 
-dateIcon: {
-  fontSize: 16,
-  marginRight: 10,
-},
+  dateIcon: {
+    fontSize: 16,
+    marginRight: 10,
+  },
 
-dateText: {
-  fontSize: 14,
-},
+  dateText: {
+    fontSize: 14,
+  },
 
-datePlaceholder: {
-  color: '#64748b',
-},
+  datePlaceholder: {
+    color: '#64748b',
+  },
 
-dateValue: {
-  color: '#0f172a',
-  fontWeight: '600',
-},
+  dateValue: {
+    color: '#0f172a',
+    fontWeight: '600',
+  },
 
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
 
+  modalContainer: {
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 16,
+    paddingBottom: 20,
+  },
 
-modalOverlay: {
-  flex: 1,
-  justifyContent: 'flex-end',
-  backgroundColor: 'rgba(0,0,0,0.4)',
-},
+  cancelButton: {
+    paddingVertical: 12,
+    marginTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#e2e8f0',
+  },
 
-modalContainer: {
-  backgroundColor: '#ffffff',
-  borderTopLeftRadius: 20,
-  borderTopRightRadius: 20,
-  padding: 16,
-  paddingBottom: 20,
-},
-
-cancelButton: {
-  paddingVertical: 12,
-  marginTop: 10,
-  borderTopWidth: 1,
-  borderTopColor: '#e2e8f0',
-},
-
-cancelText: {
-  textAlign: 'center',
-  color: '#ef4444',
-  fontWeight: '600',
-  fontSize: 16,
-},
+  cancelText: {
+    textAlign: 'center',
+    color: '#ef4444',
+    fontWeight: '600',
+    fontSize: 16,
+  },
 });
