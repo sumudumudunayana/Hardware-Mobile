@@ -20,9 +20,7 @@ export default function AIInsightsScreen({navigation}: any) {
   const fetchAI = async () => {
     try {
       setLoading(true);
-
       const res = await api.post('/ai/predict');
-
       setData(res.data || []);
       Toast.show({
         type: 'success',
