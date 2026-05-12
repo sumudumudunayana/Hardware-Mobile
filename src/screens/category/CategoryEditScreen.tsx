@@ -16,13 +16,12 @@ import styles from '../../styles/category/CategoryEditScreenStyles';
 
 export default function CategoryEditScreen({route, navigation}: any) {
   const {category} = route.params;
-
   const [formData, setFormData] = useState({
     ...category,
   });
-
   const [loading, setLoading] = useState(false);
 
+  // HANDLE INPUT CHANGE
   const handleChange = (key: string, value: string) => {
     setFormData({
       ...formData,
