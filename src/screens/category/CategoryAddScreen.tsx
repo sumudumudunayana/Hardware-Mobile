@@ -29,6 +29,7 @@ export default function CategoryAddScreen({navigation}: any) {
       [key]: value,
     });
   };
+  
 
   // CREATE CATEGORY
   const handleSubmit = async () => {
@@ -40,7 +41,6 @@ export default function CategoryAddScreen({navigation}: any) {
       });
       return;
     }
-
     if (formData.categoryName.trim().length < 3) {
       Toast.show({
         type: 'error',
