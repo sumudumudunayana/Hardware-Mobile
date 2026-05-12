@@ -1,9 +1,9 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f7fb",
+    backgroundColor: '#f5f7fb',
   },
 
   scrollContent: {
@@ -12,12 +12,12 @@ export default StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     padding: 20,
     borderRadius: 16,
     marginTop: 10,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
     shadowOffset: {
@@ -27,13 +27,13 @@ export default StyleSheet.create({
     elevation: 4,
 
     borderWidth: 1,
-    borderColor: "#eef2f7",
+    borderColor: '#eef2f7',
   },
 
   title: {
     fontSize: 18,
-    fontWeight: "700",
-    color: "#0f172a",
+    fontWeight: '700',
+    color: '#0f172a',
     marginBottom: 20,
   },
 
@@ -46,20 +46,20 @@ export default StyleSheet.create({
   },
 
   input: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: "#e2e8f0",
+    borderColor: '#e2e8f0',
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 14,
-    color: "#0f172a",
+    color: '#0f172a',
   },
 
   readOnlyInput: {
-    backgroundColor: "#f8fafc",
+    backgroundColor: '#f8fafc',
     borderWidth: 1,
-    borderColor: "#e2e8f0",
+    borderColor: '#e2e8f0',
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 12,
@@ -73,28 +73,28 @@ export default StyleSheet.create({
   },
 
   updateBtn: {
-    backgroundColor: "#f59e0b",
+    backgroundColor: '#f59e0b',
     paddingVertical: 14,
     borderRadius: 14,
-    alignItems: "center",
+    alignItems: 'center',
   },
 
   updateText: {
-    color: "#ffffff",
-    fontWeight: "700",
+    color: '#ffffff',
+    fontWeight: '700',
     fontSize: 15,
   },
 
   deleteBtn: {
-    backgroundColor: "#fee2e2",
+    backgroundColor: '#fee2e2',
     paddingVertical: 14,
     borderRadius: 14,
-    alignItems: "center",
+    alignItems: 'center',
   },
 
   deleteText: {
-    color: "#dc2626",
-    fontWeight: "700",
+    color: '#dc2626',
+    fontWeight: '700',
     fontSize: 15,
   },
 });

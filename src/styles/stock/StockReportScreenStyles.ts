@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f5f7fb', 
+    backgroundColor: '#f5f7fb',
   },
 
   container: {
@@ -89,6 +89,4 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: '#f1f5f9',
   },
-
-  
 });
