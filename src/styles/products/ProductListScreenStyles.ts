@@ -163,4 +163,4 @@ export default StyleSheet.create({
     fontWeight: '700',
     color: '#0f172a',
   },
-})
+});
