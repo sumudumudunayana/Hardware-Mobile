@@ -1,9 +1,9 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f5f7fb",
+    backgroundColor: '#f5f7fb',
   },
 
   container: {
@@ -16,12 +16,12 @@ export default StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     padding: 20,
     borderRadius: 16,
     marginTop: 10,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
     shadowOffset: {
@@ -31,29 +31,28 @@ export default StyleSheet.create({
     elevation: 4,
 
     borderWidth: 1,
-    borderColor: "#eef2f7",
+    borderColor: '#eef2f7',
   },
 
   title: {
     fontSize: 20,
-    fontWeight: "700",
-    color: "#0f172a",
+    fontWeight: '700',
+    color: '#0f172a',
     marginBottom: 20,
   },
 
   label: {
-  fontSize: 14,
-  fontWeight: "600",
-  color: "#334155",
-  marginBottom: 6,
-  marginTop: 12,
-
-},
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#334155',
+    marginBottom: 6,
+    marginTop: 12,
+  },
 
   input: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: "#e2e8f0",
+    borderColor: '#e2e8f0',
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 14,
@@ -64,77 +63,74 @@ export default StyleSheet.create({
 
   textArea: {
     minHeight: 100,
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
   },
 
   updateBtn: {
-    backgroundColor: "#f59e0b",
+    backgroundColor: '#f59e0b',
     paddingVertical: 15,
     borderRadius: 14,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 10,
   },
 
   updateText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 
   deleteBtn: {
-    backgroundColor: "#fee2e2",
+    backgroundColor: '#fee2e2',
     paddingVertical: 15,
     borderRadius: 14,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 14,
   },
 
   deleteText: {
-    color: "#dc2626",
-    fontWeight: "700",
+    color: '#dc2626',
+    fontWeight: '700',
     fontSize: 15,
   },
 
-
-
-
   /* DATE INPUT (MATCH ADD SCREEN) */
-dateInput: {
-  flexDirection: 'row',
-  alignItems: 'center',
+  dateInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
 
-  backgroundColor: '#ffffff',
-  borderRadius: 14,
-  paddingHorizontal: 14,
-  paddingVertical: 14,
+    backgroundColor: '#ffffff',
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
 
-  borderWidth: 1,
-  borderColor: '#e2e8f0',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
 
-  marginBottom: 12,
+    marginBottom: 12,
 
-  shadowColor: '#000',
-  shadowOpacity: 0.04,
-  shadowRadius: 6,
-  shadowOffset: {width: 0, height: 2},
-  elevation: 2,
-},
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    shadowOffset: {width: 0, height: 2},
+    elevation: 2,
+  },
 
-dateIcon: {
-  fontSize: 16,
-  marginRight: 10,
-},
+  dateIcon: {
+    fontSize: 16,
+    marginRight: 10,
+  },
 
-dateText: {
-  fontSize: 14,
-},
+  dateText: {
+    fontSize: 14,
+  },
 
-datePlaceholder: {
-  color: '#64748b',
-},
+  datePlaceholder: {
+    color: '#64748b',
+  },
 
-dateValue: {
-  color: '#0f172a',
-  fontWeight: '600',
-},
+  dateValue: {
+    color: '#0f172a',
+    fontWeight: '600',
+  },
 });
