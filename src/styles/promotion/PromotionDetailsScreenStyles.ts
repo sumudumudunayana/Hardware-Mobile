@@ -1,9 +1,9 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f5f7fb",
+    backgroundColor: '#f5f7fb',
   },
 
   container: {
@@ -17,11 +17,11 @@ export default StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     padding: 20,
     borderRadius: 16,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.06,
     shadowRadius: 10,
     shadowOffset: {
@@ -31,13 +31,13 @@ export default StyleSheet.create({
     elevation: 4,
 
     borderWidth: 1,
-    borderColor: "#eef2f7",
+    borderColor: '#eef2f7',
   },
 
   title: {
     fontSize: 20,
-    fontWeight: "700",
-    color: "#0f172a",
+    fontWeight: '700',
+    color: '#0f172a',
     marginBottom: 16,
   },
 
@@ -45,20 +45,20 @@ export default StyleSheet.create({
     marginBottom: 14,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#f1f5f9",
+    borderBottomColor: '#f1f5f9',
   },
 
   label: {
     fontSize: 13,
-    fontWeight: "600",
-    color: "#64748b",
+    fontWeight: '600',
+    color: '#64748b',
     marginBottom: 6,
   },
 
   value: {
     fontSize: 15,
-    color: "#0f172a",
-    fontWeight: "500",
+    color: '#0f172a',
+    fontWeight: '500',
     lineHeight: 22,
   },
 });
