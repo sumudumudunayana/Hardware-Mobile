@@ -80,9 +80,7 @@ export default function CategoryEditScreen({route, navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Update Failed',
-        text2:
-          error.response?.data?.message ||
-          'Failed to update category',
+        text2: error.response?.data?.message || 'Failed to update category',
       });
     } finally {
       setLoading(false);
@@ -91,42 +89,37 @@ export default function CategoryEditScreen({route, navigation}: any) {
 
   // DELETE CATEGORY
   const handleDelete = () => {
-    Alert.alert(
-      'Delete Category',
-      'This action cannot be undone',
-      [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              setLoading(true);
+    Alert.alert('Delete Category', 'This action cannot be undone', [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            setLoading(true);
 
-              await api.delete(`/categories/${formData._id}`);
+            await api.delete(`/categories/${formData._id}`);
 
-              Toast.show({
-                type: 'success',
-                text1: 'Deleted',
-                text2: 'Category removed successfully',
-              });
+            Toast.show({
+              type: 'success',
+              text1: 'Deleted',
+              text2: 'Category removed successfully',
+            });
 
-              navigation.goBack();
-            } catch (error: any) {
-              Toast.show({
-                type: 'error',
-                text1: 'Delete Failed',
-                text2:
-                  error.response?.data?.message ||
-                  'Failed to delete category',
-              });
-            } finally {
-              setLoading(false);
-            }
-          },
+            navigation.goBack();
+          } catch (error: any) {
+            Toast.show({
+              type: 'error',
+              text1: 'Delete Failed',
+              text2:
+                error.response?.data?.message || 'Failed to delete category',
+            });
+          } finally {
+            setLoading(false);
+          }
         },
-      ],
-    );
+      },
+    ]);
   };
 
   return (
@@ -144,9 +137,7 @@ export default function CategoryEditScreen({route, navigation}: any) {
             value={formData.categoryName}
             placeholder="Category Name"
             placeholderTextColor="#64748b"
-            onChangeText={text =>
-              handleChange('categoryName', text)
-            }
+            onChangeText={text => handleChange('categoryName', text)}
           />
 
           {/* DESCRIPTION */}
@@ -157,9 +148,7 @@ export default function CategoryEditScreen({route, navigation}: any) {
             value={formData.categoryDescription}
             placeholder="Category Description"
             placeholderTextColor="#64748b"
-            onChangeText={text =>
-              handleChange('categoryDescription', text)
-            }
+            onChangeText={text => handleChange('categoryDescription', text)}
           />
 
           {/* BUTTONS */}
