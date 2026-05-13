@@ -77,7 +77,6 @@ export default function CompanyEditScreen({route, navigation}: any) {
 
     try {
       setLoading(true);
-
       await api.put(`/companies/${formData._id}`, {
         companyName: formData.companyName,
         companyDescription: formData.companyDescription,
@@ -95,7 +94,6 @@ export default function CompanyEditScreen({route, navigation}: any) {
       setTimeout(() => {
         navigation.goBack();
       }, 1000);
-
     } catch (error: any) {
       if (error.response?.status === 401) {
         Toast.show({
@@ -103,7 +101,6 @@ export default function CompanyEditScreen({route, navigation}: any) {
           text1: 'Session Expired',
           text2: 'Please login again',
         });
-
         navigation.replace('Login');
         return;
       }
@@ -111,8 +108,7 @@ export default function CompanyEditScreen({route, navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Update Failed',
-        text2:
-          error.response?.data?.message || 'Failed to update company',
+        text2: error.response?.data?.message || 'Failed to update company',
       });
     } finally {
       setLoading(false);
@@ -121,42 +117,37 @@ export default function CompanyEditScreen({route, navigation}: any) {
 
   // DELETE COMPANY
   const handleDelete = () => {
-    Alert.alert(
-      'Delete Company',
-      'This action cannot be undone',
-      [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              setLoading(true);
+    Alert.alert('Delete Company', 'This action cannot be undone', [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            setLoading(true);
 
-              await api.delete(`/companies/${formData._id}`);
+            await api.delete(`/companies/${formData._id}`);
 
-              Toast.show({
-                type: 'success',
-                text1: 'Deleted',
-                text2: 'Company removed successfully',
-              });
+            Toast.show({
+              type: 'success',
+              text1: 'Deleted',
+              text2: 'Company removed successfully',
+            });
 
-              navigation.goBack();
-            } catch (error: any) {
-              Toast.show({
-                type: 'error',
-                text1: 'Delete Failed',
-                text2:
-                  error.response?.data?.message ||
-                  'Failed to delete company',
-              });
-            } finally {
-              setLoading(false);
-            }
-          },
+            navigation.goBack();
+          } catch (error: any) {
+            Toast.show({
+              type: 'error',
+              text1: 'Delete Failed',
+              text2:
+                error.response?.data?.message || 'Failed to delete company',
+            });
+          } finally {
+            setLoading(false);
+          }
         },
-      ],
-    );
+      },
+    ]);
   };
 
   return (
@@ -185,9 +176,7 @@ export default function CompanyEditScreen({route, navigation}: any) {
             value={formData.companyDescription}
             placeholder="Company Description"
             placeholderTextColor="#64748b"
-            onChangeText={text =>
-              handleChange('companyDescription', text)
-            }
+            onChangeText={text => handleChange('companyDescription', text)}
           />
 
           {/* ADDRESS */}
@@ -197,9 +186,7 @@ export default function CompanyEditScreen({route, navigation}: any) {
             value={formData.companyAddress}
             placeholder="Company Address"
             placeholderTextColor="#64748b"
-            onChangeText={text =>
-              handleChange('companyAddress', text)
-            }
+            onChangeText={text => handleChange('companyAddress', text)}
           />
 
           {/* CONTACT */}
@@ -211,10 +198,7 @@ export default function CompanyEditScreen({route, navigation}: any) {
             placeholder="Contact Number"
             placeholderTextColor="#64748b"
             onChangeText={text =>
-              handleChange(
-                'companyContactNumber',
-                text.replace(/[^0-9]/g, ''),
-              )
+              handleChange('companyContactNumber', text.replace(/[^0-9]/g, ''))
             }
           />
 
