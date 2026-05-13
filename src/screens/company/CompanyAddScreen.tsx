@@ -24,7 +24,6 @@ export default function CompanyAddScreen({navigation}: any) {
   });
 
   const [loading, setLoading] = useState(false);
-
   const handleChange = (key: string, value: string) => {
     setFormData(prev => ({
       ...prev,
@@ -81,7 +80,7 @@ export default function CompanyAddScreen({navigation}: any) {
       setTimeout(() => {
         navigation.goBack();
       }, 1000);
-
+    
     } catch (error: any) {
       if (error.response?.status === 401) {
         Toast.show({
@@ -89,7 +88,6 @@ export default function CompanyAddScreen({navigation}: any) {
           text1: 'Session Expired',
           text2: 'Please login again',
         });
-
         navigation.replace('Login');
         return;
       }
@@ -97,8 +95,7 @@ export default function CompanyAddScreen({navigation}: any) {
       Toast.show({
         type: 'error',
         text1: 'Add Failed',
-        text2:
-          error.response?.data?.message || 'Failed to add company',
+        text2: error.response?.data?.message || 'Failed to add company',
       });
     } finally {
       setLoading(false);
@@ -131,9 +128,7 @@ export default function CompanyAddScreen({navigation}: any) {
               style={[styles.input, styles.textArea]}
               multiline
               value={formData.companyDescription}
-              onChangeText={text =>
-                handleChange('companyDescription', text)
-              }
+              onChangeText={text => handleChange('companyDescription', text)}
               placeholderTextColor="#64748b"
             />
 
@@ -142,9 +137,7 @@ export default function CompanyAddScreen({navigation}: any) {
               placeholder="Company Address"
               style={styles.input}
               value={formData.companyAddress}
-              onChangeText={text =>
-                handleChange('companyAddress', text)
-              }
+              onChangeText={text => handleChange('companyAddress', text)}
               placeholderTextColor="#64748b"
             />
 
@@ -170,9 +163,7 @@ export default function CompanyAddScreen({navigation}: any) {
               autoCapitalize="none"
               keyboardType="email-address"
               value={formData.companyEmail}
-              onChangeText={text =>
-                handleChange('companyEmail', text)
-              }
+              onChangeText={text => handleChange('companyEmail', text)}
               placeholderTextColor="#64748b"
             />
 
