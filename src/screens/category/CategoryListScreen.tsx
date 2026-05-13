@@ -84,7 +84,6 @@ export default function CategoryListScreen({navigation}: any) {
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           <AppHeader title="Categories" onBack={() => navigation.goBack()} />
-
           {loading ? (
             <View style={{marginTop: 40}}>
               <ActivityIndicator size="large" color="#f59e0b" />
@@ -124,7 +123,6 @@ export default function CategoryListScreen({navigation}: any) {
                   Tap here to create new product categories
                 </Text>
               </TouchableOpacity>
-
               <Text style={styles.sectionTitle}>Category List</Text>
 
               {/* SEARCH */}
