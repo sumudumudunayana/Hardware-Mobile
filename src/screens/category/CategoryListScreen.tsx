@@ -40,16 +40,13 @@ export default function CategoryListScreen({navigation}: any) {
           text1: 'Session Expired',
           text2: 'Please login again',
         });
-
         navigation.replace('Login');
         return;
       }
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2:
-          error.response?.data?.message ||
-          'Failed to fetch categories',
+        text2: error.response?.data?.message || 'Failed to fetch categories',
       });
     } finally {
       setLoading(false);
@@ -65,9 +62,7 @@ export default function CategoryListScreen({navigation}: any) {
   const handleSearch = (text: string) => {
     setSearch(text);
     const filtered = categories.filter(category =>
-      category.categoryName
-        ?.toLowerCase()
-        .includes(text.toLowerCase()),
+      category.categoryName?.toLowerCase().includes(text.toLowerCase()),
     );
     setFilteredCategories(filtered);
   };
@@ -82,7 +77,6 @@ export default function CategoryListScreen({navigation}: any) {
 
   return (
     <View style={{flex: 1, backgroundColor: '#ffffffcd'}}>
-      
       {/* GLOW BACKGROUND */}
       <View style={styles.glowPrimary} />
       <View style={styles.glowSecondary} />
@@ -99,7 +93,6 @@ export default function CategoryListScreen({navigation}: any) {
             <ScrollView
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.scrollContent}>
-              
               {/* HEADER */}
               <View style={styles.headingSection}>
                 <Text style={styles.heading}>Category Overview</Text>
@@ -206,8 +199,7 @@ export default function CategoryListScreen({navigation}: any) {
                 type: 'error',
                 text1: 'Delete Failed',
                 text2:
-                  error.response?.data?.message ||
-                  'Failed to delete category',
+                  error.response?.data?.message || 'Failed to delete category',
               });
             }
           }}
