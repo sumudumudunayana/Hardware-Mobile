@@ -7,7 +7,6 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -47,7 +46,6 @@ export default function CustomerEditScreen({route, navigation}: any) {
   };
 
   // UPDATE CUSTOMER
-
   const handleUpdate = async () => {
     if (!formData.customerName.trim()) {
       return Toast.show({
@@ -56,7 +54,6 @@ export default function CustomerEditScreen({route, navigation}: any) {
         text2: 'Customer name is required',
       });
     }
-
     if (!formData.customerContactNumber.trim()) {
       return Toast.show({
         type: 'error',
@@ -64,7 +61,6 @@ export default function CustomerEditScreen({route, navigation}: any) {
         text2: 'Contact number is required',
       });
     }
-
     if (!formData.customerEmail.trim()) {
       return Toast.show({
         type: 'error',
