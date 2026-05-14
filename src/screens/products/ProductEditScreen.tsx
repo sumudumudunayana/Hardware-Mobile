@@ -7,7 +7,6 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -38,7 +37,6 @@ export default function ProductEditScreen({route, navigation}: any) {
     const loadData = async () => {
       try {
         setLoading(true);
-
         const [cat, com, sup] = await Promise.all([
           api.get('/categories'),
           api.get('/companies'),
@@ -57,7 +55,6 @@ export default function ProductEditScreen({route, navigation}: any) {
         setLoading(false);
       }
     };
-
     loadData();
   }, []);
 
