@@ -7,7 +7,6 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -60,7 +59,6 @@ export default function DistributorEditScreen({route, navigation}: any) {
         text2: 'All fields are required',
       });
     }
-
     if (!/^\d{10}$/.test(formData.distributorContactNumber)) {
       return Toast.show({
         type: 'error',
@@ -68,7 +66,6 @@ export default function DistributorEditScreen({route, navigation}: any) {
         text2: 'Contact number must be exactly 10 digits',
       });
     }
-
     if (!/^\S+@\S+\.\S+$/.test(formData.distributorEmail)) {
       return Toast.show({
         type: 'error',
