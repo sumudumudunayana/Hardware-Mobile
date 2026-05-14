@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -47,7 +46,6 @@ export default function DistributorAddScreen({navigation}: any) {
         text2: 'All fields are required',
       });
     }
-
     if (formData.distributorName.trim().length < 2) {
       return Toast.show({
         type: 'error',
@@ -55,7 +53,6 @@ export default function DistributorAddScreen({navigation}: any) {
         text2: 'Supplier name must be at least 2 characters',
       });
     }
-
     if (!/^\d{10}$/.test(formData.distributorContactNumber)) {
       return Toast.show({
         type: 'error',
