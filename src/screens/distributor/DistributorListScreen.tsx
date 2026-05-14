@@ -40,7 +40,6 @@ export default function DistributorListScreen({navigation}: any) {
         distributorContactNumber: item.distributorContactNumber,
         distributorEmail: item.distributorEmail,
       }));
-
       setDistributors(formatted);
       setFilteredDistributors(formatted);
     } catch (error: any) {
@@ -73,7 +72,6 @@ export default function DistributorListScreen({navigation}: any) {
   // SEARCH
   const handleSearch = (text: string) => {
     setSearch(text);
-
     if (!text.trim()) {
       setFilteredDistributors(distributors);
       return;
