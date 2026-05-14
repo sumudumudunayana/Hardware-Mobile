@@ -8,7 +8,6 @@ import {
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -24,7 +23,7 @@ export default function ProductListScreen({navigation}: any) {
   const [showDialog, setShowDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
-  // ✅ NEW: search state
+  // NEW: search state
   const [searchQuery, setSearchQuery] = useState('');
 
   // FETCH PRODUCTS + CATEGORIES
@@ -70,7 +69,6 @@ export default function ProductListScreen({navigation}: any) {
         navigation.replace('Login');
         return;
       }
-
       Toast.show({
         type: 'error',
         text1: 'Error',
