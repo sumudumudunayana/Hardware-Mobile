@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -37,7 +36,6 @@ export default function ProductAddScreen({navigation}: any) {
     const loadData = async () => {
       try {
         setLoading(true);
-
         const [cat, com, dist] = await Promise.all([
           api.get('/categories'),
           api.get('/companies'),
@@ -65,7 +63,6 @@ export default function ProductAddScreen({navigation}: any) {
         setLoading(false);
       }
     };
-
     loadData();
   }, []);
 
