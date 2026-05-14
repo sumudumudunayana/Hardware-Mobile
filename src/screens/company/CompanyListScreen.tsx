@@ -13,7 +13,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
-import ConfirmDialog from '../../components/ConfirmDialog'; // ✅ IMPORT
+import ConfirmDialog from '../../components/ConfirmDialog';
 import styles from '../../styles/company/CompanyListScreenStyles';
 
 export default function CompanyListScreen({navigation}: any) {
@@ -42,15 +42,13 @@ export default function CompanyListScreen({navigation}: any) {
           text1: 'Session Expired',
           text2: 'Please login again',
         });
-
         navigation.replace('Login');
         return;
       }
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2:
-          error.response?.data?.message || 'Failed to fetch companies',
+        text2: error.response?.data?.message || 'Failed to fetch companies',
       });
     } finally {
       setLoading(false);
@@ -97,7 +95,6 @@ export default function CompanyListScreen({navigation}: any) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}>
-            
             {/* HEADER */}
             <View style={styles.headingSection}>
               <Text style={styles.heading}>Company Overview</Text>
@@ -144,9 +141,7 @@ export default function CompanyListScreen({navigation}: any) {
             {/* LIST */}
             {filteredCompanies.map(company => (
               <View key={company._id} style={styles.card}>
-                <Text style={styles.companyName}>
-                  {company.companyName}
-                </Text>
+                <Text style={styles.companyName}>{company.companyName}</Text>
 
                 <Text style={styles.companyMeta}>
                   Phone: {company.companyContactNumber}
@@ -211,8 +206,7 @@ export default function CompanyListScreen({navigation}: any) {
               type: 'error',
               text1: 'Delete Failed',
               text2:
-                error.response?.data?.message ||
-                'Failed to delete company',
+                error.response?.data?.message || 'Failed to delete company',
             });
           }
         }}
