@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -15,7 +14,6 @@ import styles from '../../styles/sales/InvoiceScreenStyles';
 
 export default function InvoiceScreen({route, navigation}: any) {
   const {id} = route.params;
-
   const [sale, setSale] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
