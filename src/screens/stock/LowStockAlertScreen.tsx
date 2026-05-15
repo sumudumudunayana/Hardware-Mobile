@@ -6,10 +6,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
-
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/stock/LowStockAlertScreenStyles';
@@ -69,7 +67,6 @@ export default function LowStockAlertScreen({navigation}: any) {
     }
 
     const priority: any = {OUT: 1, CRITICAL: 2, LOW: 3};
-
     return data.sort(
       (a, b) =>
         priority[getStatus(a.quantity)] - priority[getStatus(b.quantity)],
