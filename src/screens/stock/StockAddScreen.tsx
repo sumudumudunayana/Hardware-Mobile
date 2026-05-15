@@ -8,7 +8,6 @@ import {
   Modal,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Toast from 'react-native-toast-message';
 import {Dropdown} from 'react-native-element-dropdown';
 // @ts-ignore
@@ -70,7 +69,6 @@ export default function StockAddScreen({navigation}: any) {
     }
 
     const quantity = Number(formData.quantity);
-
     if (isNaN(quantity) || quantity <= 0) {
       Toast.show({
         type: 'error',
