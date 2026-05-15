@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -30,7 +29,6 @@ export default function SalesHistoryScreen({navigation}: any) {
   const loadSales = async () => {
     try {
       setLoading(true);
-
       const res = await api.get('/sales');
       setSales(res.data || []);
     } catch (error: any) {
