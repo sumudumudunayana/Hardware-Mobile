@@ -1,8 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-
 import Toast from 'react-native-toast-message';
-
 import {AuthContext} from '../context/AuthContext';
 import ConfirmDialog from '../components/ConfirmDialog'; // 👈 IMPORT
 
@@ -16,7 +14,6 @@ export default function DashboardScreen({navigation}: any) {
   const handleLogout = async () => {
     try {
       await logout();
-
       Toast.show({
         type: 'success',
         text1: 'Logged Out',
