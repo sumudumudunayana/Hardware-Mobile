@@ -11,7 +11,6 @@ import {
   Modal,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -19,9 +18,7 @@ import styles from '../../styles/promotion/PromotionEditScreenStyles';
 
 export default function PromotionEditScreen({route, navigation}: any) {
   const {promotion} = route.params;
-
   const [loading, setLoading] = useState(false);
-
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateField, setDateField] = useState<'start' | 'end'>('start');
 
