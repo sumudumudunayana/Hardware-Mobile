@@ -11,7 +11,6 @@ import {
   Modal,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -50,7 +49,6 @@ export default function PromotionAddScreen({navigation}: any) {
         });
       }
     };
-
     fetchItems();
   }, []);
 
@@ -107,7 +105,6 @@ export default function PromotionAddScreen({navigation}: any) {
         ...formData,
         discountValue: Number(formData.discountValue),
       });
-
       Toast.show({
         type: 'success',
         text1: 'Success',
