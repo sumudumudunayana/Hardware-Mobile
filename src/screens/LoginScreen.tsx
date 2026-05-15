@@ -6,9 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-
 import Toast from 'react-native-toast-message';
-
 import api from '../api/api';
 import {AuthContext} from '../context/AuthContext';
 import styles from '../styles/loginStyles';
@@ -18,7 +16,6 @@ export default function LoginScreen({navigation}: any) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
