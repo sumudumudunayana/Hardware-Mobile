@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -15,7 +14,6 @@ import styles from '../../styles/sales/SalesDetailsScreenStyles';
 
 export default function SalesDetailsScreen({route, navigation}: any) {
   const {id} = route.params;
-
   const [sale, setSale] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -75,7 +73,6 @@ export default function SalesDetailsScreen({route, navigation}: any) {
     ) || 0;
 
   const totalDiscount = Number(sale.discountTotal || 0);
-
   const finalTotal =
     Number(sale.finalTotal) ||
     Number(sale.totalAmount) ||
