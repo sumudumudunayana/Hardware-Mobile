@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import styles from '../../styles/sales/SalesListScreenStyles';
@@ -24,7 +23,6 @@ export default function SalesListScreen({navigation}: any) {
       setLoading(true);
 
       const res = await api.get('/sales');
-
       setSales(res.data || []);
     } catch (error: any) {
       Toast.show({
