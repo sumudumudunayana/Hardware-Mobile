@@ -10,7 +10,6 @@ import {
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BarChart, PieChart} from 'react-native-chart-kit';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
