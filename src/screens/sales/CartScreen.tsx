@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -67,7 +66,6 @@ export default function CartScreen() {
     }
 
     const now = new Date();
-
     const subtotal = cart.reduce(
       (sum, item) => sum + Number(item.price) * Number(item.quantity),
       0,
@@ -117,7 +115,6 @@ export default function CartScreen() {
         itemId: item.itemId,
         quantity: Number(item.quantity) + 1,
       });
-
       loadCart();
     } catch {
       Toast.show({
