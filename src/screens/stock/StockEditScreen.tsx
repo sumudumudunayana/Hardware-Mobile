@@ -14,13 +14,10 @@ import styles from '../../styles/stock/StockEditScreenStyles';
 
 export default function StockEditScreen({route, navigation}: any) {
   const {stock} = route.params;
-
   const [quantity, setQuantity] = useState(String(stock.quantity));
   const [loading, setLoading] = useState(false);
 
-  /**
-   * UPDATE STOCK
-   */
+  // UPDATE STOCK
   const handleUpdate = async () => {
     const updatedQty = Number(quantity);
 
