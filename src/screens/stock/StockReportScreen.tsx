@@ -56,7 +56,6 @@ export default function StockReportScreen({navigation}: any) {
   /* SUMMARY */
   const summary = useMemo(() => {
     const totalItems = stocks.reduce((sum, s) => sum + s.quantity, 0);
-
     const totalValue = stocks.reduce(
       (sum, s) => sum + s.quantity * (s.itemId?.itemCostPrice || 0),
       0,
@@ -65,7 +64,6 @@ export default function StockReportScreen({navigation}: any) {
     const lowStock = stocks.filter(
       s => s.quantity > 0 && s.quantity <= LOW_STOCK_LIMIT,
     ).length;
-
     const outOfStock = stocks.filter(s => s.quantity === 0).length;
     const mostStock = [...stocks].sort((a, b) => b.quantity - a.quantity)[0];
     const leastStock = [...stocks].sort((a, b) => a.quantity - b.quantity)[0];
