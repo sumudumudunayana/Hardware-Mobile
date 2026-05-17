@@ -9,9 +9,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
-
 import Toast from 'react-native-toast-message';
-
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
 import ConfirmDialog from '../../components/ConfirmDialog'; // ✅ added
@@ -28,7 +26,6 @@ export default function StockListScreen({navigation}: any) {
   const [selectedStock, setSelectedStock] = useState<any>(null);
 
   // FETCH STOCKS
-
   const fetchStocks = async () => {
     try {
       setLoading(true);
