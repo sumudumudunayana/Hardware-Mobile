@@ -75,11 +75,9 @@ export default function AIInsightsScreen({navigation}: any) {
               {topDemand && (
                 <View style={[styles.topCard, styles.gradientDemand]}>
                   <Text style={styles.topLabel}>🔥 Top Demand</Text>
-
                   <Text style={styles.topProduct}>
                     {topDemand.product_name}
                   </Text>
-
                   <Text style={styles.topValue}>
                     {topDemand.predicted_demand}
                   </Text>
