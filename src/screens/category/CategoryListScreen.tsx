@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -21,14 +20,12 @@ export default function CategoryListScreen({navigation}: any) {
   const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
-
   const [showDialog, setShowDialog] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
 
   const fetchCategories = async () => {
     try {
       setLoading(true);
-
       const res = await api.get('/categories');
 
       setCategories(res.data);
