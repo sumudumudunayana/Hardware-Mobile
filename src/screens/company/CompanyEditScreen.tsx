@@ -8,7 +8,6 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
 import AppHeader from '../../components/AppHeader';
@@ -84,13 +83,11 @@ export default function CompanyEditScreen({route, navigation}: any) {
         companyContactNumber: formData.companyContactNumber,
         companyEmail: formData.companyEmail,
       });
-
       Toast.show({
         type: 'success',
         text1: 'Success',
         text2: 'Company updated successfully',
       });
-
       setTimeout(() => {
         navigation.goBack();
       }, 1000);
