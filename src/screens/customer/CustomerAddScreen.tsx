@@ -21,7 +21,6 @@ export default function CustomerAddScreen({navigation}: any) {
   });
 
   const [loading, setLoading] = useState(false);
-
   // HANDLE INPUT CHANGE
   const handleChange = (key: string, value: string) => {
     setFormData(prev => ({
@@ -31,7 +30,6 @@ export default function CustomerAddScreen({navigation}: any) {
   };
 
   // CREATE CUSTOMER
-
   const handleSubmit = async () => {
     // VALIDATION
     if (!formData.customerName.trim()) {
