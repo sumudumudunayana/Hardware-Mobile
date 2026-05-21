@@ -33,10 +33,8 @@ export default function CustomerEditScreen({route, navigation}: any) {
   });
 
   const [loading, setLoading] = useState(false);
-
   // DIALOG STATE
   const [showDialog, setShowDialog] = useState(false);
-
   // TYPED CHANGE HANDLER
   const handleChange = (key: keyof CustomerForm, value: string) => {
     setFormData(prev => ({
