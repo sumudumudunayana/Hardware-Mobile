@@ -42,7 +42,6 @@ export default function CustomerListScreen({navigation}: any) {
         navigation.replace('Login');
         return;
       }
-
       Toast.show({
         type: 'error',
         text1: 'Error',
@@ -72,7 +71,6 @@ export default function CustomerListScreen({navigation}: any) {
           ?.toLowerCase()
           .includes(text.toLowerCase()),
     );
-
     setFilteredCustomers(filtered);
   };
 
@@ -194,13 +192,11 @@ export default function CustomerListScreen({navigation}: any) {
         onConfirm={async () => {
           try {
             await api.delete(`/customers/${selectedCustomer._id}`);
-
             Toast.show({
               type: 'success',
               text1: 'Deleted',
               text2: 'Customer deleted successfully',
             });
-
             setShowDialog(false);
             fetchCustomers();
           } catch (error: any) {
