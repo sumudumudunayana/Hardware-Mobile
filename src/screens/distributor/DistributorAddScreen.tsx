@@ -60,7 +60,6 @@ export default function DistributorAddScreen({navigation}: any) {
         text2: 'Contact number must be exactly 10 digits',
       });
     }
-
     if (!/^\S+@\S+\.\S+$/.test(formData.distributorEmail)) {
       return Toast.show({
         type: 'error',
@@ -68,7 +67,6 @@ export default function DistributorAddScreen({navigation}: any) {
         text2: 'Please enter a valid email address',
       });
     }
-
     try {
       setLoading(true);
 
