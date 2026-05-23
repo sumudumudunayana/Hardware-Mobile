@@ -28,7 +28,6 @@ export default function ProductAddScreen({navigation}: any) {
   const [categories, setCategories] = useState<any[]>([]);
   const [companies, setCompanies] = useState<any[]>([]);
   const [distributors, setDistributors] = useState<any[]>([]);
-
   const [loading, setLoading] = useState(false);
 
   // LOAD DROPDOWN DATA
@@ -104,7 +103,6 @@ export default function ProductAddScreen({navigation}: any) {
       });
       return;
     }
-
     if (!formData.itemDistributor) {
       Toast.show({
         type: 'error',
@@ -113,7 +111,6 @@ export default function ProductAddScreen({navigation}: any) {
       });
       return;
     }
-
     if (cost < 0 || selling < 0 || labeled < 0) {
       Toast.show({
         type: 'error',
