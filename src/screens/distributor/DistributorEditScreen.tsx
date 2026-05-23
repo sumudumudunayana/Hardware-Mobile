@@ -73,10 +73,8 @@ export default function DistributorEditScreen({route, navigation}: any) {
         text2: 'Please enter a valid email address',
       });
     }
-
     try {
       setLoading(true);
-
       await api.put(`/distributors/${formData._id}`, {
         distributorName: formData.distributorName,
         distributorDescription: formData.distributorDescription,
