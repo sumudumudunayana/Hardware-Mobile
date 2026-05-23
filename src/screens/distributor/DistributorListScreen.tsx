@@ -85,7 +85,6 @@ export default function DistributorListScreen({navigation}: any) {
           .includes(text.toLowerCase()) ||
         item.distributorEmail?.toLowerCase().includes(text.toLowerCase()),
     );
-
     setFilteredDistributors(filtered);
   };
 
@@ -97,7 +96,6 @@ export default function DistributorListScreen({navigation}: any) {
 
   // Dashboard
   const totalSuppliers = distributors.length;
-
   const suppliersWithEmail = distributors.filter(
     item => item.distributorEmail,
   ).length;
