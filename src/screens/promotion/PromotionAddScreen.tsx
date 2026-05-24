@@ -19,7 +19,6 @@ import styles from '../../styles/promotion/PromotionAddScreenStyles';
 export default function PromotionAddScreen({navigation}: any) {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateField, setDateField] = useState<'start' | 'end'>('start');
 
@@ -100,7 +99,6 @@ export default function PromotionAddScreen({navigation}: any) {
     }
     try {
       setLoading(true);
-
       await api.post('/promotions', {
         ...formData,
         discountValue: Number(formData.discountValue),
