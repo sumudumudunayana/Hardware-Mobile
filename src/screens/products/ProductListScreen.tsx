@@ -65,7 +65,6 @@ export default function ProductListScreen({navigation}: any) {
           text1: 'Session Expired',
           text2: 'Please login again',
         });
-
         navigation.replace('Login');
         return;
       }
@@ -96,7 +95,7 @@ export default function ProductListScreen({navigation}: any) {
   const totalProducts = products.length;
   const totalCategories = categories.length;
 
-  // ✅ FILTERED PRODUCTS
+  // FILTERED PRODUCTS
   const filteredProducts = products.filter(item => {
     const query = searchQuery.toLowerCase();
 
