@@ -42,7 +42,6 @@ export default function ProductEditScreen({route, navigation}: any) {
           api.get('/companies'),
           api.get('/distributors'),
         ]);
-
         setCategories(cat.data);
         setCompanies(com.data);
         setSuppliers(sup.data);
@@ -75,7 +74,6 @@ export default function ProductEditScreen({route, navigation}: any) {
     if (!formData.name.trim()) {
       return Toast.show({type: 'error', text1: 'Item name required'});
     }
-
     if (!formData.description.trim()) {
       return Toast.show({type: 'error', text1: 'Description required'});
     }
