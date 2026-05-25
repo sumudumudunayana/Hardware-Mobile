@@ -81,13 +81,11 @@ export default function PromotionEditScreen({route, navigation}: any) {
         discountValue: Number(formData.discountValue),
         itemId: formData.applyTo === 'specific' ? formData.itemId : null,
       });
-
       Toast.show({
         type: 'success',
         text1: 'Success',
         text2: 'Promotion updated successfully',
       });
-
       setTimeout(() => navigation.goBack(), 1000);
     } catch (error: any) {
       Toast.show({
