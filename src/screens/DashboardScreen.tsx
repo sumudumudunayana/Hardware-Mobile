@@ -8,9 +8,7 @@ import styles from '../styles/dashboardScreenStyles';
 
 export default function DashboardScreen({navigation}: any) {
   const {logout} = useContext(AuthContext);
-
   const [showConfirm, setShowConfirm] = useState(false); // 👈 STATE
-
   const handleLogout = async () => {
     try {
       await logout();
