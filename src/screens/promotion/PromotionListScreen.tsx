@@ -30,7 +30,6 @@ export default function PromotionListScreen({navigation}: any) {
   const fetchPromotions = async () => {
     try {
       setLoading(true);
-
       const res = await api.get('/promotions');
 
       const formatted = res.data.map((promotion: any) => ({
@@ -66,7 +65,6 @@ export default function PromotionListScreen({navigation}: any) {
         navigation.replace('Login');
         return;
       }
-
       Toast.show({
         type: 'error',
         text1: 'Error',
