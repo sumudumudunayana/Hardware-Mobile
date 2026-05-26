@@ -15,7 +15,6 @@ import styles from '../../styles/sales/CartScreenStyles';
 
 export default function CartScreen() {
   const navigation = useNavigation<any>();
-
   const [cart, setCart] = useState<any[]>([]);
   const [promotions, setPromotions] = useState<any[]>([]);
   const [appliedPromotions, setAppliedPromotions] = useState<any[]>([]);
