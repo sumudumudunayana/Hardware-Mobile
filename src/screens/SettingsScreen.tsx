@@ -8,7 +8,6 @@ import styles from '../styles/SettingsScreenStyles';
 
 export default function SettingsScreen({navigation}: any) {
   const {logout} = useContext(AuthContext);
-
   const handleLogout = () => {
     Alert.alert('Logout', 'Are you sure you want to logout?', [
       {
@@ -65,7 +64,6 @@ export default function SettingsScreen({navigation}: any) {
             </View>
 
             <Text style={styles.name}>Sumudu</Text>
-
             <Text style={styles.role}>Admin</Text>
           </View>
 
