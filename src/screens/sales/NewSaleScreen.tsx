@@ -11,7 +11,6 @@ export default function NewSaleScreen() {
   const navigation = useNavigation<any>();
   const [products, setProducts] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
-
   const [cart, setCart] = useState<any[]>([]);
   const [cartCount, setCartCount] = useState(0);
 
@@ -39,10 +38,8 @@ export default function NewSaleScreen() {
       ]);
 
       const stockMap: {[key: string]: number} = {};
-
       stockRes.data.forEach((stock: any) => {
         const id = stock.itemId?._id || stock.itemId;
-
         if (!stockMap[id]) stockMap[id] = 0;
 
         stockMap[id] += Number(stock.quantity || 0);
