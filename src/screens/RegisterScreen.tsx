@@ -15,8 +15,8 @@ export default function RegisterScreen({navigation}: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-
   const handleRegister = async () => {
+    
     // VALIDATION
     if (!name || !email || !password) {
       Toast.show({
