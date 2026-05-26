@@ -36,9 +36,7 @@ export default function LoginScreen({navigation}: any) {
         email,
         password,
       });
-
       const token = res.data.token;
-
       if (!token) {
         Toast.show({
           type: 'error',
