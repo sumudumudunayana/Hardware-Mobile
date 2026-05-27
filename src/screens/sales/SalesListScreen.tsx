@@ -85,9 +85,7 @@ export default function SalesListScreen({navigation}: any) {
         {/* HEADER */}
         <View style={styles.header}>
           <Text style={styles.badge}>SALES CENTER</Text>
-
           <Text style={styles.title}>Sales Management</Text>
-
           <Text style={styles.subtitle}>
             Manage orders, invoices and checkout
           </Text>
