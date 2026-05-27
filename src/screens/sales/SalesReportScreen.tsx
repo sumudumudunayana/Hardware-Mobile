@@ -47,11 +47,9 @@ export default function SalesReportScreen({navigation}: any) {
 
     return sales.filter(sale => {
       const saleDate = new Date(sale.createdAt);
-
       if (filterType === 'today') {
         return saleDate.toDateString() === now.toDateString();
       }
-
       if (filterType === 'week') {
         const last7 = new Date();
         last7.setDate(now.getDate() - 7);
