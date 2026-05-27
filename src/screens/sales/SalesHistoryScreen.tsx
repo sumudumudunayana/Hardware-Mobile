@@ -55,7 +55,6 @@ export default function SalesHistoryScreen({navigation}: any) {
   //  delete sale
   const deleteSale = async () => {
     if (!selectedId) return;
-
     try {
       await api.delete(`/sales/${selectedId}`);
 
@@ -64,7 +63,6 @@ export default function SalesHistoryScreen({navigation}: any) {
         text1: 'Deleted',
         text2: 'Sale deleted successfully',
       });
-
       setShowDialog(false);
       loadSales();
     } catch (error: any) {
