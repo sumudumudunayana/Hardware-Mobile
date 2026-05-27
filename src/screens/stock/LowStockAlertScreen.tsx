@@ -16,7 +16,6 @@ export default function LowStockAlertScreen({navigation}: any) {
   const [stocks, setStocks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('ALL');
-
   const LOW_LIMIT = 10;
   const CRITICAL_LIMIT = 5;
 
@@ -61,7 +60,6 @@ export default function LowStockAlertScreen({navigation}: any) {
   // FILTERED DATA
   const alertStocks = useMemo(() => {
     let data = stocks.filter(s => s.quantity <= LOW_LIMIT);
-
     if (filter !== 'ALL') {
       data = data.filter(s => getStatus(s.quantity) === filter);
     }
@@ -79,11 +77,9 @@ export default function LowStockAlertScreen({navigation}: any) {
       low: stocks.filter(
         s => s.quantity > CRITICAL_LIMIT && s.quantity <= LOW_LIMIT,
       ).length,
-
       critical: stocks.filter(
         s => s.quantity > 0 && s.quantity <= CRITICAL_LIMIT,
       ).length,
-
       out: stocks.filter(s => s.quantity === 0).length,
 
       reorder: stocks.filter(s => s.quantity <= LOW_LIMIT).length,
