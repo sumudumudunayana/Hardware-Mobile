@@ -19,12 +19,10 @@ import styles from '../../styles/stock/StockAddScreenStyles';
 export default function StockAddScreen({navigation}: any) {
   const [items, setItems] = useState<any[]>([]);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-
   const [formData, setFormData] = useState({
     quantity: '',
     arrivalDate: '',
   });
-
   const [loading, setLoading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
