@@ -20,11 +20,9 @@ export default function SalesDetailsScreen({route, navigation}: any) {
   useEffect(() => {
     loadSaleDetails();
   }, []);
-
   const loadSaleDetails = async () => {
     try {
       setLoading(true);
-
       const res = await api.get(`/sales/${id}`);
       setSale(res.data);
     } catch (error: any) {
