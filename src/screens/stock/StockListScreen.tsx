@@ -29,9 +29,7 @@ export default function StockListScreen({navigation}: any) {
   const fetchStocks = async () => {
     try {
       setLoading(true);
-
       const res = await api.get('/stocks');
-
       const formatted = res.data.map((stock: any) => ({
         _id: stock._id,
         stockId: stock.stockId,
@@ -61,7 +59,6 @@ export default function StockListScreen({navigation}: any) {
         navigation.replace('Login');
         return;
       }
-
       Toast.show({
         type: 'error',
         text1: 'Error',
