@@ -41,11 +41,9 @@ export default function StockEditScreen({route, navigation}: any) {
 
     try {
       setLoading(true);
-
       await api.put(`/stocks/${stock._id}`, {
         quantity: updatedQty,
       });
-
       Toast.show({
         type: 'success',
         text1: 'Success',
