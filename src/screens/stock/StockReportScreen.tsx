@@ -81,7 +81,6 @@ export default function StockReportScreen({navigation}: any) {
   /* CATEGORY */
   const categoryData = useMemo(() => {
     const grouped: any = {};
-
     stocks.forEach(s => {
       const category = s.itemId?.itemCategory || 'Other';
       grouped[category] = (grouped[category] || 0) + s.quantity;
@@ -133,7 +132,6 @@ export default function StockReportScreen({navigation}: any) {
     stocks.forEach(s => {
       const d = new Date(s.updatedAt);
       const label = `${d.getMonth() + 1}/${d.getFullYear()}`;
-
       if (!grouped[label]) grouped[label] = 0;
       grouped[label] += s.quantity;
     });
