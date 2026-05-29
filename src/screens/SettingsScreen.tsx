@@ -53,7 +53,6 @@ export default function SettingsScreen({navigation}: any) {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <AppHeader title="Settings" onBack={() => navigation.goBack()} />
-
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}>
