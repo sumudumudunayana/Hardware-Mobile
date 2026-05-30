@@ -69,7 +69,6 @@ export default function SettingsScreen({navigation}: any) {
           {/* ACCOUNT SETTINGS */}
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>Account</Text>
-
             <TouchableOpacity
               style={styles.item}
               onPress={() => showComingSoon('Edit Profile')}>
