@@ -102,11 +102,8 @@ export default function SettingsScreen({navigation}: any) {
           {/* ABOUT */}
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>About System</Text>
-
             <Text style={styles.infoText}>Hardware Management System</Text>
-
             <Text style={styles.infoText}>Version 1.0</Text>
-
             <Text style={styles.infoText}>Developed by Team</Text>
           </View>
 
