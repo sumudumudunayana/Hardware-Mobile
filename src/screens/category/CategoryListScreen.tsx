@@ -77,7 +77,6 @@ export default function CategoryListScreen({navigation}: any) {
       {/* GLOW BACKGROUND */}
       <View style={styles.glowPrimary} />
       <View style={styles.glowSecondary} />
-
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           <AppHeader title="Categories" onBack={() => navigation.goBack()} />
