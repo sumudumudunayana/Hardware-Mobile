@@ -76,7 +76,6 @@ export default function CompanyAddScreen({navigation}: any) {
         text1: 'Success',
         text2: 'Company added successfully',
       });
-
       setTimeout(() => {
         navigation.goBack();
       }, 1000);
@@ -91,7 +90,6 @@ export default function CompanyAddScreen({navigation}: any) {
         navigation.replace('Login');
         return;
       }
-
       Toast.show({
         type: 'error',
         text1: 'Add Failed',
