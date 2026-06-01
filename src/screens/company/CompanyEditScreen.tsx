@@ -101,7 +101,6 @@ export default function CompanyEditScreen({route, navigation}: any) {
         navigation.replace('Login');
         return;
       }
-
       Toast.show({
         type: 'error',
         text1: 'Update Failed',
@@ -122,7 +121,6 @@ export default function CompanyEditScreen({route, navigation}: any) {
         onPress: async () => {
           try {
             setLoading(true);
-
             await api.delete(`/companies/${formData._id}`);
 
             Toast.show({
