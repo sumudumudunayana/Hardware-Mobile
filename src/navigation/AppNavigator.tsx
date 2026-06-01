@@ -342,7 +342,6 @@ function MainTabs() {
 
           if (route.name === 'Home') iconName = 'home';
           if (route.name === 'Settings') iconName = 'settings';
-
           return <Ionicons name={iconName} size={22} color={color} />;
         },
       })}>
