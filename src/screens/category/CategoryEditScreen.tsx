@@ -95,9 +95,7 @@ export default function CategoryEditScreen({route, navigation}: any) {
         onPress: async () => {
           try {
             setLoading(true);
-
             await api.delete(`/categories/${formData._id}`);
-
             Toast.show({
               type: 'success',
               text1: 'Deleted',
