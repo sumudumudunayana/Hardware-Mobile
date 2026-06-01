@@ -37,7 +37,6 @@ export default function AIInsightsScreen({navigation}: any) {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchAI();
   }, []);
@@ -69,8 +68,10 @@ export default function AIInsightsScreen({navigation}: any) {
                 Smart demand & revenue insights
               </Text>
             </View>
+
             {/* TOP CARDS  */}
             <View style={styles.topCardsRow}>
+              
               {/* TOP DEMAND */}
               {topDemand && (
                 <View style={[styles.topCard, styles.gradientDemand]}>
