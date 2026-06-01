@@ -29,7 +29,6 @@ export default function CompanyListScreen({navigation}: any) {
   const fetchCompanies = async () => {
     try {
       setLoading(true);
-
       const res = await api.get('/companies');
 
       setCompanies(res.data);
