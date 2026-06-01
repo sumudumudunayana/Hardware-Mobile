@@ -39,7 +39,6 @@ export default function CustomerAddScreen({navigation}: any) {
         text2: 'Customer name is required',
       });
     }
-
     if (!formData.customerContactNumber.trim()) {
       return Toast.show({
         type: 'error',
@@ -47,7 +46,6 @@ export default function CustomerAddScreen({navigation}: any) {
         text2: 'Contact number is required',
       });
     }
-
     if (!formData.customerEmail.trim()) {
       return Toast.show({
         type: 'error',
