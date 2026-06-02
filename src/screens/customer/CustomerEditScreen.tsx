@@ -23,7 +23,6 @@ type CustomerForm = {
 
 export default function CustomerEditScreen({route, navigation}: any) {
   const {customer} = route.params;
-
   // TYPED STATE
   const [formData, setFormData] = useState<CustomerForm>({
     _id: customer._id,
