@@ -149,7 +149,6 @@ export default function CustomerListScreen({navigation}: any) {
                 <Text style={styles.customerMeta}>
                   ID: {customer.customerId}
                 </Text>
-
                 <Text style={styles.customerMeta}>
                   Phone: {customer.customerContactNumber}
                 </Text>
@@ -166,8 +165,7 @@ export default function CustomerListScreen({navigation}: any) {
                   <TouchableOpacity
                     style={[styles.btn, styles.editBtn]}
                     onPress={() =>
-                      navigation.navigate('CustomerEdit', {customer})
-                    }>
+                      navigation.navigate('CustomerEdit', {customer})}>
                     <Text style={styles.btnText}>Edit</Text>
                   </TouchableOpacity>
 
