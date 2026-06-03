@@ -111,7 +111,6 @@ export default function CustomerEditScreen({route, navigation}: any) {
         navigation.replace('Login');
         return;
       }
-
       Toast.show({
         type: 'error',
         text1: 'Update Failed',
