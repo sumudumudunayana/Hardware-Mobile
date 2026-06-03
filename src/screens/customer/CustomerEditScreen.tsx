@@ -107,7 +107,6 @@ export default function CustomerEditScreen({route, navigation}: any) {
           text1: 'Session Expired',
           text2: 'Please login again',
         });
-
         navigation.replace('Login');
         return;
       }
