@@ -81,13 +81,11 @@ export default function DistributorEditScreen({route, navigation}: any) {
         distributorContactNumber: formData.distributorContactNumber,
         distributorEmail: formData.distributorEmail,
       });
-
       Toast.show({
         type: 'success',
         text1: 'Success',
         text2: 'Supplier updated successfully',
       });
-
       setTimeout(() => navigation.goBack(), 1000);
     } catch (error: any) {
       Toast.show({
