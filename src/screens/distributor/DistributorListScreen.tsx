@@ -20,7 +20,6 @@ export default function DistributorListScreen({navigation}: any) {
   const [filteredDistributors, setFilteredDistributors] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-
   // dialog state
   const [showDialog, setShowDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
@@ -31,7 +30,6 @@ export default function DistributorListScreen({navigation}: any) {
       setLoading(true);
 
       const res = await api.get('/distributors');
-
       const formatted = res.data.map((item: any) => ({
         _id: item._id,
         distributorId: item.distributorId,
