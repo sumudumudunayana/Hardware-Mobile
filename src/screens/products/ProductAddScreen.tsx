@@ -78,7 +78,6 @@ export default function ProductAddScreen({navigation}: any) {
     const cost = Number(formData.itemCostPrice);
     const selling = Number(formData.itemSellingPrice);
     const labeled = Number(formData.itemLabeledPrice);
-
     if (!formData.itemName.trim()) {
       Toast.show({
         type: 'error',
