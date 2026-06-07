@@ -77,11 +77,9 @@ export default function ProductEditScreen({route, navigation}: any) {
     if (!formData.description.trim()) {
       return Toast.show({type: 'error', text1: 'Description required'});
     }
-
     if (!formData.category) {
       return Toast.show({type: 'error', text1: 'Select category'});
     }
-
     if (!formData.company) {
       return Toast.show({type: 'error', text1: 'Select company'});
     }
