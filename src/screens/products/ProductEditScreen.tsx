@@ -98,10 +98,8 @@ export default function ProductEditScreen({route, navigation}: any) {
         text1: 'Labeled must be highest',
       });
     }
-
     try {
       setLoading(true);
-
       await api.put(`/items/${formData._id}`, {
         itemName: formData.name,
         itemDescription: formData.description,
