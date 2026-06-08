@@ -19,10 +19,8 @@ export default function ProductListScreen({navigation}: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [showDialog, setShowDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-
   // NEW: search state
   const [searchQuery, setSearchQuery] = useState('');
 
