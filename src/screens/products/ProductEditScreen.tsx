@@ -83,11 +83,9 @@ export default function ProductEditScreen({route, navigation}: any) {
     if (!formData.company) {
       return Toast.show({type: 'error', text1: 'Select company'});
     }
-
     if (!formData.supplier) {
       return Toast.show({type: 'error', text1: 'Select supplier'});
     }
-
     if (cost < 0 || selling < 0 || labeled < 0) {
       return Toast.show({type: 'error', text1: 'Invalid prices'});
     }
