@@ -89,11 +89,9 @@ export default function ProductEditScreen({route, navigation}: any) {
     if (cost < 0 || selling < 0 || labeled < 0) {
       return Toast.show({type: 'error', text1: 'Invalid prices'});
     }
-
     if (selling <= cost) {
       return Toast.show({type: 'error', text1: 'Selling must be > cost'});
     }
-
     if (labeled <= selling || labeled <= cost) {
       return Toast.show({
         type: 'error',
