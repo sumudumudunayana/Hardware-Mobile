@@ -115,11 +115,9 @@ export default function ProductEditScreen({route, navigation}: any) {
         type: 'success',
         text1: 'Product updated successfully',
       });
-
       setTimeout(() => navigation.goBack(), 1000);
     } catch (error: any) {
       console.log(error.response?.data);
-
       Toast.show({
         type: 'error',
         text1: 'Update failed',
