@@ -28,12 +28,10 @@ export default function ProductListScreen({navigation}: any) {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-
       const [productsRes, categoriesRes] = await Promise.all([
         api.get('/items'),
         api.get('/categories'),
       ]);
-
       const formatted = productsRes.data.map((item: any) => ({
         id: item._id,
         itemId: item.itemId,
