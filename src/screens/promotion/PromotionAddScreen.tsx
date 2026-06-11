@@ -21,7 +21,6 @@ export default function PromotionAddScreen({navigation}: any) {
   const [loading, setLoading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateField, setDateField] = useState<'start' | 'end'>('start');
-
   const [formData, setFormData] = useState({
     promotionName: '',
     promotionDescription: '',
@@ -108,7 +107,6 @@ export default function PromotionAddScreen({navigation}: any) {
         text1: 'Success',
         text2: 'Promotion added successfully',
       });
-
       setTimeout(() => navigation.goBack(), 1000);
     } catch (error: any) {
       Toast.show({
