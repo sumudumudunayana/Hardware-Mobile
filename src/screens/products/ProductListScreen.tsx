@@ -51,7 +51,6 @@ export default function ProductListScreen({navigation}: any) {
         company: item.itemCompany,
         supplier: item.itemDistributor,
       }));
-
       setProducts(formatted);
       setCategories(categoriesRes.data);
     } catch (error: any) {
@@ -106,7 +105,6 @@ export default function ProductListScreen({navigation}: any) {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <AppHeader title="Products" onBack={() => navigation.goBack()} />
-
         {loading ? (
           <ActivityIndicator size="large" color="#f59e0b" />
         ) : (
