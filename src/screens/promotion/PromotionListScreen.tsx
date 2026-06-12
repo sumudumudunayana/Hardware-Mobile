@@ -20,13 +20,11 @@ export default function PromotionListScreen({navigation}: any) {
   const [filteredPromotions, setFilteredPromotions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-
   // dialog state
   const [showDialog, setShowDialog] = useState(false);
   const [selectedPromotion, setSelectedPromotion] = useState<any>(null);
 
   // FETCH PROMOTIONS
-
   const fetchPromotions = async () => {
     try {
       setLoading(true);
