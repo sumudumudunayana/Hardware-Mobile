@@ -1,6 +1,5 @@
 // @ts-ignore
 import DatePicker from 'react-native-modern-datepicker';
-
 import React, {useState} from 'react';
 import {
   View,
@@ -21,7 +20,6 @@ export default function PromotionEditScreen({route, navigation}: any) {
   const [loading, setLoading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateField, setDateField] = useState<'start' | 'end'>('start');
-
   const [formData, setFormData] = useState({
     promotionName: promotion.promotionName || '',
     promotionDescription: promotion.promotionDescription || '',
