@@ -1,13 +1,11 @@
 import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
 import AppHeader from '../../components/AppHeader';
 import styles from '../../styles/promotion/PromotionDetailsScreenStyles';
 
 export default function PromotionDetailsScreen({route, navigation}: any) {
   const {promotion} = route.params;
-
   const formatDate = (date: string) => {
     if (!date) return 'N/A';
     return new Date(date).toLocaleDateString();
