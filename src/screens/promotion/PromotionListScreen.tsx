@@ -29,7 +29,6 @@ export default function PromotionListScreen({navigation}: any) {
     try {
       setLoading(true);
       const res = await api.get('/promotions');
-
       const formatted = res.data.map((promotion: any) => ({
         _id: promotion._id,
         promotionId: promotion.promotionId,
@@ -41,7 +40,6 @@ export default function PromotionListScreen({navigation}: any) {
         endDate: promotion.endDate,
         applyTo: promotion.applyTo,
         status: promotion.status,
-
         item: promotion.itemId
           ? {
               _id: promotion.itemId._id,
