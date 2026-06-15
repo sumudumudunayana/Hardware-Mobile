@@ -80,19 +80,16 @@ export default function PromotionListScreen({navigation}: any) {
   // SEARCH
   const handleSearch = (text: string) => {
     setSearch(text);
-
     if (!text.trim()) {
       setFilteredPromotions(promotions);
       return;
     }
-
     const filtered = promotions.filter(
       item =>
         item.promotionName?.toLowerCase().includes(text.toLowerCase()) ||
         item.discountType?.toLowerCase().includes(text.toLowerCase()) ||
         item.status?.toLowerCase().includes(text.toLowerCase()),
     );
-
     setFilteredPromotions(filtered);
   };
 
