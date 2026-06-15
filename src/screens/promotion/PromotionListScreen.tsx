@@ -57,7 +57,6 @@ export default function PromotionListScreen({navigation}: any) {
           text1: 'Session Expired',
           text2: 'Please login again',
         });
-
         navigation.replace('Login');
         return;
       }
@@ -79,7 +78,6 @@ export default function PromotionListScreen({navigation}: any) {
   );
 
   // SEARCH
-
   const handleSearch = (text: string) => {
     setSearch(text);
 
