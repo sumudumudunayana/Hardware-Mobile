@@ -19,12 +19,10 @@ export default function CartScreen() {
   const [promotions, setPromotions] = useState<any[]>([]);
   const [appliedPromotions, setAppliedPromotions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     loadCart();
     loadPromotions();
   }, []);
-
   useEffect(() => {
     applyPromotions();
   }, [cart, promotions]);
