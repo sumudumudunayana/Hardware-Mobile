@@ -61,13 +61,11 @@ export default function CartScreen() {
       setAppliedPromotions([]);
       return;
     }
-
     const now = new Date();
     const subtotal = cart.reduce(
       (sum, item) => sum + Number(item.price) * Number(item.quantity),
       0,
     );
-
     let runningTotal = subtotal;
     let applied: any[] = [];
 
