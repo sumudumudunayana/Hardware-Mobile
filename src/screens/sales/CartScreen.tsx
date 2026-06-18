@@ -124,7 +124,6 @@ export default function CartScreen() {
   const decreaseQty = async (item: any) => {
     try {
       const newQty = Number(item.quantity) - 1;
-
       if (newQty <= 0) {
         await api.delete(`/cart/remove/${item.itemId}`);
       } else {
@@ -133,7 +132,6 @@ export default function CartScreen() {
           quantity: newQty,
         });
       }
-
       loadCart();
     } catch {
       Toast.show({
