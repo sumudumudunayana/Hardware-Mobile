@@ -174,7 +174,6 @@ export default function CartScreen() {
         itemId: item.itemId,
         quantity: qty,
       });
-
       loadCart();
     } catch {
       Toast.show({
@@ -228,7 +227,6 @@ export default function CartScreen() {
       const res = await api.post('/sales', payload);
       await api.delete('/cart/clear');
       const id = res.data._id || res.data.saleId;
-
       Toast.show({
         type: 'success',
         text1: 'Success',
