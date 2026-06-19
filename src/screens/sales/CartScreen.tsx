@@ -247,7 +247,6 @@ export default function CartScreen() {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <AppHeader title="Shopping Cart" onBack={() => navigation.goBack()} />
-
         <ScrollView showsVerticalScrollIndicator={false}>
           {cart.length === 0 ? (
             <Text style={styles.empty}>Your cart is empty</Text>
