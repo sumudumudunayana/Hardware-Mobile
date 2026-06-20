@@ -24,7 +24,6 @@ export default function InvoiceScreen({route, navigation}: any) {
   const loadInvoice = async () => {
     try {
       setLoading(true);
-
       const res = await api.get(`/sales/${id}`);
       setSale(res.data);
     } catch (error: any) {
@@ -56,7 +55,6 @@ export default function InvoiceScreen({route, navigation}: any) {
     return (
       <SafeAreaView style={styles.safeArea}>
         <AppHeader title="Invoice" onBack={() => navigation.goBack()} />
-
         <View style={styles.center}>
           <Text>Invoice not found</Text>
         </View>
