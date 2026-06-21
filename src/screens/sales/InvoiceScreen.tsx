@@ -72,7 +72,6 @@ export default function InvoiceScreen({route, navigation}: any) {
     ) || 0;
 
   const discount = Number(sale.discountTotal || 0);
-
   const finalTotal =
     Number(sale.finalTotal) || Number(sale.totalAmount) || subtotal - discount;
 
@@ -80,7 +79,6 @@ export default function InvoiceScreen({route, navigation}: any) {
     <SafeAreaView style={styles.safeArea}>
       {/* HEADER */}
       <AppHeader title="Invoice" onBack={() => navigation.goBack()} />
-
       <ScrollView style={styles.container}>
         {/* HEADER SECTION */}
         <View style={styles.header}>
