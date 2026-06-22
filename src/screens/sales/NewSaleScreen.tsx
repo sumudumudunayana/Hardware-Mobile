@@ -15,13 +15,11 @@ export default function NewSaleScreen() {
   const [cartCount, setCartCount] = useState(0);
 
   // LOAD ITEMS
-
   useEffect(() => {
     loadItems();
   }, []);
 
   // AUTO REFRESH CART
-
   useFocusEffect(
     useCallback(() => {
       loadCart();
