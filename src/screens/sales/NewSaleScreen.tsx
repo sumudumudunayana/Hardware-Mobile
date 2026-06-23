@@ -58,7 +58,6 @@ export default function NewSaleScreen() {
   };
 
   // LOAD CART
-
   const loadCart = async () => {
     try {
       const res = await api.get('/cart');
@@ -68,7 +67,6 @@ export default function NewSaleScreen() {
         (sum: number, item: any) => sum + Number(item.quantity || 0),
         0,
       );
-
       setCartCount(totalCount);
     } catch (error: any) {
       Toast.show({
@@ -80,7 +78,6 @@ export default function NewSaleScreen() {
   };
 
   // ADD TO CART
-
   const handleAdd = async (product: any) => {
     const cartItem = cart.find((c: any) => c.itemId === product._id);
     const currentQty = cartItem ? Number(cartItem.quantity) : 0;
