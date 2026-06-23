@@ -27,7 +27,6 @@ export default function NewSaleScreen() {
   );
 
   // LOAD ITEMS + STOCK
-
   const loadItems = async () => {
     try {
       const [itemRes, stockRes] = await Promise.all([
@@ -64,9 +63,7 @@ export default function NewSaleScreen() {
     try {
       const res = await api.get('/cart');
       const items = res.data.items || [];
-
       setCart(items);
-
       const totalCount = items.reduce(
         (sum: number, item: any) => sum + Number(item.quantity || 0),
         0,
