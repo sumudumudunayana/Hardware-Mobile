@@ -148,7 +148,6 @@ export default function SalesDetailsScreen({route, navigation}: any) {
                     ? `${promo.discountValue}%`
                     : `Rs. ${promo.discountValue}`}
                 </Text>
-
                 <Text style={styles.discountText}>
                   Discount: - Rs. {Number(promo.amount).toLocaleString()}
                 </Text>
@@ -185,7 +184,6 @@ export default function SalesDetailsScreen({route, navigation}: any) {
               text1: 'Opening Invoice',
               text2: 'Redirecting to invoice screen',
             });
-
             navigation.navigate('InvoiceScreen', {
               id: sale._id,
             });
