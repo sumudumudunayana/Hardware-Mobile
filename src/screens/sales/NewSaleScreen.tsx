@@ -115,7 +115,6 @@ export default function NewSaleScreen() {
   };
 
   // CATEGORY FILTER
-
   const categories = [
     'All',
     ...new Set(products.map((p: any) => p.itemCategory)),
@@ -128,7 +127,6 @@ export default function NewSaleScreen() {
   );
 
   // TOTAL PRICE
-
   const totalPrice = cart.reduce(
     (total: number, item: any) =>
       total + Number(item.price) * Number(item.quantity),
@@ -136,7 +134,6 @@ export default function NewSaleScreen() {
   );
 
   // PRODUCT CARD
-
   const renderProduct = ({item}: any) => (
     <View style={styles.card}>
       <Text style={styles.productName}>{item.itemName}</Text>
