@@ -41,7 +41,6 @@ export default function SalesDetailsScreen({route, navigation}: any) {
     return (
       <SafeAreaView style={styles.safeArea}>
         <AppHeader title="Sale Details" onBack={() => navigation.goBack()} />
-
         <View style={styles.center}>
           <ActivityIndicator size="large" color="#f59e0b" />
         </View>
@@ -54,7 +53,6 @@ export default function SalesDetailsScreen({route, navigation}: any) {
     return (
       <SafeAreaView style={styles.safeArea}>
         <AppHeader title="Sale Details" onBack={() => navigation.goBack()} />
-
         <View style={styles.center}>
           <Text>Sale not found</Text>
         </View>
