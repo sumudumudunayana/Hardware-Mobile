@@ -89,16 +89,13 @@ export default function SalesDetailsScreen({route, navigation}: any) {
         {/* SALE INFO */}
         <View style={styles.card}>
           <Text style={styles.sectionTitle}>Sale Information</Text>
-
           <Text style={styles.infoText}>
             Invoice No: {sale.invoiceNumber || '-'}
           </Text>
-
           <Text style={styles.infoText}>
             Date:{' '}
             {sale.createdAt ? new Date(sale.createdAt).toLocaleString() : '-'}
           </Text>
-
           <Text style={styles.infoText}>Sale ID: {sale.saleId || '-'}</Text>
         </View>
 
