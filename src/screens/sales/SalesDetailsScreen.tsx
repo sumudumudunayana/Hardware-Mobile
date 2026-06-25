@@ -113,13 +113,10 @@ export default function SalesDetailsScreen({route, navigation}: any) {
                 <Text style={styles.itemName}>
                   {item.itemId?.itemName || 'Item'}
                 </Text>
-
                 <Text style={styles.itemText}>Qty: {qty}</Text>
-
                 <Text style={styles.itemText}>
                   Unit Price: Rs. {price.toLocaleString()}
                 </Text>
-
                 <Text style={styles.itemSubtotal}>
                   Subtotal: Rs. {itemSubtotal.toLocaleString()}
                 </Text>
