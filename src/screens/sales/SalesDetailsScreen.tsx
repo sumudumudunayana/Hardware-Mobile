@@ -133,7 +133,6 @@ export default function SalesDetailsScreen({route, navigation}: any) {
             sale.promotions.map((promo: any, index: number) => (
               <View key={index} style={styles.promoBox}>
                 <Text style={styles.promoName}>{promo.name}</Text>
-
                 <Text style={styles.promoText}>
                   Type:{' '}
                   {promo.discountType === 'percentage'
@@ -153,15 +152,12 @@ export default function SalesDetailsScreen({route, navigation}: any) {
         {/* TOTAL */}
         <View style={styles.card}>
           <Text style={styles.sectionTitle}>Payment Summary</Text>
-
           <Text style={styles.summaryText}>
             Subtotal: Rs. {subtotal.toLocaleString()}
           </Text>
-
           <Text style={styles.discountText}>
             Total Discount: - Rs. {totalDiscount.toLocaleString()}
           </Text>
-
           <Text style={styles.finalTotal}>
             Final Total: Rs. {finalTotal.toLocaleString()}
           </Text>
