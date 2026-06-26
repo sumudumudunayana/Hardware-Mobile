@@ -137,11 +137,9 @@ export default function SalesHistoryScreen({navigation}: any) {
                         <Text style={styles.itemName}>
                           {item.itemId?.itemName || 'Item'}
                         </Text>
-
                         <Text style={styles.itemText}>
                           Qty: {item.quantity}
                         </Text>
-
                         <Text style={styles.itemText}>
                           Rs. {Number(item.subtotal || 0).toLocaleString()}
                         </Text>
