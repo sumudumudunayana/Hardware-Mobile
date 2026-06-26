@@ -57,7 +57,6 @@ export default function SalesHistoryScreen({navigation}: any) {
     if (!selectedId) return;
     try {
       await api.delete(`/sales/${selectedId}`);
-
       Toast.show({
         type: 'success',
         text1: 'Deleted',
@@ -96,11 +95,9 @@ export default function SalesHistoryScreen({navigation}: any) {
               <View key={sale._id} style={styles.card}>
                 {/* TOP INFO */}
                 <Text style={styles.invoice}>{sale.invoiceNumber}</Text>
-
                 <Text style={styles.date}>
                   {new Date(sale.createdAt).toLocaleString()}
                 </Text>
-
                 <Text style={styles.total}>
                   Rs. {Number(sale.totalAmount || 0).toLocaleString()}
                 </Text>
