@@ -17,11 +17,9 @@ export default function SalesListScreen({navigation}: any) {
   const [loading, setLoading] = useState(true);
 
   // LOAD SALES
-
   const loadSales = async () => {
     try {
       setLoading(true);
-
       const res = await api.get('/sales');
       setSales(res.data || []);
     } catch (error: any) {
