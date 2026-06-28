@@ -34,13 +34,11 @@ export default function SalesListScreen({navigation}: any) {
   };
 
   // FIRST LOAD
-
   useEffect(() => {
     loadSales();
   }, []);
 
   // AUTO REFRESH ON SCREEN FOCUS
-
   useFocusEffect(
     useCallback(() => {
       loadSales();
