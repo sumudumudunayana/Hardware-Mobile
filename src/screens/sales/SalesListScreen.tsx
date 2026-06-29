@@ -72,7 +72,6 @@ export default function SalesListScreen({navigation}: any) {
   return (
     <View style={styles.container}>
       <AppHeader title="Sales Management" onBack={() => navigation.goBack()} />
-
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
@@ -91,7 +90,6 @@ export default function SalesListScreen({navigation}: any) {
             <Text style={styles.statLabel}>Orders</Text>
             <Text style={styles.statValue}>{totalOrders}</Text>
           </View>
-
           <View style={styles.statCard}>
             <Text style={styles.statLabel}>Revenue</Text>
             <Text style={styles.statValue}>
