@@ -45,8 +45,7 @@ export default function SalesListScreen({navigation}: any) {
     }, []),
   );
 
-  // CALCULATIONS
-
+  // CALCULATION
   const totalRevenue = sales.reduce(
     (sum, sale) => sum + Number(sale.totalAmount || 0),
     0,
@@ -55,7 +54,6 @@ export default function SalesListScreen({navigation}: any) {
   const totalOrders = sales.length;
 
   // LATEST SALE
-
   const latestSale =
     sales.length > 0
       ? [...sales].sort(
