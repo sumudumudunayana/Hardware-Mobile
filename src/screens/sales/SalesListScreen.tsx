@@ -130,11 +130,9 @@ export default function SalesListScreen({navigation}: any) {
             <Text style={styles.metaText}>
               {new Date(latestSale.createdAt).toLocaleString()}
             </Text>
-
             <Text style={styles.totalText}>
               Rs. {Number(latestSale.totalAmount || 0).toLocaleString()}
             </Text>
-
             <TouchableOpacity
               style={styles.invoiceBtn}
               onPress={() =>
