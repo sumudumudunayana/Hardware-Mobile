@@ -126,9 +126,7 @@ export default function SalesListScreen({navigation}: any) {
         {latestSale && (
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>Latest Invoice</Text>
-
             <Text style={styles.invoiceText}>{latestSale.invoiceNumber}</Text>
-
             <Text style={styles.metaText}>
               {new Date(latestSale.createdAt).toLocaleString()}
             </Text>
