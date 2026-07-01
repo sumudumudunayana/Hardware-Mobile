@@ -55,14 +55,12 @@ export default function SalesReportScreen({navigation}: any) {
         last7.setDate(now.getDate() - 7);
         return saleDate >= last7;
       }
-
       if (filterType === 'month') {
         return (
           saleDate.getMonth() === now.getMonth() &&
           saleDate.getFullYear() === now.getFullYear()
         );
       }
-
       return true;
     });
   }, [sales, filterType]);
