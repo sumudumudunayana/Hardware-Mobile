@@ -30,7 +30,6 @@ export default function CompanyListScreen({navigation}: any) {
     try {
       setLoading(true);
       const res = await api.get('/companies');
-
       setCompanies(res.data);
       setFilteredCompanies(res.data);
     } catch (error: any) {
@@ -62,7 +61,6 @@ export default function CompanyListScreen({navigation}: any) {
   // SEARCH
   const handleSearch = (text: string) => {
     setSearch(text);
-
     const filtered = companies.filter(
       company =>
         company.companyName?.toLowerCase().includes(text.toLowerCase()) ||
